@@ -1,0 +1,39 @@
+body,
+html {
+    font-size: 62.5%;
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+li {
+    list-style: none;
+}
+
+/* scrollbar */
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+    height: 8px;
+    padding-top: 4px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(22, 24, 35, 0.05);
+}
+
+html *::-webkit-scrollbar:hover {
+    background-color: rgba(22, 24, 35, 0.05);
+}
+html *::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(22, 24, 35, 0.3);
+}
+
+/* show/hide */
+.show {
+    display: block;
+}

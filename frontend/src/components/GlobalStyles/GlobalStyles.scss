@@ -1,0 +1,251 @@
+@import 'normalize.css';
+
+@import url('https://use.typekit.net/waz4tsx.css');
+
+html {
+    font-size: 62.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: ibm-plex-sans, sans-serif;
+    font-size: 1.6rem;
+    overflow-y: overlay;
+}
+
+// scrollbar
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(22, 24, 35, 0.06);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+button,
+input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+li {
+    list-style: none;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+.capitalize {
+    text-transform: capitalize;
+}
+
+//Common
+.col-1 {
+    flex: 1;
+}
+
+.col-2 {
+    flex: 2;
+}
+
+.col-3 {
+    flex: 3;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.flex-center {
+    justify-content: center;
+}
+
+.flex-end {
+    justify-content: end;
+}
+
+.row-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.v-center {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+// fill
+
+.h-100 {
+    height: 100%;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.pt-8 {
+    padding-top: 8px;
+}
+
+.pv-8 {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.ph-16 {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.d-none {
+    display: none;
+}
+
+// text-align
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+// font-weight
+.fw-500 {
+    font-weight: 500 !important;
+}
+
+.fw-700 {
+    font-weight: 700 !important;
+}
+
+.fw-300 {
+    font-weight: 300 !important;
+}
+
+// icon
+.regular-icon {
+    color: #fff;
+    filter: drop-shadow(0 0 2px #000);
+}
+
+// scroll
+.scrollable {
+    overflow-y: overlay;
+}
+
+// from yolo
+
+$main-bg: #fff;
+$main-color: #4267b2;
+
+$txt-main-color: #000;
+$txt-second-color: #8d8d8d;
+$txt-white: #fff;
+
+$btn-main-bg: $main-color;
+$btn-main-color: #fff;
+
+$header-height: 170px;
+$header-tablet-height: 70px;
+$header-mobile-height: 40px;
+$header-shrink-height: 70px;
+
+$box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+$colors: (
+    'blue': #4267b2,
+    'orange': #fbb96b,
+    'pink': #fe7e73,
+    'white': #fff,
+    'black': #000,
+    'main': $main-color,
+    'red': #ff0000,
+);
+
+$mobile-width: 600px;
+$tablet-width: 1024px;
+
+$numbers: (0, 1, 2, 3, 4, 5, 6, 7, 8);
+
+@mixin flex($align-item, $justify-content) {
+    display: flex;
+    align-items: $align-item;
+    justify-content: $justify-content;
+}
+
+@mixin mobile {
+    @media only screen and (max-width: $mobile-width) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media only screen and (max-width: $tablet-width) {
+        @content;
+    }
+}
+
+@each $color, $val in $colors {
+    .color-#{$color} {
+        color: $val;
+    }
+
+    .bg-#{$color} {
+        background-color: $val;
+    }
+}
+
+@each $val in $numbers {
+    .grid-col-#{$val} {
+        grid-template-columns: repeat($val, 1fr);
+    }
+}
+
+@each $val in $numbers {
+    .grid-col-md-#{$val} {
+        @include tablet {
+            grid-template-columns: repeat($val, 1fr);
+        }
+    }
+}
+
+@each $val in $numbers {
+    .grid-col-sm-#{$val} {
+        @include mobile {
+            grid-template-columns: repeat($val, 1fr);
+        }
+    }
+}
+
+.grid {
+    display: grid;
+}
