@@ -5,12 +5,27 @@ import { IconButton } from '@mui/material';
 import { Box } from '@mui/system';
 import { Link } from 'react-router-dom';
 import { route } from '~/config';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { GlobalContext } from '~/context/GlobalContext';
+import * as request from '~/utils/httpRequest';
 
 const Action = () => {
-    const { totalCartItem } = useContext(GlobalContext);
+    const { totalCartItem, setTotalCartItem } = useContext(GlobalContext);
     const auth = JSON.parse(localStorage.getItem('auth'));
+
+    const handleLogout = () => {
+        localStorage.removeItem('auth');
+        setTotalCartItem(0);
+    };
+
+    const getTotalCartItem = async () => {
+        const res = await request.get(route.countCartAPI);
+        setTotalCartItem(res.data.data);
+    };
+
+    useEffect(() => {
+        getTotalCartItem();
+    }, []);
 
     return (
         <Stack direction={'row'} gap={1}>

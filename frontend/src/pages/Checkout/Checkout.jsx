@@ -1,8 +1,10 @@
-import { Alert, Box, Button, Divider, Skeleton, Stack, Typography } from '@mui/material';
+import { Alert, Box, Button, Divider, Select, Skeleton, Stack, Typography } from '@mui/material';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { useContext, useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
-import { route } from '~/config';
+import PaymentMethodItem from '~/components/PaymentMethodItem/PaymentMethodItem';
+import { route, paymentMethods } from '~/config';
 import { AlertContext } from '~/context/AlertContext';
 import CheckoutItem from '~/layouts/components/CheckoutItem/CheckoutItem';
 import * as request from '~/utils/httpRequest';
@@ -12,7 +14,7 @@ const Checkout = () => {
 
     const [loading, setLoading] = useState(false);
 
-    const [paymentMethod, setPaymentMethod] = useState('cash');
+    const [paymentMethod, setPaymentMethod] = useState(1);
 
     const { message, setMessage, showMessage, setShowMessage } = useContext(AlertContext);
 
@@ -27,11 +29,11 @@ const Checkout = () => {
         const params = {
             idAddress: 1,
             note: 'note',
-            paymentMethod: 1,
-            idProductVariation: checkoutProducts.map((item) => item.productVariation.id),
+            paymentMethod: paymentMethod - 1,
+            idProductVariations: checkoutProducts.map((item) => item.productVariation.id),
         };
         try {
-            const res = await request.post(route.orderAPI, params);
+            const res = await request.post(route.orderFromCartAPI, params);
             if (res.status === 200 && paymentMethod === 1) {
                 setMessage({ text: 'Checkout success', severity: 'success' });
                 setShowMessage(true);
@@ -45,6 +47,8 @@ const Checkout = () => {
             setShowMessage(true);
         }
     };
+
+    const handleOpenModal = () => {};
 
     useEffect(() => {
         getCheckoutProducts();
@@ -75,27 +79,57 @@ const Checkout = () => {
                         )}
                     </Stack>
                 </Box>
+                {/* delivery address */}
+                <Box width="100%" p={2} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
+                    <Typography variant="h5">Delivery Address</Typography>
+                    <Typography variant="h6">Pham Phong Duy 8034350394</Typography>
+                    <Typography variant="h6">Address 1</Typography>
+                    <Typography variant="h6">Default</Typography>
+                    <Button variant="outlined" onClick={handleOpenModal}>
+                        Change
+                    </Button>
+                </Box>
+                {/* checkout and payment method */}
                 <Box width="100%" p={2} mt={3} sx={{ boxShadow: 1, bgcolor: 'background.white', borderRadius: 2 }}>
-                    {/* Price and checkout */}
-                    <div className="cart__info">
-                        <div className="cart__info__txt">
-                            <div className="cart__info__txt__price">
-                                <span>Thành tiền:</span> <span>100000000 d</span>
+                    <Grid2 container>
+                        {/* payment method */}
+                        <Grid2 item xs={5}>
+                            <Typography variant="h6">Payment method</Typography>
+                            <Stack spacing={1} divider={<Divider />}>
+                                {paymentMethods.map((item, index) => (
+                                    <PaymentMethodItem
+                                        key={index}
+                                        {...item}
+                                        selectedID={paymentMethod}
+                                        onClick={(id) => setPaymentMethod(id)}
+                                    />
+                                ))}
+                            </Stack>
+                        </Grid2>
+                        {/* Price and checkout */}
+                        <Grid2 item xs={7} display="flex" justifyContent="center">
+                            <div>
+                                <div className="cart__info__txt">
+                                    <Typography>Thành tiền:</Typography> <Typography>100000000 d</Typography>
+                                </div>
+                                <div>
+                                    <Button LinkComponent={Link} to={route.home} size="large" variant="outlined">
+                                        Add more product
+                                    </Button>
+                                    <Button size="large" variant="contained" onClick={handleCheckout}>
+                                        Đặt hàng
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="cart__info__btn">
-                            <Button LinkComponent={Link} to={route.home} size="large" variant="outlined">
-                                Add more product
-                            </Button>
-                            <Button size="large" variant="contained" onClick={handleCheckout}>
-                                Đặt hàng
-                            </Button>
-                        </div>
-                    </div>
+                        </Grid2>
+                    </Grid2>
                 </Box>
             </Box>
-
-            <Alert severity={message.severity} open={showMessage} onClose={() => setShowMessage(false)} />
+            {showMessage && (
+                <Alert severity={message.severity} onClose={() => setShowMessage(false)}>
+                    {message.text}
+                </Alert>
+            )}
         </>
     );
 };

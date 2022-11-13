@@ -1,8 +1,6 @@
 import { route } from '~/config';
 import UserProfileLayout from '~/layouts/UserProfileLayout/UserProfileLayout';
-import { Cart, Home, Profile, Search, Product, SingleProduct, Signin, DeliveryAddress } from '~/pages';
-import { Checkout } from '~/pages/Checkout';
-import Order from '~/pages/Order';
+import { Cart, Home, Profile, Search, Product, SingleProduct, Signin, DeliveryAddress, Checkout, Order } from '~/pages';
 import AuthCheck from '~/pages/Signin/AuthCheck';
 
 const publicRoute = [

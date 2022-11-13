@@ -16,9 +16,10 @@ const Route = {
 
     // API
     cartAPI: '/buyer/cart-detail',
+    countCartAPI: '/buyer/cart-detail/count',
     signinAPI: '/signin',
     productAPI: '/product',
-    orderAPI: '/buyer/order',
+    orderFromCartAPI: '/buyer/order/cart',
     deliveryAddressAPI: '/buyer/delivery-address',
     userinfoAPI: '/buyer/userinfo',
     singleProductAPI: '/product/:id',

@@ -3,7 +3,7 @@ import { createContext, useState } from 'react';
 const AlertContext = createContext();
 
 const AlertProvider = ({ children }) => {
-    const [message, setMessage] = useState({ text: '', severity: '' });
+    const [message, setMessage] = useState({ text: '', severity: 'info' });
     const [showMessage, setShowMessage] = useState(false);
     const ectx = {
         message,
