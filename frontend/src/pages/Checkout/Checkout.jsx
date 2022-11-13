@@ -8,6 +8,7 @@ import { route, paymentMethods } from '~/config';
 import { AlertContext } from '~/context/AlertContext';
 import CheckoutItem from '~/layouts/components/CheckoutItem/CheckoutItem';
 import * as request from '~/utils/httpRequest';
+import DeliveryAddressItem from './DeliveryAddressItem';
 
 const Checkout = () => {
     const [checkoutProducts, setCheckoutProducts] = useState([]);
@@ -17,6 +18,8 @@ const Checkout = () => {
     const [paymentMethod, setPaymentMethod] = useState(1);
 
     const { message, setMessage, showMessage, setShowMessage } = useContext(AlertContext);
+
+    const deliveryAddress = JSON.parse(localStorage.getItem('auth')).userInfo.defaultAddress;
 
     const getCheckoutProducts = async () => {
         setLoading(true);
@@ -82,9 +85,7 @@ const Checkout = () => {
                 {/* delivery address */}
                 <Box width="100%" p={2} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
                     <Typography variant="h5">Delivery Address</Typography>
-                    <Typography variant="h6">Pham Phong Duy 8034350394</Typography>
-                    <Typography variant="h6">Address 1</Typography>
-                    <Typography variant="h6">Default</Typography>
+                    <DeliveryAddressItem {...deliveryAddress} />
                     <Button variant="outlined" onClick={handleOpenModal}>
                         Change
                     </Button>

@@ -18,7 +18,6 @@ const states = [
 
 const UserInfo = (props) => {
     const user = JSON.parse(localStorage.getItem('auth')).userInfo;
-    console.log(user);
 
     const [values, setValues] = useState({
         fullname: user.fullname,
