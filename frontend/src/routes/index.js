@@ -2,6 +2,7 @@ import { route } from '~/config';
 import UserProfileLayout from '~/layouts/UserProfileLayout/UserProfileLayout';
 import { Cart, Home, Profile, Search, Product, SingleProduct, Signin, DeliveryAddress, Checkout, Order } from '~/pages';
 import AuthCheck from '~/pages/Signin/AuthCheck';
+import Signup from '~/pages/Signup';
 
 const publicRoute = [
     { path: route.home, element: <Home /> },
@@ -10,6 +11,14 @@ const publicRoute = [
         element: (
             <AuthCheck>
                 <Signin />
+            </AuthCheck>
+        ),
+    },
+    {
+        path: route.signup,
+        element: (
+            <AuthCheck>
+                <Signup />
             </AuthCheck>
         ),
     },

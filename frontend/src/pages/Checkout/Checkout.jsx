@@ -9,6 +9,7 @@ import { AlertContext } from '~/context/AlertContext';
 import CheckoutItem from '~/layouts/components/CheckoutItem/CheckoutItem';
 import * as request from '~/utils/httpRequest';
 import DeliveryAddressItem from './DeliveryAddressItem';
+import { commas } from '~/utils/formater';
 
 const Checkout = () => {
     const [checkoutProducts, setCheckoutProducts] = useState([]);
@@ -19,7 +20,9 @@ const Checkout = () => {
 
     const { message, setMessage, showMessage, setShowMessage } = useContext(AlertContext);
 
-    const deliveryAddress = JSON.parse(localStorage.getItem('auth')).userInfo.defaultAddress;
+    const [deliveryAddress, setDeliveryAddress] = useState(
+        JSON.parse(localStorage.getItem('auth')).userInfo.defaultAddress,
+    );
 
     const getCheckoutProducts = async () => {
         setLoading(true);
@@ -30,7 +33,7 @@ const Checkout = () => {
 
     const handleCheckout = async () => {
         const params = {
-            idAddress: 1,
+            idAddress: deliveryAddress.id,
             note: 'note',
             paymentMethod: paymentMethod - 1,
             idProductVariations: checkoutProducts.map((item) => item.productVariation.id),
@@ -85,10 +88,16 @@ const Checkout = () => {
                 {/* delivery address */}
                 <Box width="100%" p={2} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
                     <Typography variant="h5">Delivery Address</Typography>
-                    <DeliveryAddressItem {...deliveryAddress} />
-                    <Button variant="outlined" onClick={handleOpenModal}>
-                        Change
-                    </Button>
+                    {deliveryAddress ? (
+                        <Box display="flex" justifyContent="space-between">
+                            <DeliveryAddressItem address={deliveryAddress} />
+                            <Button variant="outlined" onClick={handleOpenModal}>
+                                Change
+                            </Button>
+                        </Box>
+                    ) : (
+                        <Typography variant="h6">No delivery address</Typography>
+                    )}
                 </Box>
                 {/* checkout and payment method */}
                 <Box width="100%" p={2} mt={3} sx={{ boxShadow: 1, bgcolor: 'background.white', borderRadius: 2 }}>
@@ -111,7 +120,7 @@ const Checkout = () => {
                         <Grid2 item xs={7} display="flex" justifyContent="center">
                             <div>
                                 <div className="cart__info__txt">
-                                    <Typography>Thành tiền:</Typography> <Typography>100000000 d</Typography>
+                                    <Typography>Thành tiền:</Typography> <Typography>{commas(100000)}đ</Typography>
                                 </div>
                                 <div>
                                     <Button LinkComponent={Link} to={route.home} size="large" variant="outlined">

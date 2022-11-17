@@ -14,7 +14,6 @@ const DeliveryAddressItem = ({
     handleRemoveClick,
     handleUpdateClick,
 }) => {
-    console.log(addressWard);
     return (
         <Box display="flex" justifyContent="space-between" alignItems="center">
             <Box>

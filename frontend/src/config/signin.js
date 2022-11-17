@@ -1,5 +1,5 @@
 import { route } from '~/config';
-export const signin = {
+const signin = {
     image: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp',
     logo: {},
     redirect: route.home,
@@ -18,3 +18,5 @@ export const signin = {
         label: 'Sign in',
     },
 };
+
+export default signin;

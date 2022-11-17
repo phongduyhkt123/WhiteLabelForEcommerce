@@ -1,7 +1,7 @@
 const Route = {
     home: '/',
     signin: '/signin',
-    register: '/register',
+    signup: '/signup',
     profile: '/profile',
     search: '/search',
     singleProduct: '/product/:id',

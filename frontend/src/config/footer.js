@@ -1,4 +1,4 @@
-import { Facebook } from '@mui/icons-material';
+import { Facebook, Google, Mail, Phone } from '@mui/icons-material';
 
 const Footer = {
     styles: {
@@ -29,8 +29,12 @@ const Footer = {
                     content: 'facebook.com',
                 },
                 {
-                    icon: <Facebook />,
-                    content: 'facebook.com',
+                    icon: <Mail />,
+                    content: 'example@gmail.com',
+                },
+                {
+                    icon: <Phone />,
+                    content: '0900200110',
                 },
             ],
         },

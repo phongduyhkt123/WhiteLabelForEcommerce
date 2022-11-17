@@ -3,44 +3,21 @@ import { Box, Button, Chip, Divider, IconButton, Typography } from '@mui/materia
 import { Stack } from '@mui/system';
 import React from 'react';
 
-const DeliveryAddressItem = ({
-    receiverName,
-    receiverPhone,
-    id,
-    isDefault,
-    addressDetail,
-    addressWard,
-    handleSetDefaultClick,
-    handleRemoveClick,
-    handleUpdateClick,
-}) => {
-    console.log(addressWard);
+const DeliveryAddressItem = ({ address, isDefault, handleSetDefaultClick, handleRemoveClick, handleUpdateClick }) => {
     return (
         <Box display="flex" justifyContent="space-between" alignItems="center">
             <Box>
                 <Box display="flex">
-                    <Typography variant="h4">{receiverName}</Typography>
+                    <Typography variant="h4">{address?.receiverName}</Typography>
                     <Typography variant="h4" color="primary" sx={{ mx: 4 }}>
-                        {receiverPhone}
+                        {address?.receiverPhone}
                     </Typography>
                     <Chip label="Default" color="primary" variant="outlined" size="small" icon={<Check />} />
-                    <Button variant="outlined">Dat lam mac dinh</Button>
                 </Box>
                 <Typography variant="h5">
-                    {addressDetail}, {addressWard.name}, {addressWard.district.name},
-                    {addressWard.district.provinceCity.name}
+                    {address?.addressDetail}, {address?.addressWard.name}, {address?.addressWard.district.name},{' '}
+                    {address?.addressWard.district.provinceCity.name}
                 </Typography>
-            </Box>
-
-            <Box>
-                <Box display="flex">
-                    <IconButton onClick={() => handleUpdateClick(id)}>
-                        <Edit />
-                    </IconButton>
-                    <IconButton>
-                        <Delete color="error" />
-                    </IconButton>
-                </Box>
             </Box>
         </Box>
     );

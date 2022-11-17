@@ -1,4 +1,5 @@
 import { Add, Remove } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 import {
     Button,
     Divider,
@@ -19,6 +20,7 @@ import { route } from '~/config';
 import { AlertContext } from '~/context/AlertContext';
 import { GlobalContext } from '~/context/GlobalContext';
 import * as request from '~/utils/httpRequest';
+import { commas } from '~/utils/formater';
 
 function SingleProduct() {
     const { id } = useParams();
@@ -26,6 +28,7 @@ function SingleProduct() {
     const { setTotalCartItem } = useContext(GlobalContext);
 
     const [product, setProduct] = useState();
+    const [variant, setVariant] = useState(0);
 
     const getProduct = async () => {
         const response = await request.get(`${route.productAPI}/${id}`);
@@ -44,43 +47,26 @@ function SingleProduct() {
 
     const [descriptionExpand, setDescriptionExpand] = useState(false);
 
-    const [color, setColor] = useState(undefined);
-
-    const [size, setSize] = useState(undefined);
-
     const [quantity, setQuantity] = useState(1);
 
     const updateQuantity = (type) => {
-        if (type === 'plus') {
-            setQuantity(quantity + 1);
-        } else {
-            setQuantity(quantity - 1 < 1 ? 1 : quantity - 1);
-        }
-    };
-
-    // useEffect(() => {
-    //     setPreviewImg(product.image01);
-    //     setColor(undefined);
-    //     setSize(undefined);
-    // }, [product]);
-
-    const check = () => {
-        if (color === undefined) {
-            alert('Vui lòng chọn màu sắc!');
-            return false;
-        }
-
-        if (size === undefined) {
-            alert('Vui lòng chọn kích cỡ!');
-            return false;
-        }
-
-        return true;
+        type === 'plus' ? setQuantity(quantity + 1) : setQuantity(quantity - 1 < 1 ? 1 : quantity - 1);
     };
 
     const addToCart = async () => {
+        if (product.variations.length > 1 && variant === 0) {
+            setMessage({
+                text: 'Please select a variant',
+                severity: 'warning',
+            });
+            setShowMessage(true);
+            return;
+        } else if (product.variations.length < 1) {
+            setVariant(product.variations[0].id);
+        }
+
         try {
-            const response = await request.post(`${route.cartAPI}/${product.variations[0].id}`, {
+            const response = await request.post(`${route.cartAPI}/${variant}`, {
                 quantity,
             });
             if (response.status === 200) {
@@ -91,24 +77,6 @@ function SingleProduct() {
             setMessage({ text: e.response?.data?.message || 'Something went wrong', severity: 'error' });
         }
         setShowMessage(true);
-    };
-
-    const goToCart = () => {
-        if (check()) {
-            let newItem = {
-                slug: product.slug,
-                color: color,
-                size: size,
-                price: product.price,
-                quantity: quantity,
-            };
-            // if (dispatch(addItem(newItem))) {
-            //     dispatch(remove());
-            //     props.history.push('/cart');
-            // } else {
-            //     alert('Fail');
-            // }
-        }
     };
 
     return (
@@ -156,36 +124,26 @@ function SingleProduct() {
                     <Rating name="simple-controlled" size="large" value={5} onChange={(event, newValue) => {}} />
                     <Box>
                         <div className="product__info__item">
-                            <Typography variant="h3">1.000.000đ</Typography>
+                            <Typography variant="h3">{commas(product?.minPrice || 0)} đ</Typography>
                         </div>
-                        <div className="product__info__item">
-                            <div className="product__info__item__title">Màu sắc</div>
-                            <div className="product__info__item__list">
-                                {product?.colors?.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        className={`product__info__item__list__item ${color === item ? 'active' : ''}`}
-                                        onClick={() => setColor(item)}
-                                    >
-                                        <div className={`circle bg-${item}`}></div>
-                                    </div>
-                                ))}
+                        {product?.variations?.length > 1 && (
+                            <div>
+                                <Typography>Phân loại</Typography>
+                                <Grid2 container spacing={2}>
+                                    {product?.variations?.map((item) => (
+                                        <Grid2 key={item.id}>
+                                            <Button
+                                                variant={variant === item.id ? 'contained' : 'outlined'}
+                                                onClick={() => setVariant(item.id)}
+                                            >
+                                                {item.variationName}
+                                            </Button>
+                                        </Grid2>
+                                    ))}
+                                </Grid2>
                             </div>
-                        </div>
-                        <div className="product__info__item">
-                            <div className="product__info__item__title">Kích cỡ</div>
-                            <div className="product__info__item__list">
-                                {product?.size?.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        className={`product__info__item__list__item ${size === item ? 'active' : ''}`}
-                                        onClick={() => setSize(item)}
-                                    >
-                                        <span className="product__info__item__list__item__size">{item}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                        )}
+
                         <div className="product__info__item">
                             <div className="product__info__item__title">Số lượng</div>
                             <Box>
@@ -212,20 +170,15 @@ function SingleProduct() {
                             </Box>
                         </div>
                         <Stack direction="row" spacing={2}>
-                            <Button
+                            <LoadingButton
                                 variant="outlined"
                                 sx={{ flex: 1, fontSize: '1.8rem' }}
                                 fullWidth
                                 onClick={() => addToCart()}
                             >
                                 thêm vào giỏ
-                            </Button>
-                            <Button
-                                variant="contained"
-                                sx={{ flex: 1, fontSize: '2rem' }}
-                                fullWidth
-                                onClick={() => goToCart()}
-                            >
+                            </LoadingButton>
+                            <Button variant="contained" sx={{ flex: 1, fontSize: '2rem' }} fullWidth>
                                 mua ngay
                             </Button>
                         </Stack>

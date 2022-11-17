@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 
-import { Button, Checkbox, Divider, Paper, Stack, Typography } from '@mui/material';
+import { Button, Checkbox, Divider, Paper, Skeleton, Stack, Typography } from '@mui/material';
 import { ProductCard } from '~/layouts/components/ProductCard/ProductCard';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Box } from '@mui/system';
@@ -56,10 +56,13 @@ const Product = () => {
     const clearFilter = () => setFilter(initFilter);
 
     // my code
+    const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState([]);
     const getProducts = async () => {
+        setIsLoading(true);
         const res = await request.get(route.productAPI);
         setProducts(res.data.data);
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -184,11 +187,19 @@ const Product = () => {
             <Divider variant="middle" sx={{ borderWidth: '0.8px' }} />
             {/* Product list */}
             <Grid2 item container spacing={3} flex={1}>
-                {products.map((item, index) => (
-                    <Grid2 item xs={12} sm={6} md={4} lg={3} key={index}>
-                        <ProductCard data={item} />
-                    </Grid2>
-                ))}
+                {!isLoading
+                    ? products.map((item, index) => (
+                          <Grid2 item xs={12} sm={6} md={4} lg={3} key={index}>
+                              <ProductCard data={item} />
+                          </Grid2>
+                      ))
+                    : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+                          <Grid2 item xs={12} sm={6} md={4} lg={3} key={item}>
+                              <Skeleton variant="rectangular" width="100%" height={118} />
+                              <Skeleton />
+                              <Skeleton width="60%" />
+                          </Grid2>
+                      ))}
             </Grid2>
         </Grid2>
     );

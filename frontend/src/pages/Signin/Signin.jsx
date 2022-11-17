@@ -4,7 +4,7 @@ import { Stack } from '@mui/system';
 import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Input from '~/components/Input';
-import { signin } from '~/config/signin';
+import signin from '~/config/signin';
 import * as request from '~/utils/httpRequest';
 
 import AlertMessage from '~/components/Alert/AlertMessage';
@@ -37,12 +37,14 @@ const Signin = () => {
                     localStorage.setItem('auth', JSON.stringify({ token, type, userInfo }));
                     navigate(location.state || redirect || '/');
                 } else {
+                    console.log(response);
                     setMessage({ text: response?.data?.message || 'Something went wrong', severity: 'error' });
                     setShowMessage(true);
                 }
             } catch (error) {
                 setMessage({ text: error?.data?.message || 'Something went wrong', severity: 'error' });
                 setShowMessage(true);
+                console.log(error);
             }
         };
 

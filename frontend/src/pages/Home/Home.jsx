@@ -19,7 +19,7 @@ function Home() {
                     objectFit: 'cover',
                     width: '100%',
                 }}
-                src="https://biographypost.org/wp-content/uploads/2021/10/tumblr_pftzjcnaOW1s5d6bpo1_1280.jpg"
+                src="https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000"
                 alt="image"
             ></Box>
 
