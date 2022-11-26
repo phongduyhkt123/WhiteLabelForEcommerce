@@ -2,29 +2,39 @@ import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { route } from '~/config';
+import { commas } from '~/utils/formater';
 
-const OrderDetailItem = () => {
+const OrderDetailItem = ({ item }) => {
     return (
         <Box>
-            <Grid container>
-                {/* image */}
-                <Grid item xs={2} display="flex">
+            <Grid container spacing={2}>
+                <Grid item xs={1} display="flex">
                     <Box
                         component="img"
-                        src="https://tmdl.edu.vn/wp-content/uploads/2022/06/Dasha-Taran-la-ai.jpg"
+                        src={item?.productVariation.product.avatar}
                         alt=""
                         height={80}
+                        width="100%"
                         sx={{ objectFit: 'cover' }}
                     />
                 </Grid>
-                {/* info */}
-                <Grid item xs={9} display="flex" justifyContent="space-around" alignItems="center">
-                    <Typography variant="h4" component={Link}>
-                        product name
+                <Grid item xs={8} display="flex" alignItems="center">
+                    <Typography
+                        variant="h5"
+                        component={Link}
+                        to={route.singleProductAPI + item?.productVariation.product.id}
+                        width="100%"
+                        sx={{ overflowWrap: 'break-word' }} // word break for long text
+                    >
+                        {item?.productVariation.product.name}
                     </Typography>
-                    <Typography>2000000 d</Typography>
+                </Grid>
+                <Grid item xs={2} display="flex" justifyContent="center" alignItems="center">
+                    <Typography>{commas(item?.productVariation.price || 0)} đ</Typography>
                     {/* quantity */}
-
+                </Grid>
+                <Grid item xs={1} display="flex" alignItems="center">
                     <Typography px={2}>3</Typography>
                 </Grid>
             </Grid>

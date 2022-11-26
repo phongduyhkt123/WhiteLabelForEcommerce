@@ -15,13 +15,21 @@ const theme = createTheme({
     },
 
     components: {
-        // MuiButton: {
-        //     styleOverrides: {
-        //         root: {
-        //             color: 'red',
-        //         },
-        //     },
-        // },
+        MuiButton: {
+            defaultProps: {
+                sx: {
+                    fontSize: '1.3rem',
+                },
+            },
+        },
+
+        MuiPaginationItem: {
+            styleOverrides: {
+                root: {
+                    fontSize: '1.3rem',
+                },
+            },
+        },
         // MuiTabs: {
         //     styleOverrides: {
         //         indicator: {

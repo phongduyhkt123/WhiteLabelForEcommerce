@@ -4,6 +4,7 @@ import { Box } from '@mui/system';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { route } from '~/config';
+import { commas } from '~/utils/formater';
 
 export const ProductCard = ({ data }) => {
     return (
@@ -14,11 +15,13 @@ export const ProductCard = ({ data }) => {
         >
             <Link style={{ width: '100%' }} to={route.singleProduct.replace(':id', data?.id)}>
                 <CardActionArea>
-                    <Box maxHeight="320px" sx={{ m: 0.5, borderRadius: 2, overflow: 'hidden' }}>
+                    <Box sx={{ m: 0.5, borderRadius: 2, overflow: 'hidden' }}>
+                        {/* image */}
                         <CardMedia
                             component="img"
                             image={data?.avatar}
                             alt="green iguana"
+                            height={200}
                             sx={{
                                 transition: 'transform 1s',
                                 ':hover': { transform: 'scale(1.2)' },
@@ -37,12 +40,13 @@ export const ProductCard = ({ data }) => {
                                 display: '-webkit-box',
                                 WebkitLineClamp: '2',
                                 WebkitBoxOrient: 'vertical',
+                                height: '3.8rem',
                             }}
                         >
                             {data?.name}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            {data?.minPrice}
+                        <Typography variant="body" color="text.secondary">
+                            {commas(data?.minPrice || 0)} đ
                         </Typography>
                     </CardContent>
                 </CardActionArea>
@@ -50,6 +54,13 @@ export const ProductCard = ({ data }) => {
             <CardActions>
                 <Button
                     variant="contained"
+                    LinkComponent={Link}
+                    to={data?.variations?.length > 1 ? 'sdfsdf' : '#'}
+                    onClick={() => {
+                        if (data?.variations?.length === 1) {
+                            //add to cart
+                        }
+                    }}
                     size="large"
                     color="secondary"
                     fullWidth

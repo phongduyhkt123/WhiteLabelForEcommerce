@@ -9,6 +9,7 @@ import 'slick-carousel/slick/slick-theme.css'; // Add this line
 import StoreAdmin from './pages/Admin/StoreAdmin';
 import AuthRequire from '~/components/AuthRequire/AuthRequire';
 import { NavigateSetter } from './components/NavigateSetter/NavigateSetter';
+import ToastContainer from './components/ToastContainer/ToastContainer';
 
 function App() {
     return (
@@ -50,6 +51,8 @@ function App() {
                     </Routes>
                 </Box>
             </Router>
+
+            <ToastContainer />
         </Box>
     );
 }

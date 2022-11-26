@@ -50,13 +50,7 @@ const Signup = () => {
             >
                 <Grid2 container spacing={2}>
                     <Grid2 item md={6}>
-                        <Box
-                            component="img"
-                            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
-                            alt="login form"
-                            maxWidth="100%"
-                            height={600}
-                        />
+                        <Box component="img" src={signup.image} alt="login form" maxWidth="100%" height={600} />
                     </Grid2>
 
                     <Grid2 item md={6} my="auto">
@@ -71,7 +65,7 @@ const Signup = () => {
                             <Typography variant="h5" style={{ letterSpacing: '1px' }}>
                                 Welcom to our community
                             </Typography>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
                                 {fields.map(([name, props], index) => (
                                     <Input name={name} {...props} key={index} />
                                 ))}

@@ -44,6 +44,7 @@ const SpringDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => {
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = '';
         const options = {};
+        options.headers = params.meta?.headers ? params.meta.headers : { 'Content-Type': 'application/json' };
         switch (type) {
             case GET_MANY_REFERENCE:
             case GET_LIST: {
@@ -71,7 +72,32 @@ const SpringDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => {
             case CREATE:
                 url = `${apiUrl}/${resource}`;
                 options.method = 'POST';
-                options.body = JSON.stringify(params.data);
+
+                // if send form data (multipart/form-data) then map data to FormData
+                if (options.headers['Content-Type'] === 'multipart/form-data') {
+                    const formData = new FormData();
+                    const info = {};
+                    Object.keys(params.data).forEach((key) => {
+                        if (params.data[key]?.rawFile) {
+                            formData.append(key, params.data[key].rawFile);
+                        } else if (typeof params.data[key] === 'object') {
+                            // may be this is a nested object
+                            // if key contains prefix 'id_' then cut it
+                            const newKey = key.includes('_') ? key.slice(0, key.indexOf('_')) : key;
+                            info[newKey] = info[newKey] ? [...info[newKey], params.data[key]] : [params.data[key]];
+                        } else {
+                            info[key] = params.data[key];
+                        }
+                    });
+                    formData.append('info', JSON.stringify(info));
+                    console.log(formData.values());
+
+                    options.data = formData;
+                } else {
+                    // else send json
+                    options.body = JSON.stringify(params.data);
+                }
+
                 break;
             case DELETE:
                 url = `${apiUrl}/${resource}/${params.id}`;
@@ -155,7 +181,6 @@ const SpringDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => {
 
             // Add headers to all requests
             options.user = user;
-            options.headers = { 'Content-Type': 'application/json' };
             options.headers = { ...options.headers, Authorization: user.token };
 
             // const fetch = async () => {

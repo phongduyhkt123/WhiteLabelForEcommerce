@@ -19,10 +19,12 @@ const Route = {
     countCartAPI: '/buyer/cart-detail/count',
     signinAPI: '/signin',
     productAPI: '/product',
+    categoryAPI: '/product-category',
+    orderAPI: '/buyer/order',
     orderFromCartAPI: '/buyer/order/cart',
     deliveryAddressAPI: '/buyer/delivery-address',
     userinfoAPI: '/buyer/userinfo',
-    singleProductAPI: '/product/:id',
+    singleProductAPI: '/product/',
 };
 
 export default Route;

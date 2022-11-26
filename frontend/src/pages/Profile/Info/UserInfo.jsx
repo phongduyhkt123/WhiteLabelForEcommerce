@@ -17,7 +17,7 @@ const states = [
 ];
 
 const UserInfo = (props) => {
-    const user = JSON.parse(localStorage.getItem('auth')).userInfo;
+    const user = JSON.parse(localStorage.getItem('auth'))?.userInfo;
 
     const [values, setValues] = useState({
         fullname: user.fullname,
@@ -76,7 +76,7 @@ const UserInfo = (props) => {
                                 name="phone"
                                 onChange={handleChange}
                                 type="number"
-                                value={values.phone}
+                                value={values.phone || ''}
                                 variant="outlined"
                             />
                         </Grid>

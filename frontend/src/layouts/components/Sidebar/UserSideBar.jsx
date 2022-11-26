@@ -32,6 +32,8 @@ const UserSidebar = (props) => {
         noSsr: false,
     });
 
+    const user = JSON.parse(localStorage.getItem('auth'))?.userInfo || {};
+
     useEffect(
         () => {
             if (!router.isReady) {
@@ -60,8 +62,8 @@ const UserSidebar = (props) => {
                     <Person sx={{ fontSize: '4rem' }} />
                 </Avatar>
                 <Stack display="flex" flex={1} pl={2}>
-                    <Typography variant="h5">John Doe</Typography>
-                    <Typography variant="subtitle2"> 43hushgfds </Typography>
+                    <Typography variant="h5">{user?.fullname}</Typography>
+                    <Typography variant="subtitle2"> {user?.username} </Typography>
                 </Stack>
             </Box>
             <Divider />

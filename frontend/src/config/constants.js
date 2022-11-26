@@ -1,9 +1,9 @@
-import { grey, pink, common } from '@mui/material/colors';
+import { grey, pink, indigo, blue, common } from '@mui/material/colors';
 
 const constants = {
     color: {
         primary: {
-            main: pink[800], //button outline text color, iconbutton text color, button container background color
+            main: blue[800], //button outline text color, iconbutton text color, button container background color
             light: grey[100],
             dark: grey[100],
             contrastText: '#fff',
@@ -27,41 +27,41 @@ const constants = {
             main: grey[100],
         },
         background: {
-            default: pink[50],
-            paper: pink[100],
+            default: blue[100],
+            paper: blue[200],
             white: common.white,
         },
         text: {
             primary: '#000', //text typhography color
             secondary: '#fff',
         },
-        divider: pink[100],
+        divider: blue[100],
         // mode: 'dark',
     },
 
-    background: {
-        primary: {
-            main: grey[100],
-        },
-        secondary: {
-            main: pink[500],
-        },
-        success: {
-            main: '#2dce89',
-        },
-        info: {
-            main: '#11cdef',
-        },
-        warning: {
-            main: '#fb6340',
-        },
-        danger: {
-            main: '#f5365c',
-        },
-        logo: {
-            main: grey[100],
-        },
-    },
+    // background: {
+    //     primary: {
+    //         main: grey[100],
+    //     },
+    //     secondary: {
+    //         main: blue[500],
+    //     },
+    //     success: {
+    //         main: '#2dce89',
+    //     },
+    //     info: {
+    //         main: '#11cdef',
+    //     },
+    //     warning: {
+    //         main: '#fb6340',
+    //     },
+    //     danger: {
+    //         main: '#f5365c',
+    //     },
+    //     logo: {
+    //         main: grey[100],
+    //     },
+    // },
 
     font: { fontFamily: 'Roboto', fontSize: '1.5rem', fontWeight: 400 },
 

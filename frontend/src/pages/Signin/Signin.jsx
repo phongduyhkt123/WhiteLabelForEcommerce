@@ -87,7 +87,7 @@ const Signin = () => {
                                     Sign into your account
                                 </Typography>
                                 {showMessage && <AlertMessage severity={message.severity}>{message.text}</AlertMessage>}
-                                <form onSubmit={handleSubmit}>
+                                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
                                     <Input
                                         label={form.loginKey.label}
                                         type={form.loginKey.type}

@@ -79,6 +79,16 @@ function SingleProduct() {
         setShowMessage(true);
     };
 
+    const limitDescription = !descriptionExpand
+        ? {
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: '5',
+              WebkitBoxOrient: 'vertical',
+          }
+        : {};
+
     return (
         <Box>
             <Grid2 container columnSpacing={5} my={5} mx="auto">
@@ -87,8 +97,14 @@ function SingleProduct() {
                     <Paper sx={{ position: 'relative', left: -70, py: 4, borderRadius: 0 }}>
                         <Grid2 containter columnSpacing={3} display="flex">
                             {/* image list */}
-                            <Grid2 item xs={3}>
-                                <Stack spacing={3} alignItems="center">
+                            <Grid2 item xs={2}>
+                                <Stack
+                                    spacing={3}
+                                    alignItems="center"
+                                    maxHeight={500}
+                                    overflow="auto"
+                                    sx={{ direction: 'rtl' }}
+                                >
                                     {product?.images.map((image) => (
                                         <Box
                                             key={image.id}
@@ -96,9 +112,16 @@ function SingleProduct() {
                                             onClick={() => setPreviewImg({ id: image.id, url: image.url })}
                                             src={image.url}
                                             alt=""
-                                            height={200}
+                                            height={80}
                                             width="100%"
-                                            sx={{ objectFit: 'cover' }}
+                                            border={previewImg?.id === image.id ? '5px solid' : 'none'}
+                                            sx={{
+                                                objectFit: 'cover',
+                                                opacity: image.id === previewImg.id ? 1 : 0.5,
+                                                cursor: 'pointer',
+                                                borderColor: 'primary.main',
+                                                direction: 'ltr',
+                                            }}
                                         />
                                     ))}
                                 </Stack>
@@ -120,7 +143,7 @@ function SingleProduct() {
                 <Divider variant="middle" sx={{ background: 'pink', borderWidth: '0.8px' }} />
                 {/* info */}
                 <Grid2 flex={1}>
-                    <Typography variant="h1">{product?.name}</Typography>
+                    <Typography variant="h2">{product?.name}</Typography>
                     <Rating name="simple-controlled" size="large" value={5} onChange={(event, newValue) => {}} />
                     <Box>
                         <div className="product__info__item">
@@ -187,10 +210,16 @@ function SingleProduct() {
                     <Box>
                         <div className={`product-description mobile ${descriptionExpand ? 'expand' : ''}`}>
                             <Typography variant="h5">Chi tiết sản phẩm</Typography>
-                            <div
-                                className="product-description__content"
+                            <Typography
+                                variant="body1"
                                 dangerouslySetInnerHTML={{ __html: product?.description }}
-                            ></div>
+                                /* new line with \n */
+                                whiteSpace="pre-line"
+                                sx={{
+                                    overflowWrap: 'break-word', // word break for long text
+                                    ...limitDescription,
+                                }}
+                            />
                             <div className="product-description__toggle">
                                 <Button size="sm" onClick={() => setDescriptionExpand(!descriptionExpand)}>
                                     {descriptionExpand ? 'Thu gọn' : 'Xem thêm'}
@@ -200,16 +229,6 @@ function SingleProduct() {
                     </Box>
                 </Grid2>
             </Grid2>
-            <Snackbar
-                open={showMessage}
-                autoHideDuration={1000}
-                onClose={() => setShowMessage(false)}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            >
-                <Alert severity={message.severity} sx={{ width: '100%' }}>
-                    {message.text}
-                </Alert>
-            </Snackbar>
         </Box>
     );
 }

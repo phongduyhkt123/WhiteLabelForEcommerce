@@ -1,4 +1,5 @@
-import { Divider, Typography } from '@mui/material';
+import { Add } from '@mui/icons-material';
+import { Button, Divider, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import DeliveryAddressDialog from '~/components/Dialog/DeliveryAddressDialog';
@@ -34,8 +35,16 @@ const DeliveryAddress = () => {
         setshowDialog(true);
     };
 
+    const handleAddClick = () => {
+        setDeliveryAddress({});
+        setshowDialog(true);
+    };
+
     return (
         <>
+            <Button variant="contained" startIcon={<Add fontSize="small" />} onClick={handleAddClick}>
+                Thêm địa chỉ
+            </Button>
             <Stack spacing={1} divider={<Divider />}>
                 {deliveryAddresses.length > 0 ? (
                     deliveryAddresses.map((item, index) => (

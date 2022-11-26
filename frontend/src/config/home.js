@@ -8,19 +8,46 @@ const home = {
         width: '100%',
         images: [
             {
-                src: 'https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000',
+                src: 'https://img.freepik.com/premium-vector/fitness-club-banner-with-healthy-woman-lifting-weights-exploding-powder-effect-surface-3d-illustration_317810-1773.jpg?w=2000',
                 alt: 'image',
             },
         ],
     },
-    groupProduct: [
+    groupProducts: [
         {
             title: 'Best Seller',
             banner: {
                 src: 'https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000',
                 alt: 'image',
             },
-            api: 'http://localhost:3000/api/products',
+            api: '/product/most-sold',
+            limit: 10,
+        },
+        {
+            title: 'Most View',
+            banner: {
+                src: 'https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000',
+                alt: 'image',
+            },
+            api: '/product/most-viewed',
+            limit: 10,
+        },
+        {
+            title: 'Sale Off',
+            banner: {
+                src: 'https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000',
+                alt: 'image',
+            },
+            api: '/product/sale',
+            limit: 10,
+        },
+        {
+            title: 'Latest',
+            banner: {
+                src: 'https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000',
+                alt: 'image',
+            },
+            api: '/product/lasted',
             limit: 10,
         },
         {
@@ -29,7 +56,7 @@ const home = {
                 src: 'https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000',
                 alt: 'image',
             },
-            api: 'http://localhost:3000/api/products',
+            api: '/product',
             limit: 10,
         },
     ],

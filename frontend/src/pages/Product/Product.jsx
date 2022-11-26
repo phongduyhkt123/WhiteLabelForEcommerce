@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 
-import { Button, Checkbox, Divider, Paper, Skeleton, Stack, Typography } from '@mui/material';
+import { Button, Checkbox, Divider, Pagination, Paper, Skeleton, Stack, Typography } from '@mui/material';
 import { ProductCard } from '~/layouts/components/ProductCard/ProductCard';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Box } from '@mui/system';
@@ -10,64 +10,68 @@ import * as request from '~/utils/httpRequest';
 const Product = () => {
     const initFilter = {
         category: [],
-        color: [],
-        size: [],
     };
 
-    const category = ['cat1', 'cat2', 'cat3'];
-    const colors = ['color1', 'color2', 'color3'];
-    const size = ['size1', 'size2', 'size3'];
-
     const [filter, setFilter] = useState(initFilter);
+
+    const [categories, setCategories] = useState([]);
+
+    const getCategories = async () => {
+        const res = await request.get(route.categoryAPI);
+        if (res.status === 200) {
+            setCategories(res.data.data);
+        }
+    };
+
+    useEffect(() => {
+        getCategories();
+    }, []);
 
     const filterSelect = (type, checked, item) => {
         if (checked) {
             switch (type) {
                 case 'CATEGORY':
-                    setFilter({ ...filter, category: [...filter.category, item.categorySlug] });
-                    break;
-                case 'COLOR':
-                    setFilter({ ...filter, color: [...filter.color, item.color] });
-                    break;
-                case 'SIZE':
-                    setFilter({ ...filter, size: [...filter.size, item.size] });
+                    setFilter({ ...filter, category: [...filter.category, item] });
                     break;
                 default:
             }
         } else {
             switch (type) {
                 case 'CATEGORY':
-                    const newCategory = filter.category.filter((e) => e !== item.categorySlug);
+                    const newCategory = filter.category.filter((e) => e !== item);
                     setFilter({ ...filter, category: newCategory });
-                    break;
-                case 'COLOR':
-                    const newColor = filter.color.filter((e) => e !== item.color);
-                    setFilter({ ...filter, color: newColor });
-                    break;
-                case 'SIZE':
-                    const newSize = filter.size.filter((e) => e !== item.size);
-                    setFilter({ ...filter, size: newSize });
                     break;
                 default:
             }
         }
     };
 
-    const clearFilter = () => setFilter(initFilter);
-
-    // my code
-    const [isLoading, setIsLoading] = useState(false);
-    const [products, setProducts] = useState([]);
-    const getProducts = async () => {
-        setIsLoading(true);
-        const res = await request.get(route.productAPI);
-        setProducts(res.data.data);
-        setIsLoading(false);
+    const [page, setPage] = useState(1);
+    const handleChangePage = ({}, page) => {
+        setPage(page);
     };
 
     useEffect(() => {
-        getProducts();
-    }, []);
+        let params = {};
+        params.page = page;
+        if (filter.category.length > 0)
+            params = {
+                ...params,
+                idCategory: filter.category[0],
+            };
+        getProducts(params);
+    }, [filter, page]);
+
+    const clearFilter = () => setFilter(initFilter);
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [products, setProducts] = useState([]);
+    const getProducts = async (params) => {
+        setIsLoading(true);
+        const res = await request.get(route.productAPI, { params });
+        setProducts(res.data.data);
+        setIsLoading(false);
+    };
 
     //
     // const updateProducts = useCallback(() => {
@@ -100,15 +104,13 @@ const Product = () => {
 
     const filterRef = useRef(null);
 
-    const showHideFilter = () => filterRef.current.classList.toggle('active');
-
     return (
         <Grid2 container spacing={3}>
             {/* Sidebar */}
             <Grid2 item xs={12} md={2}>
                 <Paper sx={{ position: 'sticky', top: header.styles.height ? header.styles.height + 5 : 90 }}>
                     <div className="catalog__filter" ref={filterRef}>
-                        <div className="catalog__filter__close" onClick={() => showHideFilter()}>
+                        <div className="catalog__filter__close" onClick={() => {}}>
                             <i className="bx bx-left-arrow-alt"></i>
                         </div>
 
@@ -118,51 +120,17 @@ const Product = () => {
                             divider={<Divider variant="middle" sx={{ borderColor: 'white' }} />}
                         >
                             <div className="catalog__filter__widget">
-                                <div className="catalog__filter__widget__title">danh mục sản phẩm</div>
+                                <Typography>danh mục sản phẩm</Typography>
                                 <div className="catalog__filter__widget__content">
-                                    {category.map((item, index) => (
-                                        <Box key={index} display="flex" alignItems="center">
+                                    {categories.map((item) => (
+                                        <Box key={item.id} display="flex" alignItems="center">
                                             <Checkbox
-                                                label={item.display}
+                                                label={item.name}
                                                 sx={{ color: 'primary.main' }}
-                                                onChange={(input) => filterSelect('CATEGORY', input.checked, item)}
-                                                checked={filter.category.includes(item.categorySlug)}
+                                                onChange={(e) => filterSelect('CATEGORY', e.target.checked, item.id)}
+                                                checked={filter.category.includes(item.id)}
                                             />
-                                            <Typography> something</Typography>
-                                        </Box>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="catalog__filter__widget">
-                                <div className="catalog__filter__widget__title">màu sắc</div>
-                                <div className="catalog__filter__widget__content">
-                                    {colors.map((item, index) => (
-                                        <Box key={index} display="flex" alignItems="center">
-                                            <Checkbox
-                                                label={item.display}
-                                                sx={{ color: 'primary.main' }}
-                                                onChange={(input) => filterSelect('COLOR', input.checked, item)}
-                                                checked={filter.color.includes(item.color)}
-                                            />
-                                            <Typography> something</Typography>
-                                        </Box>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="catalog__filter__widget">
-                                <div className="catalog__filter__widget__title">kích cỡ</div>
-                                <div className="catalog__filter__widget__content">
-                                    {size.map((item, index) => (
-                                        <Box key={index} display="flex" alignItems="center">
-                                            <Checkbox
-                                                label={item.display}
-                                                sx={{ color: 'primary.main' }}
-                                                onChange={(input) => filterSelect('SIZE', input.checked, item)}
-                                                checked={filter.size.includes(item.size)}
-                                            />
-                                            <Typography> something</Typography>
+                                            <Typography> {item.name}</Typography>
                                         </Box>
                                     ))}
                                 </div>
@@ -178,7 +146,7 @@ const Product = () => {
                         </div>
                     </div>
                     <div className="catalog__filter__toggle">
-                        <Button size="sm" onClick={() => showHideFilter()}>
+                        <Button size="sm" onClick={() => {}}>
                             bộ lọc
                         </Button>
                     </div>
@@ -186,20 +154,23 @@ const Product = () => {
             </Grid2>
             <Divider variant="middle" sx={{ borderWidth: '0.8px' }} />
             {/* Product list */}
-            <Grid2 item container spacing={3} flex={1}>
-                {!isLoading
-                    ? products.map((item, index) => (
-                          <Grid2 item xs={12} sm={6} md={4} lg={3} key={index}>
-                              <ProductCard data={item} />
-                          </Grid2>
-                      ))
-                    : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-                          <Grid2 item xs={12} sm={6} md={4} lg={3} key={item}>
-                              <Skeleton variant="rectangular" width="100%" height={118} />
-                              <Skeleton />
-                              <Skeleton width="60%" />
-                          </Grid2>
-                      ))}
+            <Grid2 item flex={1}>
+                <Grid2 container spacing={3}>
+                    {!isLoading
+                        ? products.map((item, index) => (
+                              <Grid2 item xs={12} sm={6} md={4} lg={3} key={index}>
+                                  <ProductCard data={item} />
+                              </Grid2>
+                          ))
+                        : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+                              <Grid2 item xs={12} sm={6} md={4} lg={3} key={item}>
+                                  <Skeleton variant="rectangular" width="100%" height={118} />
+                                  <Skeleton />
+                                  <Skeleton width="60%" />
+                              </Grid2>
+                          ))}
+                </Grid2>
+                <Pagination color="primary" count={10} size="large" sx={{ mt: 2 }} onChange={handleChangePage} />
             </Grid2>
         </Grid2>
     );

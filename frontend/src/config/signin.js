@@ -1,6 +1,6 @@
 import { route } from '~/config';
 const signin = {
-    image: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp',
+    image: 'https://coreldrawdesign.com/resources/previews/preview-fitness-gym-social-media-post-banner-template-1602333977.jpg',
     logo: {},
     redirect: route.home,
     title: {},

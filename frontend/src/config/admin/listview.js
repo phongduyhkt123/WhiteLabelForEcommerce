@@ -81,3 +81,55 @@ export const buyerrankList = [
         },
     },
 ];
+
+/**
+ * Buyer Rank List
+ */
+export const categoryList = [
+    {
+        source: 'id',
+        name: 'ID',
+        Element: TextField,
+    },
+    {
+        source: 'name',
+        name: 'NAME',
+        Element: TextField,
+    },
+    {
+        source: 'status',
+        name: 'STATUS',
+        Element: TextField,
+    },
+];
+
+/**
+ * Buyer Rank List
+ */
+export const orderList = [
+    {
+        source: 'id',
+        name: 'ID',
+        Element: TextField,
+    },
+    {
+        source: 'createTime',
+        name: 'CREATE TIME',
+        Element: TextField,
+    },
+    {
+        source: 'paymentMethod',
+        name: 'PAYMENT METHOD',
+        Element: TextField,
+    },
+    {
+        source: 'price',
+        name: 'PRICE',
+        Element: TextField,
+    },
+    {
+        source: 'status',
+        name: 'STATUS',
+        Element: TextField,
+    },
+];

@@ -2,8 +2,14 @@ import { createContext, useState } from 'react';
 
 const AlertContext = createContext();
 
+const AlertTypes = {
+    STATIC: 'STATIC',
+    SNACKBAR_SMALL: 'SNACKBAR_SMALL',
+    SNACKBAR_LARGE: 'SNACKBAR_LARGE',
+};
+
 const AlertProvider = ({ children }) => {
-    const [message, setMessage] = useState({ text: '', severity: 'info' });
+    const [message, setMessage] = useState({ text: '', severity: 'info', type: AlertTypes.SNACKBAR_SMALL });
     const [showMessage, setShowMessage] = useState(false);
     const ectx = {
         message,
@@ -15,4 +21,4 @@ const AlertProvider = ({ children }) => {
     return <AlertContext.Provider value={ectx}>{children}</AlertContext.Provider>;
 };
 
-export { AlertProvider, AlertContext };
+export { AlertProvider, AlertContext, AlertTypes };

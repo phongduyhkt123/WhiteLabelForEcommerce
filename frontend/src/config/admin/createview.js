@@ -1,21 +1,68 @@
-const { TextInput, ImageField } = require('react-admin');
+const { TextInput, ImageField, ImageInput, NumberInput } = require('react-admin');
 
 export const productCreate = [
     {
         source: 'name',
         Element: TextInput,
+        type: 'text',
     },
     {
-        source: 'category.name',
-        Element: TextInput,
+        type: 'sub',
+        label: 'variations',
+        quantity: 1,
+        fields: [
+            {
+                source: 'variations.variationName',
+                label: 'variation name',
+                Element: TextInput,
+                type: 'text',
+            },
+            {
+                source: 'variations.tier',
+                label: 'tier',
+                Element: TextInput,
+                type: 'text',
+            },
+            {
+                source: 'variations.price',
+                label: 'price',
+                Element: NumberInput,
+                type: 'text',
+            },
+            {
+                source: 'variations.availableQuantity',
+                label: 'available quantity',
+                Element: NumberInput,
+                type: 'text',
+            },
+            {
+                source: 'variations.discount',
+                label: 'discount',
+                Element: NumberInput,
+                type: 'text',
+            },
+        ],
     },
     {
-        source: 'status',
+        source: 'description',
         Element: TextInput,
+        type: 'text',
+    },
+    {
+        source: 'idCategory',
+        Element: NumberInput,
+        type: 'text',
     },
     {
         source: 'avatar',
-        Element: ImageField,
+        Element: ImageInput,
+        type: 'image',
+    },
+    {
+        source: 'images',
+        Element: ImageInput,
+        type: 'image',
+        quantity: 1,
     },
 ];
 
