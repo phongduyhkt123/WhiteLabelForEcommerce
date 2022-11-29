@@ -81,25 +81,25 @@ export const fetch = async (url, options = {}) => {
     }
 };
 
-export const useAxios = (url, method, config = {}) => {
+export const useAxios = (url, method, config = {}, dep = []) => {
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        const fetch = async (url, method, options = {}) => {
+        const fetch = async () => {
             try {
-                const res = await request.request({ url, method, ...options });
-                setData(res.data);
+                setLoaded(false);
+                const res = await request.request({ url, method, ...config });
+                setData(res.data.data);
             } catch (err) {
                 setError(err);
             } finally {
                 setLoaded(true);
             }
         };
-
         fetch();
-    }, []);
+    }, dep);
 
     return { loaded, error, data };
 };

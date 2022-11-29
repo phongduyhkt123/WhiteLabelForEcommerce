@@ -90,7 +90,6 @@ const SpringDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => {
                         }
                     });
                     formData.append('info', JSON.stringify(info));
-                    console.log(formData.values());
 
                     options.data = formData;
                 } else {

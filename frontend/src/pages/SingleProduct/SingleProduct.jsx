@@ -17,7 +17,7 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { route } from '~/config';
-import { AlertContext } from '~/context/AlertContext';
+import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import { GlobalContext } from '~/context/GlobalContext';
 import * as request from '~/utils/httpRequest';
 import { commas } from '~/utils/formater';
@@ -28,7 +28,7 @@ function SingleProduct() {
     const { setTotalCartItem } = useContext(GlobalContext);
 
     const [product, setProduct] = useState();
-    const [variant, setVariant] = useState(0);
+    const [variant, setVariant] = useState();
 
     const getProduct = async () => {
         const response = await request.get(`${route.productAPI}/${id}`);
@@ -58,11 +58,12 @@ function SingleProduct() {
             setMessage({
                 text: 'Please select a variant',
                 severity: 'warning',
+                type: AlertTypes.SNACKBAR_LARGE,
             });
             setShowMessage(true);
             return;
         } else if (product.variations.length < 1) {
-            setVariant(product.variations[0].id);
+            setVariant({ id: product.variations[0].id, price: product.variations[0].price });
         }
 
         try {
@@ -147,7 +148,7 @@ function SingleProduct() {
                     <Rating name="simple-controlled" size="large" value={5} onChange={(event, newValue) => {}} />
                     <Box>
                         <div className="product__info__item">
-                            <Typography variant="h3">{commas(product?.minPrice || 0)} đ</Typography>
+                            <Typography variant="h3">{commas(variant?.price || product?.minPrice || 0)} đ</Typography>
                         </div>
                         {product?.variations?.length > 1 && (
                             <div>
@@ -157,7 +158,7 @@ function SingleProduct() {
                                         <Grid2 key={item.id}>
                                             <Button
                                                 variant={variant === item.id ? 'contained' : 'outlined'}
-                                                onClick={() => setVariant(item.id)}
+                                                onClick={() => setVariant({ id: item.id, price: item.price })}
                                             >
                                                 {item.variationName}
                                             </Button>

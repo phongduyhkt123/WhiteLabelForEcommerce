@@ -5,11 +5,12 @@ import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PaymentMethodItem from '~/components/PaymentMethodItem/PaymentMethodItem';
 import { route, paymentMethods } from '~/config';
-import { AlertContext } from '~/context/AlertContext';
+import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import CheckoutItem from '~/layouts/components/CheckoutItem/CheckoutItem';
 import * as request from '~/utils/httpRequest';
 import DeliveryAddressItem from './DeliveryAddressItem';
 import { commas } from '~/utils/formater';
+import StaticAlert from '~/components/StaticAlert/StaticAlert';
 
 const Checkout = () => {
     const [checkoutProducts, setCheckoutProducts] = useState([]);
@@ -49,6 +50,7 @@ const Checkout = () => {
             setMessage({
                 severity: 'error',
                 text: error.response.data.message,
+                type: AlertTypes.STATIC,
             });
             setShowMessage(true);
         }
@@ -135,11 +137,7 @@ const Checkout = () => {
                     </Grid2>
                 </Box>
             </Box>
-            {showMessage && (
-                <Alert severity={message.severity} onClose={() => setShowMessage(false)}>
-                    {message.text}
-                </Alert>
-            )}
+            <StaticAlert />
         </>
     );
 };

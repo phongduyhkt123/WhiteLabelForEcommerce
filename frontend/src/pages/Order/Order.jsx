@@ -14,8 +14,6 @@ const Order = () => {
         setOrders(response.data.data);
     };
 
-    console.log(orders);
-
     useEffect(() => {
         getOrders();
     }, []);

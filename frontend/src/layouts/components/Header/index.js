@@ -1,32 +1,38 @@
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { Stack } from '@mui/system';
-import { SliderCarousel } from '../Slider';
 import { header } from '~/config';
 import Action from './Action';
 import Logo from '~/components/Logo';
 
 import Navbar from './Navbar';
+import Search from '~/components/Search';
 
-const Header = () => {
+const Header = ({ headerRef }) => {
     return (
         <Box
+            ref={headerRef}
             width="100%"
-            height={90}
             display="flex"
+            flexDirection="column"
             sx={{ ...header.styles, backgroundColor: 'white', py: 1 }}
             position="fixed"
             boxShadow="0 1px 1px rgb(0 0 0 / 12%)"
             zIndex="1000"
         >
-            <Stack
-                direction="row"
-                spacing={1}
-                justifyContent="space-between"
-                sx={{ width: '90%', height: 50, margin: 'auto' }}
-            >
-                <Logo />
-                <Navbar />
-                <Action />
+            <Stack direction="column" spacing={2} justifyContent="space-between" sx={{ width: '100%', margin: 'auto' }}>
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    sx={{ width: '90%', margin: 'auto' }}
+                >
+                    <Logo />
+                    <Search />
+                    <Action />
+                </Stack>
+                <Paper sx={{ p: 2 }}>
+                    <Navbar />
+                </Paper>
             </Stack>
         </Box>
     );

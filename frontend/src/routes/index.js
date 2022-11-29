@@ -1,6 +1,6 @@
 import { route } from '~/config';
 import UserProfileLayout from '~/layouts/UserProfileLayout/UserProfileLayout';
-import { Cart, Home, Profile, Search, Product, SingleProduct, Signin, DeliveryAddress, Checkout, Order } from '~/pages';
+import { Cart, Home, Profile, Product, SingleProduct, Signin, DeliveryAddress, Checkout, Order } from '~/pages';
 import AuthCheck from '~/pages/Signin/AuthCheck';
 import Signup from '~/pages/Signup';
 
@@ -22,7 +22,6 @@ const publicRoute = [
             </AuthCheck>
         ),
     },
-    { path: route.search, element: <Search />, layout: null },
     { path: route.singleProduct, element: <SingleProduct /> },
     { path: route.product, element: <Product /> },
 ];

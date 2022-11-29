@@ -50,7 +50,7 @@ const DeliveryAddress = () => {
                     deliveryAddresses.map((item, index) => (
                         <DeliveryAddressItem
                             key={index}
-                            {...item}
+                            item={item}
                             handleSetDefaultClick={handleSetDefaultClick}
                             handleRemoveClick={handleRemoveClick}
                             handleUpdateClick={handleUpdateClick}

@@ -1,6 +1,7 @@
 import { Grid, List, ListItemText, Typography, Button, Stack, Paper } from '@mui/material';
 import { Box } from '@mui/system';
 import { footer } from '~/config';
+import Icon from '~/config/Store/Icon';
 
 export default function Footer() {
     const { styles, font, logo, items, copyRight } = footer;
@@ -20,10 +21,9 @@ export default function Footer() {
                                     {item.title}
                                 </Typography>
                                 {item.subItems.map((s, idx) => {
-                                    const Icon = s?.icon;
                                     return (
                                         <Box display="flex" alignItems="center" justifyContent="center" key={idx}>
-                                            {Icon && Icon}
+                                            {s.icon && <Icon component={s.icon} />}
                                             <Typography variant="caption2" key={idx}>
                                                 {s.content}
                                             </Typography>

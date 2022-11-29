@@ -1,5 +1,5 @@
 import { Divider, Stack, Typography } from '@mui/material';
-import React from 'react';
+import React, { Component } from 'react';
 import { header } from '~/config';
 import NavbarItem from './NavbarItem';
 
@@ -10,11 +10,12 @@ const Navbar = () => {
             direction={'row'}
             spacing={2}
             alignItems="center"
-            divider={<Divider orientation="vertical" sx={{ borderWidth: '0.8px' }} />}
+            justifyContent="center"
+            divider={<Divider orientation="vertical" flexItem sx={{ borderWidth: '0.8px' }} />}
         >
             {navBar.item.map((item, index) => (
-                <NavbarItem to={item.url} key={index} more={item.more}>
-                    <Typography variant={'h5'}>{item.title}</Typography>
+                <NavbarItem item={item} key={index}>
+                    <Typography variant="h4">{item.title}</Typography>
                 </NavbarItem>
             ))}
         </Stack>

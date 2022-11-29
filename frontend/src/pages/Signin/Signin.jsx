@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Alert, Box, Button, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Stack } from '@mui/system';
 import { useContext, useState } from 'react';
@@ -7,9 +7,9 @@ import Input from '~/components/Input';
 import signin from '~/config/signin';
 import * as request from '~/utils/httpRequest';
 
-import AlertMessage from '~/components/Alert/AlertMessage';
 import Logo from '~/components/Logo';
-import { AlertContext } from '~/context/AlertContext';
+import { AlertContext, AlertTypes } from '~/context/AlertContext';
+import StaticAlert from '~/components/StaticAlert/StaticAlert';
 
 const Signin = () => {
     const navigate = useNavigate();
@@ -38,11 +38,19 @@ const Signin = () => {
                     navigate(location.state || redirect || '/');
                 } else {
                     console.log(response);
-                    setMessage({ text: response?.data?.message || 'Something went wrong', severity: 'error' });
+                    setMessage({
+                        text: response?.data?.message || 'Something went wrong',
+                        severity: 'error',
+                        type: AlertTypes.STATIC,
+                    });
                     setShowMessage(true);
                 }
             } catch (error) {
-                setMessage({ text: error?.data?.message || 'Something went wrong', severity: 'error' });
+                setMessage({
+                    text: error?.data?.message || 'Something went wrong',
+                    severity: 'error',
+                    type: AlertTypes.STATIC,
+                });
                 setShowMessage(true);
                 console.log(error);
             }
@@ -86,7 +94,7 @@ const Signin = () => {
                                 <Typography variant="h5" style={{ letterSpacing: '1px' }}>
                                     Sign into your account
                                 </Typography>
-                                {showMessage && <AlertMessage severity={message.severity}>{message.text}</AlertMessage>}
+                                <StaticAlert />
                                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
                                     <Input
                                         label={form.loginKey.label}
