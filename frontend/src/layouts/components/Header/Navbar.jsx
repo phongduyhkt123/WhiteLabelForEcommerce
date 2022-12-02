@@ -7,15 +7,15 @@ const Navbar = () => {
     const { navBar } = header;
     return (
         <Stack
-            direction={'row'}
+            direction="row"
             spacing={2}
             alignItems="center"
             justifyContent="center"
-            divider={<Divider orientation="vertical" flexItem sx={{ borderWidth: '0.8px' }} />}
+            divider={<Divider orientation="vertical" flexItem />}
         >
             {navBar.item.map((item, index) => (
                 <NavbarItem item={item} key={index}>
-                    <Typography variant="h4">{item.title}</Typography>
+                    <Typography variant="h6">{item.title}</Typography>
                 </NavbarItem>
             ))}
         </Stack>

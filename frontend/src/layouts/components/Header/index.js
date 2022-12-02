@@ -14,12 +14,12 @@ const Header = ({ headerRef }) => {
             width="100%"
             display="flex"
             flexDirection="column"
-            sx={{ ...header.styles, backgroundColor: 'white', py: 1 }}
+            sx={{ ...header.styles, backgroundColor: 'white', py: 0.2 }}
             position="fixed"
             boxShadow="0 1px 1px rgb(0 0 0 / 12%)"
             zIndex="1000"
         >
-            <Stack direction="column" spacing={2} justifyContent="space-between" sx={{ width: '100%', margin: 'auto' }}>
+            <Stack direction="column" spacing={1} justifyContent="space-between" sx={{ width: '100%', margin: 'auto' }}>
                 <Stack
                     direction="row"
                     justifyContent="space-between"
@@ -30,7 +30,7 @@ const Header = ({ headerRef }) => {
                     <Search />
                     <Action />
                 </Stack>
-                <Paper sx={{ p: 2 }}>
+                <Paper sx={{ p: 0.5 }}>
                     <Navbar />
                 </Paper>
             </Stack>

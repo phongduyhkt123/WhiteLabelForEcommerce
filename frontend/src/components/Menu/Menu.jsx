@@ -10,6 +10,7 @@ const Menu = ({ children, anchorEl, open, setOpen = () => {} }) => {
             onClick={setOpen}
             placement={'bottom-end'}
             disablePortal
+            style={{ margin: 0 }}
         >
             <Paper
                 sx={{

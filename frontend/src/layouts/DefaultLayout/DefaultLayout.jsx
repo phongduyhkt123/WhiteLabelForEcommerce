@@ -11,11 +11,11 @@ const DefaultLayout = ({ children }) => {
     }, [headerRef]);
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center" minHeight="100vh" position="relative">
+        <Box display="flex" flexDirection="column" alignItems="center" position="relative">
             <Header headerRef={headerRef} />
             <Box width="100%" mt={`${headerHeight}px`}>
                 <Box my={2} display="flex" justifyContent="center">
-                    <Box width="90%" p={3} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
+                    <Box width="100%" p={3} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
                         {children}
                     </Box>
                 </Box>

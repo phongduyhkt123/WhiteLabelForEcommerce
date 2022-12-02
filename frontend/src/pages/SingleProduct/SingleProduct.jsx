@@ -1,28 +1,31 @@
 import { Add, Remove } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
-import {
-    Button,
-    Divider,
-    Paper,
-    Box,
-    Rating,
-    Stack,
-    TextField,
-    Typography,
-    Snackbar,
-    Alert,
-    IconButton,
-} from '@mui/material';
+import { Box, Button, Divider, Grid, IconButton, Paper, Rating, Stack, TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2';
+import { makeStyles } from '@mui/styles';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { route } from '~/config';
 import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import { GlobalContext } from '~/context/GlobalContext';
-import * as request from '~/utils/httpRequest';
 import { commas } from '~/utils/formater';
+import * as request from '~/utils/httpRequest';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        [theme.breakpoints.down('sm')]: {},
+    },
+    divider: {
+        borderWidth: '1px !important',
+        [theme.breakpoints.down('sm')]: {
+            display: 'none',
+        },
+    },
+}));
 
 function SingleProduct() {
+    const classes = useStyles();
+
     const { id } = useParams();
     const { message, showMessage, setMessage, setShowMessage } = useContext(AlertContext);
     const { setTotalCartItem } = useContext(GlobalContext);
@@ -54,7 +57,7 @@ function SingleProduct() {
     };
 
     const addToCart = async () => {
-        if (product.variations.length > 1 && variant === 0) {
+        if (product.variations.length > 1 && variant === null) {
             setMessage({
                 text: 'Please select a variant',
                 severity: 'warning',
@@ -67,7 +70,7 @@ function SingleProduct() {
         }
 
         try {
-            const response = await request.post(`${route.cartAPI}/${variant}`, {
+            const response = await request.post(`${route.cartAPI}/${variant.id}`, {
                 quantity,
             });
             if (response.status === 200) {
@@ -92,15 +95,15 @@ function SingleProduct() {
 
     return (
         <Box>
-            <Grid2 container columnSpacing={5} my={5} mx="auto">
+            <Grid2 container spacing={2} my={1} mx="auto">
                 {/* images */}
-                <Grid2 item xs={7}>
-                    <Paper sx={{ position: 'relative', left: -70, py: 4, borderRadius: 0 }}>
-                        <Grid2 containter columnSpacing={3} display="flex">
+                <Grid2 item xs={12} md={6}>
+                    <Paper sx={{ position: 'relative', py: 4, borderRadius: 0 }}>
+                        <Grid2 containter display="flex">
                             {/* image list */}
                             <Grid2 item xs={2}>
                                 <Stack
-                                    spacing={3}
+                                    spacing={2}
                                     alignItems="center"
                                     maxHeight={500}
                                     overflow="auto"
@@ -115,7 +118,7 @@ function SingleProduct() {
                                             alt=""
                                             height={80}
                                             width="100%"
-                                            border={previewImg?.id === image.id ? '5px solid' : 'none'}
+                                            border={previewImg?.id === image.id ? '3px solid' : 'none'}
                                             sx={{
                                                 objectFit: 'cover',
                                                 opacity: image.id === previewImg.id ? 1 : 0.5,
@@ -141,14 +144,14 @@ function SingleProduct() {
                         </Grid2>
                     </Paper>
                 </Grid2>
-                <Divider variant="middle" sx={{ background: 'pink', borderWidth: '0.8px' }} />
+                {/* <Divider variant="middle" className={classes.divider} /> */}
                 {/* info */}
-                <Grid2 flex={1}>
-                    <Typography variant="h2">{product?.name}</Typography>
+                <Grid2 xs={12} md={6}>
+                    <Typography variant="h5">{product?.name}</Typography>
                     <Rating name="simple-controlled" size="large" value={5} onChange={(event, newValue) => {}} />
                     <Box>
                         <div className="product__info__item">
-                            <Typography variant="h3">{commas(variant?.price || product?.minPrice || 0)} đ</Typography>
+                            <Typography variant="h5">{commas(variant?.price || product?.minPrice || 0)} đ</Typography>
                         </div>
                         {product?.variations?.length > 1 && (
                             <div>
@@ -157,7 +160,7 @@ function SingleProduct() {
                                     {product?.variations?.map((item) => (
                                         <Grid2 key={item.id}>
                                             <Button
-                                                variant={variant === item.id ? 'contained' : 'outlined'}
+                                                variant={variant?.id === item.id ? 'contained' : 'outlined'}
                                                 onClick={() => setVariant({ id: item.id, price: item.price })}
                                             >
                                                 {item.variationName}
@@ -168,8 +171,8 @@ function SingleProduct() {
                             </div>
                         )}
 
-                        <div className="product__info__item">
-                            <div className="product__info__item__title">Số lượng</div>
+                        <div>
+                            <div>Số lượng</div>
                             <Box>
                                 <IconButton onClick={() => updateQuantity('minus')}>
                                     <Remove />

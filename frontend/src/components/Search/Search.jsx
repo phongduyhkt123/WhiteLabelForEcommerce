@@ -5,16 +5,13 @@ import React from 'react';
 const Search = () => {
     return (
         <>
-            <Box display="flex" position="relative">
-                <Box id="search" borderRadius={6} border={1} right="100%" bgcolor="background.default">
-                    <TextField
-                        variant="standard"
-                        sx={{ display: 'flex', margin: 'auto', p: 1, width: 500 }}
-                        InputProps={{
-                            disableUnderline: true,
-                        }}
-                    ></TextField>
-                </Box>
+            <Box display="flex">
+                <TextField
+                    variant="outlined"
+                    sx={{ py: 0.2, width: '40vw' }}
+                    InputProps={{ sx: { borderRadius: 8 } }}
+                    inputProps={{ style: { paddingTop: 4 * 2.5, paddingBottom: 4 * 2.5 } }}
+                ></TextField>
                 <IconButton aria-label="search" sx={{ display: 'flex', margin: 'auto' }}>
                     <SearchIcon color="primary" sx={{ fontSize: '2.5rem' }} />
                 </IconButton>

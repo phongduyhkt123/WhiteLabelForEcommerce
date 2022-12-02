@@ -1,5 +1,5 @@
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-
+import Icon from '~/config/Store/Icon';
 const { Typography, Radio, Button } = require('@mui/material');
 
 const PaymentMethodItem = ({ id, code, name, icon, selectedID, onClick }) => {
@@ -14,7 +14,7 @@ const PaymentMethodItem = ({ id, code, name, icon, selectedID, onClick }) => {
                 />
             </Grid2>
             <Grid2 item xs={2} display="flex" alignItems="center" justifyContent="center">
-                {icon}
+                <Icon component={icon} />
             </Grid2>
             <Grid2 item xs={9}>
                 <Typography variant="h5">{name}</Typography>

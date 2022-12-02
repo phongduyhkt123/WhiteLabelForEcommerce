@@ -10,6 +10,7 @@ import useGetProduct from '~/hooks/useGetProduct';
 import ProductCardSkeleton from '~/components/Skeleton/ProductCardSkeleton';
 import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import { useSearchParams } from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
 
 const Product = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -63,9 +64,9 @@ const Product = () => {
     const filterRef = useRef(null);
 
     return (
-        <Grid2 container spacing={3}>
+        <Grid2 container spacing={2}>
             {/* Sidebar */}
-            <Grid2 item xs={12} md={2}>
+            <Grid2 item xs={12} sm={3} md={2}>
                 <Paper sx={{ position: 'sticky', top: header.styles.height ? header.styles.height + 5 : 90 }}>
                     <div className="catalog__filter" ref={filterRef}>
                         <div className="catalog__filter__close" onClick={() => {}}>
@@ -110,13 +111,12 @@ const Product = () => {
                     </div>
                 </Paper>
             </Grid2>
-            <Divider variant="middle" sx={{ borderWidth: '0.8px' }} />
             {/* Product list */}
-            <Grid2 item flex={1}>
-                <Grid2 container spacing={3}>
+            <Grid2 item xs={12} sm={8} md={10}>
+                <Grid2 container spacing={1}>
                     {loaded
                         ? products.map((item, index) => (
-                              <Grid2 item xs={12} sm={6} md={4} lg={3} key={index}>
+                              <Grid2 item xs={6} sm={6} md={4} lg={3} key={index}>
                                   <ProductCard data={item} />
                               </Grid2>
                           ))

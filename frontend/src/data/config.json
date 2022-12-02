@@ -1,6 +1,34 @@
 {
+    "routes": {
+        "home": "/",
+        "signin": "/signin",
+        "signup": "/signup",
+        "profile": "/profile",
+        "search": "/search",
+        "singleProduct": "/product/:id",
+        "product": "/product",
+        "cart": "/cart",
+        "checkout": "/checkout",
+        "singleOrder": "/order/:id",
+        "order": "/order",
+        "deliveryAddress": "/delivery-address",
+        "userinfo": "/userinfo",
+        "payment": "/payment",
+
+        "cartAPI": "/buyer/cart-detail",
+        "countCartAPI": "/buyer/cart-detail/count",
+        "signinAPI": "/signin",
+        "productAPI": "/product",
+        "categoryAPI": "/product-category",
+        "orderAPI": "/buyer/order",
+        "orderFromCartAPI": "/buyer/order/cart",
+        "deliveryAddressAPI": "/buyer/delivery-address",
+        "userinfoAPI": "/buyer/userinfo",
+        "singleProductAPI": "/product/"
+    },
+
     "global": {
-        "font": { "fontFamily": "Roboto", "fontSize": "1.5rem", "fontWeight": 400 },
+        "font": { "fontFamily": "Roboto", "fontSize": 15, "fontWeight": 400 },
         "logo": {},
 
         "color": {
@@ -39,13 +67,6 @@
         },
 
         "components": {
-            "MuiButton": {
-                "defaultProps": {
-                    "sx": {
-                        "fontSize": "1.3rem"
-                    }
-                }
-            },
             "MuiPaginationItem": {
                 "styleOverrides": {
                     "root": {
@@ -112,7 +133,6 @@
 
     "header": {
         "styles": {
-            "height": "9rem",
             "width": "100%"
         },
 
@@ -150,6 +170,167 @@
                     "to": "/contact"
                 }
             ]
+        }
+    },
+
+    "home": {
+        "title": "Home",
+        "styles": {},
+        "topBanner": {
+            "height": "500px",
+            "display": "block",
+            "objectFit": "cover",
+            "width": "100%",
+            "images": [
+                {
+                    "src": "https://img.freepik.com/premium-vector/fitness-club-banner-with-healthy-woman-lifting-weights-exploding-powder-effect-surface-3d-illustration_317810-1773.jpg?w=2000",
+                    "alt": "image"
+                }
+            ]
+        },
+        "groupProducts": [
+            {
+                "title": "Best Seller",
+                "banner": {
+                    "src": "https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000",
+                    "alt": "image"
+                },
+                "api": "/product/most-sold",
+                "limit": 10
+            },
+            {
+                "title": "Most View",
+                "banner": {
+                    "src": "https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000",
+                    "alt": "image"
+                },
+                "api": "/product/most-viewed",
+                "limit": 10
+            },
+            {
+                "title": "Sale Off",
+                "banner": {
+                    "src": "https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000",
+                    "alt": "image"
+                },
+                "api": "/product/sale",
+                "limit": 10
+            },
+            {
+                "title": "Latest",
+                "banner": {
+                    "src": "https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000",
+                    "alt": "image"
+                },
+                "api": "/product/lasted",
+                "limit": 10
+            },
+            {
+                "title": "Ramdom",
+                "banner": {
+                    "src": "https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000",
+                    "alt": "image"
+                },
+                "api": "/product",
+                "limit": 10
+            }
+        ],
+
+        "bottomBanner": {
+            "height": "500px",
+            "display": "block",
+            "objectFit": "cover",
+            "width": "100%",
+            "images": [
+                {
+                    "src": "https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000",
+                    "alt": "image"
+                }
+            ]
+        }
+    },
+
+    "signin": {
+        "image": "https://coreldrawdesign.com/resources/previews/preview-fitness-gym-social-media-post-banner-template-1602333977.jpg",
+        "logo": {},
+        "redirect": "/",
+        "title": {},
+        "form": {
+            "loginKey": {
+                "label": "Username",
+                "type": "text"
+            },
+            "password": {
+                "label": "Password",
+                "type": "password"
+            }
+        },
+        "button": {
+            "label": "Sign in"
+        }
+    },
+
+    "signup": {
+        "image": "https://coreldrawdesign.com/resources/previews/preview-fitness-gym-social-media-post-banner-template-1602333977.jpg",
+        "logo": {},
+        "redirect": "/signin",
+        "title": {},
+        "form": {
+            "fullName": {
+                "label": "Full Name",
+                "type": "text",
+                "autoFocus": true,
+                "required": true
+            },
+            "username": {
+                "label": "Username",
+                "type": "text",
+                "required": true
+            },
+            "email": {
+                "label": "Email Address",
+                "type": "email"
+            },
+            "phone": {
+                "label": "Phone Number",
+                "type": "tel"
+            },
+            "password": {
+                "label": "Password",
+                "type": "password",
+                "required": true
+            }
+        },
+        "button": {
+            "label": "Sign up"
+        }
+    },
+
+    "paymentMethods": [
+        {
+            "id": 1,
+            "code": "CASH",
+            "name": "Cash on delivery",
+            "icon": "AttachMoney"
+        },
+        {
+            "id": 2,
+            "code": "CARD",
+            "name": "Credit Card",
+            "icon": "CreditCard"
+        },
+        {
+            "id": 3,
+            "code": "PAYPAL",
+            "name": "Paypal",
+            "icon": "Payment"
+        }
+    ],
+
+    "label": {
+        "singleProduct": {
+            "addToCart": "Add to cart",
+            "buyNow": "Buy now"
         }
     }
 }

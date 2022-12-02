@@ -8,49 +8,40 @@ import { commas } from '~/utils/formater';
 
 export const ProductCard = ({ data }) => {
     return (
-        <Card
-            sx={{
-                borderRadius: 2,
-            }}
-        >
-            <Link style={{ width: '100%' }} to={route.singleProduct.replace(':id', data?.id)}>
-                <CardActionArea>
-                    <Box sx={{ m: 0.5, borderRadius: 2, overflow: 'hidden' }}>
-                        {/* image */}
-                        <CardMedia
-                            component="img"
-                            image={data?.avatar}
-                            alt="green iguana"
-                            height={200}
-                            sx={{
-                                transition: 'transform 1s',
-                                ':hover': { transform: 'scale(1.2)' },
-                            }}
-                        />
-                    </Box>
-                    <CardContent>
-                        <Typography
-                            gutterBottom
-                            variant="h5"
-                            component="div"
-                            // limit to 2 lines
-                            sx={{
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                display: '-webkit-box',
-                                WebkitLineClamp: '2',
-                                WebkitBoxOrient: 'vertical',
-                                height: '3.8rem',
-                            }}
-                        >
-                            {data?.name}
-                        </Typography>
-                        <Typography variant="body" color="text.secondary">
-                            {commas(data?.minPrice || 0)} đ
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Link>
+        <Card sx={{ height: '100%' }}>
+            <CardActionArea LinkComponent={Link} to={route.singleProduct.replace(':id', data?.id)}>
+                <Box sx={{ m: 0.2, overflow: 'hidden' }}>
+                    {/* image */}
+                    <CardMedia
+                        component="img"
+                        image={data?.avatar}
+                        alt="green iguana"
+                        height={200}
+                        sx={{
+                            transition: 'transform 1s',
+                            ':hover': { transform: 'scale(1.2)' },
+                        }}
+                    />
+                </Box>
+                <CardContent>
+                    <Typography
+                        variant="body1"
+                        // limit to 2 lines
+                        sx={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            WebkitLineClamp: '2',
+                            WebkitBoxOrient: 'vertical',
+                        }}
+                    >
+                        {data?.name}
+                    </Typography>
+                    <Typography variant="body" color="text.secondary">
+                        {commas(data?.minPrice || 0)} đ
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
             <CardActions>
                 <Button
                     variant="contained"
@@ -61,7 +52,6 @@ export const ProductCard = ({ data }) => {
                             //add to cart
                         }
                     }}
-                    size="large"
                     color="secondary"
                     fullWidth
                     startIcon={<ShoppingCart />}

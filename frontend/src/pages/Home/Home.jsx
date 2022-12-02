@@ -1,35 +1,24 @@
-import {
-    Button,
-    Card,
-    CardActionArea,
-    CardActions,
-    CardContent,
-    CardMedia,
-    Paper,
-    Stack,
-    Typography,
-} from '@mui/material';
+import { Paper, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import { useContext, useEffect, useState } from 'react';
-import { AlertContext } from '~/context/AlertContext';
+import { useEffect, useState } from 'react';
+import ScrollToTop from '~/components/ScrollToTop';
+import { home } from '~/config';
 import { ProductCard } from '~/layouts/components/ProductCard/ProductCard';
 import { SliderCarousel } from '~/layouts/components/Slider';
-import { home } from '~/config';
 import * as request from '~/utils/httpRequest';
-import ScrollToTop from '~/components/ScrollToTop';
 
 function Home() {
-    const [groupProducts_, setGroupProducts_] = useState(home.groupProducts);
+    const [groupProducts, setGroupProducts] = useState(home.groupProducts);
 
     const getProducts = async (groupProduct, index) => {
         const res = await request.get(groupProduct.api);
         groupProduct.data = res.data.data;
-        groupProducts_[index] = groupProduct;
-        setGroupProducts_([...groupProducts_]);
+        groupProducts[index] = groupProduct;
+        setGroupProducts([...groupProducts]);
     };
 
     useEffect(() => {
-        groupProducts_.forEach((groupProduct, index) => {
+        groupProducts.forEach((groupProduct, index) => {
             getProducts(groupProduct, index);
         });
     }, []);
