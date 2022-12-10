@@ -13,11 +13,11 @@ const PaymentMethodItem = ({ id, code, name, icon, selectedID, onClick }) => {
                     inputProps={{ 'aria-label': 'A' }}
                 />
             </Grid2>
-            <Grid2 item xs={2} display="flex" alignItems="center" justifyContent="center">
+            <Grid2 item xs={1} display="flex" alignItems="center" justifyContent="center">
                 <Icon component={icon} />
             </Grid2>
-            <Grid2 item xs={9}>
-                <Typography variant="h5">{name}</Typography>
+            <Grid2 item xs={10}>
+                <Typography variant="body1">{name}</Typography>
             </Grid2>
         </Grid2>
     );

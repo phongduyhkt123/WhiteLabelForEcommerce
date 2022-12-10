@@ -81,10 +81,14 @@ export const fetch = async (url, options = {}) => {
     }
 };
 
-export const useAxios = (url, method, config = {}, dep = []) => {
+export const useAxios = ({ url, method = 'GET', config = {}, dep = [], isAuthen = false }) => {
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
+
+    if (isAuthen) {
+        config.headers = getHeaders();
+    }
 
     useEffect(() => {
         const fetch = async () => {
@@ -101,7 +105,7 @@ export const useAxios = (url, method, config = {}, dep = []) => {
         fetch();
     }, dep);
 
-    return { loaded, error, data };
+    return { loaded, error, data, setData };
 };
 
 export default request;

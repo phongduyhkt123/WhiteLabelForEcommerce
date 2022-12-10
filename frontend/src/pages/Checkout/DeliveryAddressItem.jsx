@@ -8,13 +8,13 @@ const DeliveryAddressItem = ({ address, isDefault, handleSetDefaultClick, handle
         <Box display="flex" justifyContent="space-between" alignItems="center">
             <Box>
                 <Box display="flex">
-                    <Typography variant="h4">{address?.receiverName}</Typography>
-                    <Typography variant="h4" color="primary" sx={{ mx: 4 }}>
+                    <Typography variant="h5">{address?.receiverName}</Typography>
+                    <Typography variant="h5" color="primary" sx={{ mx: 4 }}>
                         {address?.receiverPhone}
                     </Typography>
                     <Chip label="Default" color="primary" variant="outlined" size="small" icon={<Check />} />
                 </Box>
-                <Typography variant="h5">
+                <Typography variant="body1">
                     {address?.addressDetail}, {address?.addressWard.name}, {address?.addressWard.district.name},{' '}
                     {address?.addressWard.district.provinceCity.name}
                 </Typography>

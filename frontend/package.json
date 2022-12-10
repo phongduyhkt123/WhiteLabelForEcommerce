@@ -7,6 +7,7 @@
         "@emotion/styled": "^11.10.4",
         "@fontsource/roboto": "^4.5.8",
         "@mui/icons-material": "^5.10.9",
+        "@mui/joy": "^5.0.0-alpha.56",
         "@mui/lab": "^5.0.0-alpha.108",
         "@mui/material": "^5.10.14",
         "@mui/styles": "^5.10.10",
@@ -29,6 +30,7 @@
         "react-router-dom": "^6.4.1",
         "react-scripts": "5.0.1",
         "react-slick": "^0.29.0",
+        "react-swipeable-views": "^0.14.0",
         "slick-carousel": "^1.8.1",
         "web-vitals": "^2.1.4"
     },

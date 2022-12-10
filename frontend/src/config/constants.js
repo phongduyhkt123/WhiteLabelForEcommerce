@@ -33,8 +33,8 @@ export default constants;
 //     main: '#f5365c',
 // },
 // background: {
-//     default: blue[100],
-//     paper: blue[200],
+//     default: blue[100], // for box ...
+//     paper: blue[200], // for paper
 //     white: common.white,
 // },
 // text: {

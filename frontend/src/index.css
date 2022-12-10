@@ -3,6 +3,14 @@ html {
     font-size: 62.5%;
 }
 
+/* responsive */
+@media (max-width: 739px) {
+    body,
+    html {
+        font-size: 40%;
+    }
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -10,6 +18,13 @@ a {
 
 li {
     list-style: none;
+}
+
+/* input arrow number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* scrollbar */

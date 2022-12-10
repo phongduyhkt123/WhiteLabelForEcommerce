@@ -82,6 +82,10 @@
                     }
                 }
             }
+        },
+
+        "currency": {
+            "symbol": "₫"
         }
     },
 
@@ -182,6 +186,10 @@
             "objectFit": "cover",
             "width": "100%",
             "images": [
+                {
+                    "src": "https://img.freepik.com/premium-vector/fitness-club-banner-with-healthy-woman-lifting-weights-exploding-powder-effect-surface-3d-illustration_317810-1773.jpg?w=2000",
+                    "alt": "image"
+                },
                 {
                     "src": "https://img.freepik.com/premium-vector/fitness-club-banner-with-healthy-woman-lifting-weights-exploding-powder-effect-surface-3d-illustration_317810-1773.jpg?w=2000",
                     "alt": "image"
@@ -323,14 +331,76 @@
             "id": 3,
             "code": "PAYPAL",
             "name": "Paypal",
-            "icon": "Payment"
+            "icon": "Paypal"
         }
     ],
 
-    "label": {
+    "cart": {
+        "table": {
+            "headCells": [
+                {
+                    "label": "Product",
+                    "key": "product",
+                    "numeric": false,
+                    "disablePadding": true
+                },
+                {
+                    "label": "Price",
+                    "key": "price",
+                    "numeric": false,
+                    "disablePadding": true
+                },
+                {
+                    "label": "Quantity",
+                    "key": "quantity",
+                    "numeric": false,
+                    "disablePadding": true
+                },
+                {
+                    "label": "Total",
+                    "key": "total",
+                    "numeric": false,
+                    "disablePadding": true
+                },
+                {
+                    "label": "Action",
+                    "key": "action",
+                    "numeric": false,
+                    "disablePadding": true
+                }
+            ]
+        }
+    },
+
+    "labels": {
         "singleProduct": {
+            "variant": "Variant",
+            "quantity": "Quantity",
             "addToCart": "Add to cart",
-            "buyNow": "Buy now"
+            "buyNow": "Buy now",
+            "description": "Description",
+            "expand": "Expand",
+            "collapse": "Collapse",
+            "addToCartSuccess": "Add to cart success",
+            "addToCartUnKnownError": "Somthing went wrong",
+            "variantRequired": "Please select variant",
+            "inStock": "In stock"
+        },
+        "cart": {
+            "noItem": "No item in cart",
+            "checkout": "Checkout",
+            "total": "Total",
+            "continueShopping": "Continue shopping"
+        },
+        "checkout": {
+            "deliveryAddress": "Delivery Address",
+            "noDeliveryAddress": "No delivery address",
+            "paymentMethod": "Payment Method",
+            "noProducts": "No thing to checkout",
+            "orderSummary": "Order Summary",
+            "order": "Order",
+            "addMoreProducts": "Add more products",
+            "checkoutSuccess": "Checkout success"
         }
     }
 }

@@ -7,7 +7,7 @@ import { Box } from '@mui/system';
 import { header, route } from '~/config';
 import * as request from '~/utils/httpRequest';
 import useGetProduct from '~/hooks/useGetProduct';
-import ProductCardSkeleton from '~/components/Skeleton/ProductCardSkeleton';
+import { ProductCardSkeleton } from '~/components/Skeleton';
 import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import { useSearchParams } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
@@ -26,7 +26,7 @@ const Product = () => {
         category && setFilter({ ...initFilter, category: [parseInt(category)] });
     }, [searchParams]);
 
-    const { data: categories } = request.useAxios(route.categoryAPI, 'GET');
+    const { data: categories } = request.useAxios({ url: route.categoryAPI });
 
     const filterSelect = (type, checked, item) => {
         if (checked) {
@@ -113,10 +113,10 @@ const Product = () => {
             </Grid2>
             {/* Product list */}
             <Grid2 item xs={12} sm={8} md={10}>
-                <Grid2 container spacing={1}>
+                <Grid2 container spacing={2}>
                     {loaded
                         ? products.map((item, index) => (
-                              <Grid2 item xs={6} sm={6} md={4} lg={3} key={index}>
+                              <Grid2 item xs={6} sm={6} md={4} lg={2.4} key={index}>
                                   <ProductCard data={item} />
                               </Grid2>
                           ))

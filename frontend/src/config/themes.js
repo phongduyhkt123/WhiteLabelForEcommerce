@@ -1,22 +1,31 @@
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import constants from './constants';
 import config from '~/data/config.json';
+import { createTheme } from '@mui/material';
 
 const theme = createTheme({
     palette: {
         ...constants.color,
     },
 
-    components: config.global.components,
+    components: {
+        MuiContainer: {
+            styleOverrides: {
+                root: {
+                    fontSize: constants.font.fontSize,
+                },
+            },
+        },
+
+        ...config.global.components,
+    },
 
     typography: {
         fontFamily: constants.font.fontFamily,
-        htmlFontSize: 10,
-        fontSize: constants.font.fontSize,
+        fontSize: constants.font.fontSize * 1.4,
     },
 });
 
-export default responsiveFontSizes(theme);
+export default theme;
 
 // logo: {},
 

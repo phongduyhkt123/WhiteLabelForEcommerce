@@ -1,41 +1,42 @@
-import { Box, Button, Divider, Skeleton, Stack, Typography } from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
+import { Box, Button, Divider, Stack, Typography } from '@mui/material';
+import { useContext, useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
-import CartItem from '~/layouts/components/CartItem/CartItem';
-import * as request from '~/utils/httpRequest';
+import { CartItemSkeleton } from '~/components/Skeleton';
 import { route } from '~/config';
 import { GlobalContext } from '~/context/GlobalContext';
+import config from '~/data/config.json';
+import CartItem from '~/layouts/components/CartItem/CartItem';
+import { commas } from '~/utils/formater';
+import * as request from '~/utils/httpRequest';
 
 const Cart = () => {
-    const [cartProducts, setCartProducts] = useState([]);
+    const labels = config.labels.cart;
+    const currency = config.global.currency;
 
     const { totalCartItem, setTotalCartItem } = useContext(GlobalContext);
 
     const [totalPrice, setTotalPrice] = useState(0);
 
-    const [loading, setLoading] = useState(false);
+    const {
+        data: cartProducts,
+        setData: setCartProducts,
+        loaded,
+    } = request.useAxios({ url: route.cartAPI, isAuthen: true });
 
-    const getCartProducts = async () => {
-        setLoading(true);
-        const res = await request.get(route.cartAPI);
-        setCartProducts(res.data.data);
-        setLoading(false);
-    };
-
-    useEffect(() => {
-        getCartProducts();
-    }, []);
+    console.log(cartProducts);
 
     useEffect(() => {
-        let total = 0;
-        let price = 0;
-        cartProducts.forEach((item) => {
-            total += item.quantity;
-            price += item.productVariation.price * item.quantity;
-        });
-        setTotalCartItem(total);
-        setTotalPrice(price);
+        if (loaded) {
+            let total = 0;
+            let price = 0;
+            cartProducts.forEach((item) => {
+                total += item.quantity;
+                price += item.productVariation.price * item.quantity;
+            });
+            setTotalCartItem(total);
+            setTotalPrice(price);
+        }
     }, [cartProducts]);
 
     const removeItem = async (id) => {
@@ -75,47 +76,37 @@ const Cart = () => {
         }
     };
 
+    const renderCartItem = () => {
+        if (cartProducts.length > 0)
+            return cartProducts.map((item, index) => (
+                <CartItem key={index} item={item} onDelete={removeItem} onChange={updateQuantity} />
+            ));
+        else return <Typography variant="h6">{labels.noItem}</Typography>;
+    };
+
     return (
         <Box my={3} display="flex" flexDirection="column" alignItems="center">
             <Box width="100%" p={2} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
                 {/* List Cart Items */}
                 <Stack spacing={1} divider={<Divider />}>
-                    {!loading ? (
-                        cartProducts.length > 0 ? (
-                            cartProducts.map((item, index) => (
-                                <CartItem key={index} item={item} onDelete={removeItem} onChange={updateQuantity} />
-                            ))
-                        ) : (
-                            <Typography variant="h6">No items in cart</Typography>
-                        )
-                    ) : (
-                        // Skeleton
-                        <Stack spacing={1}>
-                            {/* For variant="text", adjust the height via font-size */}
-                            <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-                            {/* For other variants, adjust the size with `width` and `height` */}
-                            <Skeleton variant="circular" width={40} height={40} />
-                            <Skeleton variant="rectangular" width={210} height={60} />
-                            <Skeleton variant="rounded" width={210} height={60} />
-                        </Stack>
-                    )}
+                    {loaded ? renderCartItem() : <CartItemSkeleton />}
                 </Stack>
             </Box>
+
             <Box width="100%" p={2} mt={3} sx={{ boxShadow: 1, bgcolor: 'background.white', borderRadius: 2 }}>
                 {/* Price and checkout */}
-                <div className="cart__info">
-                    <div className="cart__info__txt">
-                        <p>Bạn đang có {totalCartItem} sản phẩm trong giỏ hàng</p>
-                        <div className="cart__info__txt__price">
-                            <span>Thành tiền:</span> <span>{totalPrice} d</span>
+                <div>
+                    <div>
+                        <div>
+                            <span>{labels.total}:</span> <span>{`${currency.symbol} ${commas(totalPrice)}`}</span>
                         </div>
                     </div>
-                    <div className="cart__info__btn">
+                    <div>
                         <Button LinkComponent={Link} to={route.home} size="large" variant="outlined">
-                            Tiếp tục mua hàng
+                            {labels.continueShopping}
                         </Button>
                         <Button LinkComponent={Link} to={route.checkout} size="large" variant="contained">
-                            Đặt hàng
+                            {labels.checkout}
                         </Button>
                     </div>
                 </div>

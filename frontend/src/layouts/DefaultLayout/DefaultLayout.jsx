@@ -15,7 +15,7 @@ const DefaultLayout = ({ children }) => {
             <Header headerRef={headerRef} />
             <Box width="100%" mt={`${headerHeight}px`}>
                 <Box my={2} display="flex" justifyContent="center">
-                    <Box width="100%" p={3} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
+                    <Box width="100%" p={1} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
                         {children}
                     </Box>
                 </Box>

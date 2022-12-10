@@ -12,14 +12,14 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
     <React.StrictMode>
-        <AppThemeProvider>
-            <AlertProvider>
-                <GlobalProvider>
+        <GlobalProvider>
+            <AppThemeProvider>
+                <AlertProvider>
                     <CssBaseline />
                     <App />
-                </GlobalProvider>
-            </AlertProvider>
-        </AppThemeProvider>
+                </AlertProvider>
+            </AppThemeProvider>
+        </GlobalProvider>
     </React.StrictMode>,
 );
 

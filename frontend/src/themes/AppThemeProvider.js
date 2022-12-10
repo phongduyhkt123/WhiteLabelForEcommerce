@@ -1,10 +1,17 @@
+import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import React from 'react';
 import { themes } from '~/config';
 
 const AppThemeProvider = ({ children }) => {
-    return <ThemeProvider theme={themes}>{children}</ThemeProvider>;
+    const isMobile = useMediaQuery('(max-width: 739px)');
+
+    if (isMobile) {
+        themes.typography.fontSize = 12 * 1.4;
+    }
+
+    const appThemes = createTheme(themes);
+
+    return <ThemeProvider theme={appThemes}>{children}</ThemeProvider>;
 };
 
 export default AppThemeProvider;

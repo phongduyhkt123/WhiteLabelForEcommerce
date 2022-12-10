@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Slider from 'react-slick';
 import './SliderCarousel.css';
 import { makeStyles } from '@mui/styles';
+import { GlobalContext } from '~/context/GlobalContext';
 
 const useStyles = makeStyles({
     root: {},
 });
 
-export default function SliderCarousel({ children, styles }) {
+export default function SliderCarousel({ children, isMobile }) {
     // const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     //     <img src={LeftArrow} alt="prevArrow" {...props} />
     // );
@@ -19,10 +20,11 @@ export default function SliderCarousel({ children, styles }) {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 500,
         slidesToShow: 5,
         slidesToScroll: 5,
         initialSlide: 0,
+        arrows: !isMobile,
+
         responsive: [
             {
                 breakpoint: 1024,

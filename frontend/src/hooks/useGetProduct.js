@@ -9,7 +9,7 @@ const useGetProduct = (filter, page) => {
             ...params,
             idCategory: filter.category[0],
         };
-    return useAxios(route.productAPI, 'GET', { params }, [filter, page]);
+    return useAxios({ url: route.productAPI, config: { params }, dep: [filter, page] });
 };
 
 export default useGetProduct;
