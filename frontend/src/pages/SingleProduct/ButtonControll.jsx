@@ -10,7 +10,7 @@ import config from '~/data/config.json';
 import * as request from '~/utils/httpRequest';
 
 const ButtonControll = () => {
-    const labels = config.labels.singleProduct;
+    const labels = config.singleProduct.labels;
 
     const { quantity, variant } = useContext(ProductContext);
 

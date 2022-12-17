@@ -4,7 +4,7 @@ import { useState } from 'react';
 import config from '~/data/config.json';
 
 const ProductDescription = ({ description }) => {
-    const labels = config.labels.singleProduct;
+    const labels = config.singleProduct.labels;
 
     const [descriptionExpand, setDescriptionExpand] = useState(false);
 

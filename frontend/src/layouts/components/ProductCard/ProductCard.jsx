@@ -1,16 +1,18 @@
-import { ShoppingCart } from '@mui/icons-material';
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Paper, Typography } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import OldPrice from '~/components/OldPrice';
 import { route } from '~/config';
 import { GlobalContext } from '~/context/GlobalContext';
 import { commas } from '~/utils/formater';
+import config from '~/data/config.json';
+import Icon from '~/config/Store/Icon';
 
 export const ProductCard = ({ data }) => {
     const { isMobile } = useContext(GlobalContext);
+
+    const pConfig = config.productCard;
 
     return (
         <Card sx={{ position: 'relative' }}>
@@ -78,13 +80,13 @@ export const ProductCard = ({ data }) => {
                         }}
                         color="secondary"
                         fullWidth
-                        startIcon={<ShoppingCart />}
+                        startIcon={<Icon component={pConfig.addToCart.icon} />}
                         sx={{
                             opacity: 0.7,
                             ':hover': { opacity: 1, backgroundColor: 'white' },
                         }}
                     >
-                        ADD TO CART
+                        {pConfig.addToCart.label}
                     </Button>
                 </CardActions>
             )}

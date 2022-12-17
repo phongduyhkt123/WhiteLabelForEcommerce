@@ -8,34 +8,39 @@ import { commas } from '~/utils/formater';
 const OrderDetailItem = ({ item }) => {
     return (
         <Box>
-            <Grid container spacing={2}>
-                <Grid item xs={1} display="flex">
+            <Grid container width="100%" height="100%" direction="row" spacing="0.5rem">
+                {/* image */}
+                <Grid item xs={3} md={2} height="100%" display="flex">
                     <Box
                         component="img"
-                        src={item?.productVariation.product.avatar}
+                        src={item.productVariation.product.avatar}
                         alt=""
-                        height={80}
                         width="100%"
-                        sx={{ objectFit: 'cover' }}
+                        maxWidth="10rem"
+                        margin="auto"
+                        sx={{ objectFit: 'contain', aspectRatio: '1/1' }}
                     />
                 </Grid>
-                <Grid item xs={8} display="flex" alignItems="center">
-                    <Typography
-                        variant="h5"
-                        component={Link}
-                        to={route.singleProductAPI + item?.productVariation.product.id}
-                        width="100%"
-                        sx={{ overflowWrap: 'break-word' }} // word break for long text
-                    >
-                        {item?.productVariation.product.name}
-                    </Typography>
-                </Grid>
-                <Grid item xs={2} display="flex" justifyContent="center" alignItems="center">
-                    <Typography>{commas(item?.productVariation.price || 0)} đ</Typography>
-                    {/* quantity */}
-                </Grid>
-                <Grid item xs={1} display="flex" alignItems="center">
-                    <Typography px={2}>3</Typography>
+                {/* info */}
+                <Grid item xs={9} md={10} container display="flex" justifyContent="space-around" alignItems="center">
+                    <Grid item xs={12} md={5}>
+                        <Typography
+                            component={Link}
+                            variant="body1"
+                            to={`${route.product}/${item.productVariation.product.id}`}
+                        >
+                            {item.productVariation.product.name}
+                        </Typography>
+                        <Typography variant="body1">variant: {item.productVariation.variationName}</Typography>
+                    </Grid>
+                    <Grid item xs={6} md={3}>
+                        <Typography textAlign="center">{commas(item.unitPrice)}</Typography>
+                    </Grid>
+                    <Grid item xs={6} md={2} justifyContent="center" alignItems="center" display="flex">
+                        Qt:
+                        {/* quantity */}
+                        <Typography px={2}>{item.quantity}</Typography>
+                    </Grid>
                 </Grid>
             </Grid>
         </Box>

@@ -1,4 +1,4 @@
-import { AttachMoney, CreditCard, Facebook, Google, Mail, Payment, Phone } from '@mui/icons-material';
+import { AttachMoney, CreditCard, Facebook, Google, Mail, Payment, Phone, AddShoppingCart } from '@mui/icons-material';
 import Paypal from '~/components/Icons';
 
 const Components = {
@@ -10,6 +10,7 @@ const Components = {
     CreditCard: CreditCard,
     Payment: Payment,
     Paypal: Paypal,
+    AddShoppingCart: AddShoppingCart,
 };
 
 const Icon = ({ component }) => {

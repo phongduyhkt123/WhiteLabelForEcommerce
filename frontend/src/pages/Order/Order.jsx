@@ -1,30 +1,12 @@
-import { Box, Button, Divider, Stack } from '@mui/material';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import React, { useEffect, useState } from 'react';
-import OrderItem from './OrderItem';
-import * as request from '~/utils/httpRequest';
-import { commas } from '~/utils/formater';
+import { Stack } from '@mui/material';
 import { route } from '~/config';
+import * as request from '~/utils/httpRequest';
+import OrderItem from './OrderItem';
 
 const Order = () => {
-    const [orders, setOrders] = useState([]);
+    const { data: orders, loaded } = request.useAxios({ url: route.orderAPI, isAuthen: true });
 
-    const getOrders = async () => {
-        const response = await request.get(route.orderAPI);
-        setOrders(response.data.data);
-    };
-
-    useEffect(() => {
-        getOrders();
-    }, []);
-
-    return (
-        <Stack spacing={1} divider={<Divider />}>
-            {orders.map((item) => (
-                <OrderItem key={item.id} item={item} />
-            ))}
-        </Stack>
-    );
+    return <Stack spacing={1}>{loaded && orders.map((item) => <OrderItem key={item.id} item={item} />)}</Stack>;
 };
 
 export default Order;

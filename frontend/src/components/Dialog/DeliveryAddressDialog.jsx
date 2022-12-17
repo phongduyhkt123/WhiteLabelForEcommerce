@@ -1,4 +1,4 @@
-import { FormControl } from '@mui/material';
+import { FormControl, FormControlLabel, Switch, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import Select from '~/components/Select';
 import * as addressService from '~/services/addressService';
 
-export default function DeliveryAddressDialog({ data, open, handleClose }) {
+export default function DeliveryAddressDialog({ data, open, isDefault = false, handleClose }) {
     const [citys, setCitys] = useState([]);
     const [districts, setDistricts] = useState('');
 
@@ -20,21 +20,49 @@ export default function DeliveryAddressDialog({ data, open, handleClose }) {
     const [wards, setWards] = useState('');
     const [ward, setWard] = useState('');
 
-    const getCitys = () => {
-        citys.length === 0 &&
-            addressService.getCitys().then((res) => {
-                setCitys(res.data);
-            });
-    };
+    // const getCitys = () => {
+    //     if (citys.length > 0) return;
+
+    //     addressService.getCitys().then((res) => {
+    //         setCitys(res.data);
+    //         if (data) {
+    //             setCity(citys.find((item) => item.name === data.city));
+    //         }
+    //     });
+    // };
+    useEffect(() => {
+        // get citys when component is mounted
+        addressService.getCitys().then((res) => {
+            setCitys(res.data);
+        });
+    }, []);
 
     useEffect(() => {
-        setDistrict('');
-        city && addressService.getDistricts(city.id).then((res) => setDistricts(res.data));
+        if (open) {
+            // if dialog is open then set city from data
+            data && setCity(citys.find((item) => item.name === data.addressWard.district.provinceCity.name));
+        } else {
+            // if dialog is closed then reset city
+            setCity('');
+        }
+    }, [open]);
+
+    useEffect(() => {
+        if (city) {
+            addressService.getDistricts(city.id).then((res) => {
+                setDistricts(res.data);
+                data && setDistrict(res.data.find((item) => item.name === data.addressWard.district.name) || '');
+            });
+        }
     }, [city]);
 
     useEffect(() => {
-        setWard('');
-        district && addressService.getWards(district.id).then((res) => setWards(res.data));
+        if (district) {
+            addressService.getWards(district.id).then((res) => {
+                setWards(res.data);
+                data && setWard(res.data.find((item) => item.name === data.addressWard.name) || '');
+            });
+        }
     }, [district]);
 
     return (
@@ -74,7 +102,6 @@ export default function DeliveryAddressDialog({ data, open, handleClose }) {
                             options={citys}
                             defaultValue=""
                             fullWidth
-                            onOpen={getCitys}
                             onChange={(e) => setCity(e.target.value)}
                         />
                     </FormControl>
@@ -107,6 +134,9 @@ export default function DeliveryAddressDialog({ data, open, handleClose }) {
                             variant="standard"
                             value={data.addressDetail}
                         />
+                    </FormControl>
+                    <FormControl sx={{ color: 'text.secondary' }}>
+                        <FormControlLabel control={<Switch defaultChecked={isDefault} />} label="Set as default" />
                     </FormControl>
                 </form>
             </DialogContent>

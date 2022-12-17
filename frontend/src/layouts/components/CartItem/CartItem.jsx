@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 
 import { Box, IconButton, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
@@ -8,14 +8,10 @@ import { Link } from 'react-router-dom';
 import { Add, DeleteForeverOutlined, Remove } from '@mui/icons-material';
 import { route } from '~/config';
 import { commas } from '~/utils/formater';
-import config from '~/data/config.json';
-import { GlobalContext } from '~/context/GlobalContext';
 
 /// Set time out when update quantity
 const CartItem = ({ item, canControl = true, onDelete = () => {}, onChange = () => {} }) => {
-    const currency = config.global.currency;
     const itemRef = useRef(null);
-    const { isMobile } = useContext(GlobalContext);
 
     return (
         <Box ref={itemRef}>
@@ -49,9 +45,7 @@ const CartItem = ({ item, canControl = true, onDelete = () => {}, onChange = () 
                         <Typography variant="body1">variant: {item.productVariation.variationName}</Typography>
                     </Grid2>
                     <Grid2 item xs={6} md={3}>
-                        <Typography textAlign="center">{`${currency.symbol}${commas(
-                            item.productVariation.price,
-                        )}`}</Typography>
+                        <Typography textAlign="center">{commas(item.productVariation.price)}</Typography>
                     </Grid2>
                     <Grid2 item xs={6} md={2} justifyContent="center" alignItems="center" display="flex">
                         Qt:

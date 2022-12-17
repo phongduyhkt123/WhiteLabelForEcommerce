@@ -29,7 +29,10 @@
 
     "global": {
         "font": { "fontFamily": "Roboto", "fontSize": 15, "fontWeight": 400 },
-        "logo": {},
+        "logo": {
+            "type": "html",
+            "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNDIiIHdpZHRoPSIxMTgiIGFsdD0iVGlrVG9rIj4gPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwKSI+IDxwYXRoIGQ9Ik05Ljg3NTM3IDE2Ljg0MlYxNS43MjMzQzkuNDkyMTEgMTUuNjcyMSA5LjEwMjQ2IDE1LjY0MDEgOC43MDAwMyAxNS42NDAxQzMuOTAyODggMTUuNjMzOCAwIDE5LjUzOTkgMCAyNC4zNDc1QzAgMjcuMjk0NyAxLjQ2OTE3IDI5LjkwMzEgMy43MTc2NCAzMS40ODIyQzIuMjY3NjMgMjkuOTI4NyAxLjM3OTc0IDI3LjgzODEgMS4zNzk3NCAyNS41NDk0QzEuMzc5NzQgMjAuODEyMSA1LjE3NDAzIDE2Ljk1MDcgOS44NzUzNyAxNi44NDJaIiBmaWxsPSIjMjVGNEVFIiA+PC9wYXRoPiA8cGF0aCBkPSJNMTAuMDg2MiAyOS41MjU5QzEyLjIyNjEgMjkuNTI1OSAxMy45NzYzIDI3LjgxOSAxNC4wNTMgMjUuNjk2NUwxNC4wNTk0IDYuNzI4MjJIMTcuNTIxNUMxNy40NTEyIDYuMzM4MjQgMTcuNDEyOSA1LjkzNTQ4IDE3LjQxMjkgNS41MjYzMkgxMi42ODZMMTIuNjc5NiAyNC40OTQ2QzEyLjYwMyAyNi42MTcxIDEwLjg1MjcgMjguMzI0IDguNzEyODYgMjguMzI0QzguMDQ4NTQgMjguMzI0IDcuNDIyNTUgMjguMTU3OCA2Ljg2NjgyIDI3Ljg2MzdDNy41ODIyNCAyOC44Njc0IDguNzU3NTggMjkuNTI1OSAxMC4wODYyIDI5LjUyNTlaIiBmaWxsPSIjMjVGNEVFIiA+PC9wYXRoPiA8cGF0aCBkPSJNMjMuOTkyMyAxMy4xNjZWMTIuMTExMkMyMi42NzAxIDEyLjExMTIgMjEuNDQzNiAxMS43MjEyIDIwLjQwODggMTEuMDQzNUMyMS4zMjg2IDEyLjA5ODQgMjIuNTc0MiAxMi44NjU2IDIzLjk5MjMgMTMuMTY2WiIgZmlsbD0iIzI1RjRFRSIgPjwvcGF0aD4gPHBhdGggZD0iTTIwLjQwODggMTEuMDQzNUMxOS4zOTk1IDkuODg2MzkgMTguNzkyNyA4LjM3NzYyIDE4Ljc5MjcgNi43MjgyMUgxNy41MjhDMTcuODUzNyA4LjUzMTA2IDE4LjkyNjkgMTAuMDc4MiAyMC40MDg4IDExLjA0MzVaIiBmaWxsPSIjRkUyQzU1IiA+PC9wYXRoPiA8cGF0aCBkPSJNOC43MDY0MiAyMC4zNjQ2QzYuNTE1NDQgMjAuMzY0NiA0LjczMzI4IDIyLjE0ODMgNC43MzMyOCAyNC4zNDExQzQuNzMzMjggMjUuODY5MSA1LjYwMiAyNy4xOTg4IDYuODY2NzYgMjcuODYzN0M2LjM5NDA4IDI3LjIxMTYgNi4xMTMwMiAyNi40MTI1IDYuMTEzMDIgMjUuNTQzQzYuMTEzMDIgMjMuMzUwMiA3Ljg5NTE4IDIxLjU2NjUgMTAuMDg2MiAyMS41NjY1QzEwLjQ5NSAyMS41NjY1IDEwLjg5MSAyMS42MzY4IDExLjI2MTUgMjEuNzUxOVYxNi45MTg4QzEwLjg3ODIgMTYuODY3NiAxMC40ODg2IDE2LjgzNTYgMTAuMDg2MiAxNi44MzU2QzEwLjAxNTkgMTYuODM1NiA5Ljk1MjAyIDE2Ljg0MiA5Ljg4MTc1IDE2Ljg0MlYyMC41NUM5LjUwNDg4IDIwLjQzNDkgOS4xMTUyMyAyMC4zNjQ2IDguNzA2NDIgMjAuMzY0NloiIGZpbGw9IiNGRTJDNTUiID48L3BhdGg+IDxwYXRoIGQ9Ik0yMy45OTIxIDEzLjE2NlYxNi44NDJDMjEuNTM5MiAxNi44NDIgMTkuMjY1MiAxNi4wNTU3IDE3LjQxMjcgMTQuNzI1OVYyNC4zNDc1QzE3LjQxMjcgMjkuMTQ4NyAxMy41MDk5IDMzLjA2MTMgOC43MDYzMSAzMy4wNjEzQzYuODUzODggMzMuMDYxMyA1LjEyOTIxIDMyLjQ3MzEgMy43MTc1MyAzMS40ODIyQzUuMzA4MDYgMzMuMTg5MSA3LjU3NTY5IDM0LjI2MzIgMTAuMDg2MSAzNC4yNjMyQzE0Ljg4MzIgMzQuMjYzMiAxOC43OTI1IDMwLjM1NyAxOC43OTI1IDI1LjU0OTRWMTUuOTI3OEMyMC42NDQ5IDE3LjI1NzYgMjIuOTE4OSAxOC4wNDM5IDI1LjM3MTggMTguMDQzOVYxMy4zMTMxQzI0Ljg5MjcgMTMuMzEzMSAyNC40MzI4IDEzLjI2MTkgMjMuOTkyMSAxMy4xNjZaIiBmaWxsPSIjRkUyQzU1IiA+PC9wYXRoPiA8cGF0aCBkPSJNMTcuNDEyNyAyNC4zNDc1VjE0LjcyNTlDMTkuMjY1MiAxNi4wNTU3IDIxLjUzOTIgMTYuODQyIDIzLjk5MjEgMTYuODQyVjEzLjE2NkMyMi41NzQgMTIuODY1NiAyMS4zMjg0IDEyLjA5ODQgMjAuNDA4NiAxMS4wNDM1QzE4LjkyNjYgMTAuMDc4MiAxNy44NTk5IDguNTMxMDYgMTcuNTIxMyA2LjcyODIxSDE0LjA1OTJMMTQuMDUyOCAyNS42OTY0QzEzLjk3NjIgMjcuODE4OSAxMi4yMjU5IDI5LjUyNTkgMTAuMDg2MSAyOS41MjU5QzguNzU3NDIgMjkuNTI1OSA3LjU4ODQ3IDI4Ljg2NzQgNi44NjAyOCAyNy44NzAxQzUuNTk1NTEgMjcuMTk4OCA0LjcyNjc5IDI1Ljg3NTUgNC43MjY3OSAyNC4zNDc1QzQuNzI2NzkgMjIuMTU0NyA2LjUwODk1IDIwLjM3MSA4LjY5OTkzIDIwLjM3MUM5LjEwODc0IDIwLjM3MSA5LjUwNDc4IDIwLjQ0MTMgOS44NzUyNyAyMC41NTY0VjE2Ljg0ODRDNS4xNzM5MyAxNi45NTA3IDEuMzc5NjQgMjAuODEyMSAxLjM3OTY0IDI1LjU0OTRDMS4zNzk2NCAyNy44MzgxIDIuMjY3NTMgMjkuOTIyMyAzLjcxNzUzIDMxLjQ4MjJDNS4xMjkyMSAzMi40NzMxIDYuODUzODkgMzMuMDYxMyA4LjcwNjMyIDMzLjA2MTNDMTMuNTAzNSAzMy4wNjEzIDE3LjQxMjcgMjkuMTQ4NyAxNy40MTI3IDI0LjM0NzVaIiBmaWxsPSJibGFjayIgPjwvcGF0aD4gPHBhdGggZD0iTTMwLjA0NzcgMTMuMTc4N0g0NC44MjI1TDQzLjQ2ODMgMTcuNDExSDM5LjYzNTdWMzMuMDU0OEgzNC44NTc3VjE3LjQxMUwzMC4wNTQxIDE3LjQxNzNMMzAuMDQ3NyAxMy4xNzg3WiIgZmlsbD0iYmxhY2siID48L3BhdGg+IDxwYXRoIGQ9Ik02OS4wMzE3IDEzLjE3ODdIODQuMTUxNEw4Mi43OTcyIDE3LjQxMUg3OC42MjYxVjMzLjA1NDhINzMuODQxN1YxNy40MTFMNjkuMDM4MSAxNy40MTczTDY5LjAzMTcgMTMuMTc4N1oiIGZpbGw9ImJsYWNrIiA+PC9wYXRoPiA8cGF0aCBkPSJNNDUuNzI5NSAxOS41MDE1SDUwLjQ2MjhWMzMuMDU0OEg0NS43NTVMNDUuNzI5NSAxOS41MDE1WiIgZmlsbD0iYmxhY2siPjwvcGF0aD4gPHBhdGggZD0iTTUyLjM0NyAxMy4xMjc3SDU3LjA4MDJWMjIuMzg0OEw2MS43Njg4IDE3Ljc3NTRINjcuNDE1NUw2MS40ODE0IDIzLjUzNTZMNjguMTI0NiAzMy4wNTQ4SDYyLjkxMjJMNTguNDc5MSAyNi40NTcyTDU3LjA3MzkgMjcuODE4OVYzMy4wNTQ4SDUyLjM0MDZWMTMuMTI3N0g1Mi4zNDdaIiBmaWxsPSJibGFjayIgPjwvcGF0aD4gPHBhdGggZD0iTTEwMi40OSAxMy4xMjc3SDEwNy4yMjRWMjIuMzg0OEwxMTEuOTEyIDE3Ljc3NTRIMTE3LjU1OUwxMTEuNjI1IDIzLjUzNTZMMTE4LjI2OCAzMy4wNTQ4SDExMy4wNjJMMTA4LjYyOSAyNi40NTcyTDEwNy4yMjQgMjcuODE4OVYzMy4wNTQ4SDEwMi40OVYxMy4xMjc3WiIgZmlsbD0iYmxhY2siID48L3BhdGg+IDxwYXRoIGQ9Ik00OC4wOTI5IDE3Ljk1NDRDNDkuNDA4OCAxNy45NTQ0IDUwLjQ3NTUgMTYuODg2NyA1MC40NzU1IDE1LjU2OTdDNTAuNDc1NSAxNC4yNTI4IDQ5LjQwODggMTMuMTg1MSA0OC4wOTI5IDEzLjE4NTFDNDYuNzc3MSAxMy4xODUxIDQ1LjcxMDMgMTQuMjUyOCA0NS43MTAzIDE1LjU2OTdDNDUuNzEwMyAxNi44ODY3IDQ2Ljc3NzEgMTcuOTU0NCA0OC4wOTI5IDE3Ljk1NDRaIiBmaWxsPSJibGFjayIgPjwvcGF0aD4gPHBhdGggZD0iTTgzLjU0NDUgMjQuOTQyQzgzLjU0NDUgMjAuNjc3OSA4Ni44MzQyIDE3LjE4MDggOTEuMDE4MSAxNi44NTQ4QzkwLjgwNzMgMTYuODM1NiA5MC41MTk5IDE2LjgyOTIgOTAuMzA5MSAxNi44MjkyQzg1LjgzMTMgMTYuODI5MiA4Mi4yMDMxIDIwLjQ2MDUgODIuMjAzMSAyNC45NDJDODIuMjAzMSAyOS40MjM2IDg1LjgzMTMgMzMuMDU0OCA5MC4zMDkxIDMzLjA1NDhDOTAuNTE5OSAzMy4wNTQ4IDkwLjgwNzMgMzMuMDQyIDkxLjAxODEgMzMuMDI5M0M4Ni44NDA2IDMyLjcwMzIgODMuNTQ0NSAyOS4yMDYyIDgzLjU0NDUgMjQuOTQyWiIgZmlsbD0iIzI1RjRFRSIgPjwvcGF0aD4gPHBhdGggZD0iTTkyLjg1NzkgMTYuODI5MkM5Mi42NDA3IDE2LjgyOTIgOTIuMzUzMiAxNi44NDIgOTIuMTQyNSAxNi44NTQ4Qzk2LjMyIDE3LjE4MDggOTkuNjA5NyAyMC42Nzc5IDk5LjYwOTcgMjQuOTQyQzk5LjYwOTcgMjkuMjA2MiA5Ni4zMiAzMi43MDMyIDkyLjE0MjUgMzMuMDI5M0M5Mi4zNTMyIDMzLjA0ODQgOTIuNjQwNyAzMy4wNTQ4IDkyLjg1NzkgMzMuMDU0OEM5Ny4zMzU2IDMzLjA1NDggMTAwLjk2NCAyOS40MjM2IDEwMC45NjQgMjQuOTQyQzEwMC45NjQgMjAuNDYwNSA5Ny4zMzU2IDE2LjgyOTIgOTIuODU3OSAxNi44MjkyWiIgZmlsbD0iI0ZFMkM1NSIgPjwvcGF0aD4gPHBhdGggZD0iTTkxLjU4MDMgMjguODg2NkM4OS40MDIxIDI4Ljg4NjYgODcuNjM5MSAyNy4xMjIxIDg3LjYzOTEgMjQuOTQyQzg3LjYzOTEgMjIuNzYyIDg5LjQwMjEgMjAuOTk3NSA5MS41ODAzIDIwLjk5NzVDOTMuNzU4NSAyMC45OTc1IDk1LjUyMTUgMjIuNzYyIDk1LjUyMTUgMjQuOTQyQzk1LjUyMTUgMjcuMTIyMSA5My43NTIyIDI4Ljg4NjYgOTEuNTgwMyAyOC44ODY2Wk05MS41ODAzIDE2LjgyOTJDODcuMTAyNiAxNi44MjkyIDgzLjQ3NDQgMjAuNDYwNSA4My40NzQ0IDI0Ljk0MkM4My40NzQ0IDI5LjQyMzYgODcuMTAyNiAzMy4wNTQ4IDkxLjU4MDMgMzMuMDU0OEM5Ni4wNTgxIDMzLjA1NDggOTkuNjg2MyAyOS40MjM2IDk5LjY4NjMgMjQuOTQyQzk5LjY4NjMgMjAuNDYwNSA5Ni4wNTgxIDE2LjgyOTIgOTEuNTgwMyAxNi44MjkyWiIgZmlsbD0iYmxhY2siID48L3BhdGg+IDwvZz4gPGRlZnM+IDxjbGlwLXBhdGggaWQ9ImNsaXAwIj4gPHJlY3Qgd2lkdGg9IjExOCIgaGVpZ2h0PSI0MiIgZmlsbD0id2hpdGUiPjwvcmVjdD4gPC9jbGlwLXBhdGg+IDwvZGVmcz4gPC9zdmc+"
+        },
 
         "color": {
             "primary": {
@@ -158,6 +161,7 @@
                     "title": "Categories",
                     "more": true,
                     "api": "/product-category",
+                    "to": "/product-category",
                     "subTo": "/product",
                     "subParams": "idCategory"
                 },
@@ -234,7 +238,7 @@
                 "limit": 10
             },
             {
-                "title": "Ramdom",
+                "title": "Random",
                 "banner": {
                     "src": "https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000",
                     "alt": "image"
@@ -255,62 +259,87 @@
                     "alt": "image"
                 }
             ]
+        },
+
+        "labels": {
+            "bestSeller": "Best Seller",
+            "mostView": "Most View",
+            "saleOff": "Sale Off",
+            "latest": "Latest",
+            "random": "Random"
         }
     },
 
     "signin": {
-        "image": "https://coreldrawdesign.com/resources/previews/preview-fitness-gym-social-media-post-banner-template-1602333977.jpg",
+        "image": "",
         "logo": {},
         "redirect": "/",
         "title": {},
         "form": {
             "loginKey": {
-                "label": "Username",
+                "label": "username",
                 "type": "text"
             },
             "password": {
-                "label": "Password",
+                "label": "password",
                 "type": "password"
             }
         },
         "button": {
-            "label": "Sign in"
+            "label": "signin"
+        },
+        "labels": {
+            "username": "Username",
+            "password": "Password",
+            "signin": "Sign In",
+            "dontHaveAccount": "Don't have an account?",
+            "signup": "Register here",
+            "forgotPassword": "Forgot password?",
+            "signInToYourAccount": "Sign in to your account"
         }
     },
 
     "signup": {
-        "image": "https://coreldrawdesign.com/resources/previews/preview-fitness-gym-social-media-post-banner-template-1602333977.jpg",
+        "image": "",
         "logo": {},
         "redirect": "/signin",
         "title": {},
         "form": {
-            "fullName": {
-                "label": "Full Name",
+            "fullname": {
+                "label": "fullname",
                 "type": "text",
                 "autoFocus": true,
                 "required": true
             },
             "username": {
-                "label": "Username",
+                "label": "username",
                 "type": "text",
                 "required": true
             },
             "email": {
-                "label": "Email Address",
+                "label": "email",
                 "type": "email"
             },
             "phone": {
-                "label": "Phone Number",
+                "label": "phone",
                 "type": "tel"
             },
             "password": {
-                "label": "Password",
+                "label": "password",
                 "type": "password",
                 "required": true
             }
         },
-        "button": {
-            "label": "Sign up"
+        "labels": {
+            "welcome": "Welcome to our community",
+            "fullname": "Full Name",
+            "username": "Username",
+            "email": "Email Address",
+            "phone": "Phone Number",
+            "password": "Password",
+            "signup": "Register",
+            "alreadyHaveAccount": "Already have an account?",
+            "signin": "Sign in here"
         }
     },
 
@@ -336,44 +365,16 @@
     ],
 
     "cart": {
-        "table": {
-            "headCells": [
-                {
-                    "label": "Product",
-                    "key": "product",
-                    "numeric": false,
-                    "disablePadding": true
-                },
-                {
-                    "label": "Price",
-                    "key": "price",
-                    "numeric": false,
-                    "disablePadding": true
-                },
-                {
-                    "label": "Quantity",
-                    "key": "quantity",
-                    "numeric": false,
-                    "disablePadding": true
-                },
-                {
-                    "label": "Total",
-                    "key": "total",
-                    "numeric": false,
-                    "disablePadding": true
-                },
-                {
-                    "label": "Action",
-                    "key": "action",
-                    "numeric": false,
-                    "disablePadding": true
-                }
-            ]
+        "labels": {
+            "noItem": "No item in cart",
+            "checkout": "Checkout",
+            "total": "Total",
+            "continueShopping": "Continue shopping"
         }
     },
 
-    "labels": {
-        "singleProduct": {
+    "singleProduct": {
+        "labels": {
             "variant": "Variant",
             "quantity": "Quantity",
             "addToCart": "Add to cart",
@@ -385,14 +386,43 @@
             "addToCartUnKnownError": "Somthing went wrong",
             "variantRequired": "Please select variant",
             "inStock": "In stock"
-        },
-        "cart": {
-            "noItem": "No item in cart",
-            "checkout": "Checkout",
-            "total": "Total",
-            "continueShopping": "Continue shopping"
-        },
-        "checkout": {
+        }
+    },
+
+    "productCard": {
+        "addToCart": {
+            "label": "Add to cart",
+            "icon": "AddShoppingCart"
+        }
+    },
+
+    "deliveryAddress": {
+        "labels": {
+            "noDeliveryAddress": "No delivery address",
+            "addNewAddress": "Add new address",
+            "editAddress": "Edit address",
+            "deleteAddress": "Delete address",
+            "setAsDefault": "Set as default",
+            "deleteAddressConfirm": "Are you sure to delete this address?",
+            "deleteAddressSuccess": "Delete address success",
+            "deleteAddressUnKnownError": "Somthing went wrong",
+            "addNewAddressSuccess": "Add new address success",
+            "addNewAddressUnKnownError": "Somthing went wrong",
+            "editAddressSuccess": "Edit address success",
+            "editAddressUnKnownError": "Somthing went wrong",
+            "fullName": "Full Name",
+            "phone": "Phone",
+            "address": "Address",
+            "city": "City",
+            "district": "District",
+            "ward": "Ward",
+            "save": "Save",
+            "cancel": "Cancel"
+        }
+    },
+
+    "checkout": {
+        "labels": {
             "deliveryAddress": "Delivery Address",
             "noDeliveryAddress": "No delivery address",
             "paymentMethod": "Payment Method",
@@ -401,6 +431,13 @@
             "order": "Order",
             "addMoreProducts": "Add more products",
             "checkoutSuccess": "Checkout success"
+        }
+    },
+
+    "order": {
+        "labels": {
+            "total": "Total",
+            "note": "Note"
         }
     }
 }

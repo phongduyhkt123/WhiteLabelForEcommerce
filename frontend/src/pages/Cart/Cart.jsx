@@ -11,10 +11,9 @@ import { commas } from '~/utils/formater';
 import * as request from '~/utils/httpRequest';
 
 const Cart = () => {
-    const labels = config.labels.cart;
-    const currency = config.global.currency;
+    const labels = config.cart.labels;
 
-    const { totalCartItem, setTotalCartItem } = useContext(GlobalContext);
+    const { setTotalCartItem } = useContext(GlobalContext);
 
     const [totalPrice, setTotalPrice] = useState(0);
 
@@ -98,7 +97,7 @@ const Cart = () => {
                 <div>
                     <div>
                         <div>
-                            <span>{labels.total}:</span> <span>{`${currency.symbol} ${commas(totalPrice)}`}</span>
+                            <span>{labels.total}:</span> <span>{commas(totalPrice)}</span>
                         </div>
                     </div>
                     <div>

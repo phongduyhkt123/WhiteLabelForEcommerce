@@ -1,2 +1,2 @@
-const logo = require('./logo.svg').default;
-export default logo;
+import config from '~/data/config.json';
+export default config.global.logo;

@@ -1,24 +1,10 @@
-import { Check, Delete, Edit } from '@mui/icons-material';
-import { Box, Button, Chip, Divider, IconButton, Typography } from '@mui/material';
-import { Stack } from '@mui/system';
-import React from 'react';
+import { Box } from '@mui/material';
+import DeliveryAddressItemInfo from '../Profile/DeliveryAddress/DeliveryAddressItemInfo';
 
 const DeliveryAddressItem = ({ address, isDefault, handleSetDefaultClick, handleRemoveClick, handleUpdateClick }) => {
     return (
         <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Box>
-                <Box display="flex">
-                    <Typography variant="h5">{address?.receiverName}</Typography>
-                    <Typography variant="h5" color="primary" sx={{ mx: 4 }}>
-                        {address?.receiverPhone}
-                    </Typography>
-                    <Chip label="Default" color="primary" variant="outlined" size="small" icon={<Check />} />
-                </Box>
-                <Typography variant="body1">
-                    {address?.addressDetail}, {address?.addressWard.name}, {address?.addressWard.district.name},{' '}
-                    {address?.addressWard.district.provinceCity.name}
-                </Typography>
-            </Box>
+            <DeliveryAddressItemInfo item={address} isDefault={isDefault} />
         </Box>
     );
 };

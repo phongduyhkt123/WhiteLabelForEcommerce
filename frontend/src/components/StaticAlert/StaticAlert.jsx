@@ -14,9 +14,10 @@ const StaticAlert = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    width: '100%',
                 }}
             >
-                <Typography variant="h5">{message.text}</Typography>
+                <Typography variant="h6">{message.text}</Typography>
             </Alert>
         )
     );

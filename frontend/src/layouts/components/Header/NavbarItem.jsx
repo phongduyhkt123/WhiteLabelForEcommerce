@@ -4,14 +4,30 @@ import { ExpandMore } from '@mui/icons-material';
 import Menu from '~/components/Menu';
 import * as request from '~/utils/httpRequest';
 import { List, MenuItem, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
-const NavbarItem = ({ children, item }) => {
+const useStyles = makeStyles((theme) => {
+    return {
+        active: {
+            borderBottom: `0.5rem solid ${theme.palette.primary.main}`,
+        },
+    };
+});
+
+const NavbarItem = ({ children, item, onClick }) => {
+    const classes = useStyles();
+
     const { to, more } = item;
     const itemRef = useRef();
     const [openMenu, setOpenMenu] = useState(false);
 
-    const handleToggleMenu = () => {
-        setOpenMenu(!openMenu);
+    const handleOnClick = (e) => {
+        if (more) {
+            e.preventDefault();
+            setOpenMenu(!openMenu);
+        } else {
+            onClick();
+        }
     };
 
     const [subItems, setSubItems] = useState([]);
@@ -26,16 +42,24 @@ const NavbarItem = ({ children, item }) => {
             pathname: to,
             search: createSearchParams(params).toString(),
         });
+        onClick();
     };
 
     return (
         <>
-            <NavLink to={to} ref={itemRef} style={{ display: 'flex', alignItems: 'center' }} onClick={handleToggleMenu}>
+            <NavLink
+                to={to}
+                ref={itemRef}
+                style={{ display: 'flex', alignItems: 'center' }}
+                onClick={(e) => handleOnClick(e)}
+                className={({ isActive }) => (isActive ? classes.active : '')}
+                end
+            >
                 <span>{children}</span>
                 {more && <ExpandMore />}
             </NavLink>
             {more && (
-                <Menu anchorEl={itemRef.current} open={openMenu} setOpen={handleToggleMenu}>
+                <Menu anchorEl={itemRef.current} open={openMenu} setOpen={(e) => handleOnClick(e)}>
                     <List>
                         {subItems?.map((i, index) => {
                             return (

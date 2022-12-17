@@ -1,26 +1,36 @@
-import { Typography } from '@mui/material';
+import { MonetizationOn } from '@mui/icons-material';
+import { Divider, Paper, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
-import React from 'react';
-import OrderDetailItem from './OrderDetailItem';
 import { commas } from '~/utils/formater';
+import OrderDetailItem from './OrderDetailItem';
+import config from '~/data/config.json';
 
 const OrderItem = ({ item }) => {
+    const labels = config.order.labels;
+
     return (
-        <Box>
+        <Paper sx={{ p: 0.5 }}>
             <Box>
-                <Typography variant="h6">delivery address __________</Typography>
-                <Typography variant="body1">{item.status}</Typography>
+                <Typography variant="body1" textAlign="right">
+                    {item.status}
+                </Typography>
+                <Divider sx={{ m: 0.5 }} />
             </Box>
             <Stack spacing={2}>
-                {item?.orderDetails?.map((od, index) => (
+                {item.orderDetails.map((od, index) => (
                     <OrderDetailItem key={index} item={od} />
                 ))}
             </Stack>
-            <Box>
-                <Typography variant="h6">Tổng tiền: {commas(item?.payPrice || 0)}</Typography>
-                <Typography variant="h6">Note: {item.note}</Typography>
+            <Divider sx={{ m: 0.5 }} />
+            <Box textAlign="right">
+                <Typography variant="h6" display="flex" alignItems="center" justifyContent="right">
+                    <MonetizationOn /> {labels.total}: {commas(item?.payPrice || 0)}
+                </Typography>
+                <Typography variant="h6">
+                    {labels.note}: {item.note}
+                </Typography>
             </Box>
-        </Box>
+        </Paper>
     );
 };
 

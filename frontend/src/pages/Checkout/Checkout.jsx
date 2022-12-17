@@ -15,8 +15,7 @@ import * as request from '~/utils/httpRequest';
 import DeliveryAddressItem from './DeliveryAddressItem';
 
 const Checkout = () => {
-    const labels = config.labels.checkout;
-    const currency = config.global.currency;
+    const labels = config.checkout.labels;
 
     const [paymentMethod, setPaymentMethod] = useState(1);
 
@@ -116,7 +115,7 @@ const Checkout = () => {
                             <div>
                                 <div>
                                     <Typography>{labels.orderSummary}: </Typography>
-                                    <Typography>{`${currency.symbol}${commas(100000)}`}</Typography>
+                                    <Typography>{commas(100000)}</Typography>
                                 </div>
                                 <div>
                                     <Button LinkComponent={Link} to={route.home} size="large" variant="outlined">

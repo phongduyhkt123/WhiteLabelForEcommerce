@@ -13,7 +13,7 @@ const ProductImages = ({ images }) => {
     return (
         <Grid2 item xs={12} md={6}>
             {previewImg && (
-                <Paper sx={{ position: 'relative', py: 4, borderRadius: 0 }}>
+                <Paper sx={{ position: 'relative', py: 1, borderRadius: 0 }}>
                     <Grid2 containter display="flex">
                         {/* image list */}
                         <Grid2 item xs={2}>
@@ -52,8 +52,8 @@ const ProductImages = ({ images }) => {
                                 src={previewImg?.url}
                                 alt=""
                                 width="100%"
-                                maxHeight={700}
-                                sx={{ objectFit: 'cover' }}
+                                maxHeight={500}
+                                sx={{ objectFit: 'fill' }}
                             />
                         </Grid2>
                     </Grid2>

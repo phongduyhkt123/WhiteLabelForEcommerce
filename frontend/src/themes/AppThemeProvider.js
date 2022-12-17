@@ -3,13 +3,7 @@ import { useMediaQuery } from '@mui/material';
 import { themes } from '~/config';
 
 const AppThemeProvider = ({ children }) => {
-    const isMobile = useMediaQuery('(max-width: 739px)');
-
-    if (isMobile) {
-        themes.typography.fontSize = 12 * 1.4;
-    }
-
-    const appThemes = createTheme(themes);
+    const appThemes = responsiveFontSizes(createTheme(themes));
 
     return <ThemeProvider theme={appThemes}>{children}</ThemeProvider>;
 };

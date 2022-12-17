@@ -20,8 +20,8 @@ export default function SliderCarousel({ children, isMobile }) {
     const settings = {
         dots: true,
         infinite: true,
-        slidesToShow: 5,
-        slidesToScroll: 5,
+        slidesToShow: 6,
+        slidesToScroll: 6,
         initialSlide: 0,
         arrows: !isMobile,
 

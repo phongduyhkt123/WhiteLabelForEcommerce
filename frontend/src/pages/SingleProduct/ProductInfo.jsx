@@ -13,7 +13,7 @@ import ProductDescription from './ProductDescription';
 const ProductInfo = ({ product }) => {
     const { quantity, setQuantity, variant, setVariant } = useContext(ProductContext);
 
-    const labels = config.labels.singleProduct;
+    const labels = config.singleProduct.labels;
 
     const updateQuantity = (type) => {
         type === 'plus' ? setQuantity(quantity + 1) : setQuantity(() => (quantity - 1 < 1 ? 1 : quantity - 1));
