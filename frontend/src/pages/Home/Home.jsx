@@ -1,7 +1,8 @@
-import { Container, Paper, Stack, Typography } from '@mui/material';
+import { Paper, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useContext, useEffect, useState } from 'react';
 import ScrollToTop from '~/components/ScrollToTop';
+import Title from '~/components/Title/Title';
 import { home } from '~/config';
 import { GlobalContext } from '~/context/GlobalContext';
 import { ProductCard } from '~/layouts/components/ProductCard/ProductCard';
@@ -28,7 +29,7 @@ function Home() {
     }, []);
 
     return (
-        <>
+        <Title title="Home">
             <Box width="100%" display="flex" flexDirection="column" alignItems="center" margin="auto">
                 {/* Banner */}
                 <SlideBanner images={home.topBanner.images} />
@@ -67,7 +68,7 @@ function Home() {
                 </Box>
             </Box>
             <ScrollToTop />
-        </>
+        </Title>
     );
 }
 

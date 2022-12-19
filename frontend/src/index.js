@@ -7,6 +7,8 @@ import { CssBaseline } from '@mui/material';
 import AppThemeProvider from '~/themes/AppThemeProvider';
 import { AlertProvider } from '~/context/AlertContext';
 import { GlobalProvider } from './context/GlobalContext';
+import './assets/fonts/Lato/Lato-Bold.ttf';
+import './assets/fonts/Lato/Lato-Regular.ttf';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

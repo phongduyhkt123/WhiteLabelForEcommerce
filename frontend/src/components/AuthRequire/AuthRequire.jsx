@@ -13,7 +13,7 @@ const AuthRequire = ({ children, ...rest }) => {
     }
 
     localStorage.removeItem('auth');
-    return <Navigate to={route.signin} state={location.pathname} />;
+    return <Navigate to={route.signin.path} state={location.pathname} />;
 };
 
 export default AuthRequire;

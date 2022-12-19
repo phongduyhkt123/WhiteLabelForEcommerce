@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import { route } from '~/config';
 
-const AuthCheck = ({ children }) => {
+const AuthCheck = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -11,11 +11,10 @@ const AuthCheck = ({ children }) => {
         if (token) {
             const exp = jwt_decode(token).exp * 1000;
             if (exp > Date.now()) {
-                navigate(route.home);
+                navigate(route.home.path);
             }
         }
     }, []);
-    return children;
 };
 
 export default AuthCheck;

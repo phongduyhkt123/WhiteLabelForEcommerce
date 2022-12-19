@@ -11,6 +11,7 @@ const Header = ({ headerRef }) => {
     return (
         <Box
             ref={headerRef}
+            id="header"
             width="100%"
             display="flex"
             flexDirection="column"

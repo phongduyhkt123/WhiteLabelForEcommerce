@@ -1,11 +1,10 @@
-import { Badge, Stack, TextField } from '@mui/material';
+import { Badge, Stack } from '@mui/material';
 
-import { Person, Search, ShoppingCart } from '@mui/icons-material';
+import { Person, ShoppingCart } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { Box } from '@mui/system';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { route } from '~/config';
-import { useContext, useEffect, useRef, useState } from 'react';
 import { GlobalContext } from '~/context/GlobalContext';
 import * as request from '~/utils/httpRequest';
 import AccountMenu from './ProfileMenu';
@@ -37,7 +36,7 @@ const Action = () => {
                 <IconButton
                     LinkComponent={Link}
                     aria-label="cart"
-                    to={route.cart}
+                    to={route.cart.path}
                     sx={{ display: 'flex', margin: 'auto' }}
                 >
                     <Badge badgeContent={totalCartItem} color="primary">
@@ -49,7 +48,7 @@ const Action = () => {
                     ref={avatarRef}
                     LinkComponent={Link}
                     aria-label="account"
-                    to={!auth ? route.signin : '#'}
+                    to={!auth ? route.signin.path : '#'}
                     onClick={auth ? handleToggleMenu : null}
                     sx={{ display: 'flex', margin: 'auto' }}
                 >

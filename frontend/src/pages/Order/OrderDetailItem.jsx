@@ -27,7 +27,7 @@ const OrderDetailItem = ({ item }) => {
                         <Typography
                             component={Link}
                             variant="body1"
-                            to={`${route.product}/${item.productVariation.product.id}`}
+                            to={`${route.product.path}/${item.productVariation.product.id}`}
                         >
                             {item.productVariation.product.name}
                         </Typography>

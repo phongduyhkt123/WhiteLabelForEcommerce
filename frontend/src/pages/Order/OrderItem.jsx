@@ -3,10 +3,10 @@ import { Divider, Paper, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import { commas } from '~/utils/formater';
 import OrderDetailItem from './OrderDetailItem';
-import config from '~/data/config.json';
+import { order as orderConfig } from '~/config';
 
 const OrderItem = ({ item }) => {
-    const labels = config.order.labels;
+    const labels = orderConfig.labels;
 
     return (
         <Paper sx={{ p: 0.5 }}>

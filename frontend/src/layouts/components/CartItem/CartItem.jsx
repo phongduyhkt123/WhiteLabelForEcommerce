@@ -39,7 +39,11 @@ const CartItem = ({ item, canControl = true, onDelete = () => {}, onChange = () 
                     alignItems="center"
                 >
                     <Grid2 item xs={12} md={5}>
-                        <Typography component={Link} variant="body1" to={`${route.product}/${item.productDetail.id}`}>
+                        <Typography
+                            component={Link}
+                            variant="body1"
+                            to={`${route.product.path}/${item.productDetail.id}`}
+                        >
                             {item.productDetail.name}
                         </Typography>
                         <Typography variant="body1">variant: {item.productVariation.variationName}</Typography>

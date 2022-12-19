@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { publicRoute, privateRoute } from '~/routes';
 import DefaultLayout from '~/layouts/DefaultLayout';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Box } from '@mui/system';
 
 import 'slick-carousel/slick/slick.css'; // Add this line
@@ -10,8 +10,20 @@ import StoreAdmin from './pages/Admin/StoreAdmin';
 import AuthRequire from '~/components/AuthRequire/AuthRequire';
 import { NavigateSetter } from './components/NavigateSetter/NavigateSetter';
 import ToastContainer from './components/ToastContainer/ToastContainer';
+import AuthCheck from './pages/Signin/AuthCheck';
+import { global } from '~/config';
 
 function App() {
+    useEffect(() => {
+        let link = document.querySelector("link[rel~='icon']");
+        if (!link) {
+            link = document.createElement('link');
+            link.rel = 'icon';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+        link.href = global.favicon.src;
+    }, []);
+
     return (
         <Box margin="auto">
             <Router>
@@ -24,7 +36,17 @@ function App() {
                             if (route.layout) Layout = route.layout;
                             else if (route.layout === null) Layout = Fragment;
                             const Page = route.element;
-                            return <Route key={index} path={route.path} element={<Layout>{Page}</Layout>} />;
+                            return (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    element={
+                                        <Layout>
+                                            {route.authCheck && <AuthCheck />} <Page title={route.title} />
+                                        </Layout>
+                                    }
+                                />
+                            );
                         })}
                         {/* Private Route */}
 
@@ -39,7 +61,9 @@ function App() {
                                     path={route.path}
                                     element={
                                         <AuthRequire>
-                                            <Layout>{Page}</Layout>
+                                            <Layout>
+                                                <Page title={route.title} />
+                                            </Layout>
                                         </AuthRequire>
                                     }
                                 />

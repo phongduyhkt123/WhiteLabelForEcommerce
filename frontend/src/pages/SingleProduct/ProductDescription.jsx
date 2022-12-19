@@ -1,10 +1,10 @@
 import { Button, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
-import config from '~/data/config.json';
+import { singleProduct as singleProductConfig } from '~/config';
 
 const ProductDescription = ({ description }) => {
-    const labels = config.singleProduct.labels;
+    const labels = singleProductConfig.labels;
 
     const [descriptionExpand, setDescriptionExpand] = useState(false);
 

@@ -52,7 +52,18 @@ html *::-webkit-scrollbar-thumb:hover {
     background-color: rgba(22, 24, 35, 0.3);
 }
 
-/* show/hide */
-.show {
-    display: block;
+/* font */
+
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/Lato/Lato-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Lato';
+    font-style: bold;
+    font-weight: 500;
+    src: url('assets/fonts/Lato/Lato-Bold.ttf') format('truetype');
 }

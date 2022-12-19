@@ -26,11 +26,7 @@ const CheckoutItem = ({ item }) => {
                 {/* info */}
                 <Grid2 item xs={10} container display="flex" justifyContent="space-around" alignItems="center">
                     <Grid2 item xs={5}>
-                        <Typography
-                            component={Link}
-                            variant="h5"
-                            to={route.singleProduct.replace(':id', item.productDetail.id)}
-                        >
+                        <Typography component={Link} variant="h5" to={`${route.product.path}/${item.productDetail.id}`}>
                             {item.productDetail.name}
                         </Typography>
                     </Grid2>

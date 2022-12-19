@@ -1,2 +1,6 @@
-import config from '~/data/config.json';
-export default config.global.logo;
+import { global } from '~/config';
+import { default as defaultAvatar } from './logo192.png';
+
+const { logo } = global;
+
+export { logo, defaultAvatar };

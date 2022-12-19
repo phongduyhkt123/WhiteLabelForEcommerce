@@ -1,13 +1,10 @@
 import { Check } from '@mui/icons-material';
 import { Button, Chip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useContext } from 'react';
-import { GlobalContext } from '~/context/GlobalContext';
-import config from '~/data/config.json';
+import { deliveryAddress as deliveryAddressConfig } from '~/config';
 
 const DeliveryAddressItemInfo = ({ item, isDefault = false }) => {
-    const { isMobile } = useContext(GlobalContext);
-    const labels = config.deliveryAddress.labels;
+    const labels = deliveryAddressConfig.labels;
     const address = `${item.addressDetail}, ${item.addressWard.name}, ${item.addressWard.district.name}, ${item.addressWard.district.provinceCity.name}`;
     return (
         <Box>

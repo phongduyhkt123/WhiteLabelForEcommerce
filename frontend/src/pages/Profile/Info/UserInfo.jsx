@@ -1,20 +1,7 @@
 import { useState } from 'react';
-import { Box, Button, Card, CardContent, CardHeader, Divider, Grid, TextField } from '@mui/material';
-
-const states = [
-    {
-        value: 'alabama',
-        label: 'Alabama',
-    },
-    {
-        value: 'new-york',
-        label: 'New York',
-    },
-    {
-        value: 'san-francisco',
-        label: 'San Francisco',
-    },
-];
+import { Box, Button, Card, CardContent, CardHeader, Divider, Grid, Input, TextField } from '@mui/material';
+import { profile } from '~/config';
+import { defaultAvatar } from '~/assets/images';
 
 const UserInfo = (props) => {
     const user = JSON.parse(localStorage.getItem('auth'))?.userInfo;
@@ -24,8 +11,7 @@ const UserInfo = (props) => {
         email: user.email,
         phone: user.phone,
         username: user.username,
-        state: 'Alabama',
-        country: 'USA',
+        avatar: user.avatar,
     });
 
     const handleChange = (event) => {
@@ -35,6 +21,19 @@ const UserInfo = (props) => {
         });
     };
 
+    const setAvatarPreview = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setValues({
+                ...values,
+                avatar: reader.result,
+            });
+        };
+
+        reader.readAsDataURL(file);
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
     };
@@ -42,74 +41,49 @@ const UserInfo = (props) => {
     return (
         <form autoComplete="off" noValidate {...props} onSubmit={handleSubmit}>
             <Card>
-                <CardHeader subheader="The information can be edited" title="Profile" />
+                <CardHeader subheader="The information can be edited" title={profile.labels.profile} />
                 <Divider />
                 <CardContent>
+                    <Box display="flex" alignItems="center" flexDirection="column" mb="4rem">
+                        <Box
+                            component="img"
+                            src={values.avatar}
+                            alt="avatar"
+                            width="15rem"
+                            border="1px solid #fff"
+                            borderRadius="50%"
+                            mb="2rem"
+                            sx={{ aspectRatio: '1 / 1', objectFit: 'cover' }}
+                            onClick={() => document.querySelector('input[type="file"]').click()}
+                            onError={(e) => {
+                                e.target.src = defaultAvatar;
+                            }}
+                        />
+                        <Button variant="contained" component="label">
+                            {profile.labels.changeAvatar}
+                            <input type="file" accept=".jpg,.jpeg,.png" hidden onChange={(e) => setAvatarPreview(e)} />
+                        </Button>
+                    </Box>
                     <Grid container spacing={3}>
-                        <Grid item md={6} xs={12}>
-                            <TextField
-                                fullWidth
-                                helperText="Please specify the full name"
-                                label="Full name"
-                                name="fullname"
-                                onChange={handleChange}
-                                required
-                                value={values.fullname}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item md={6} xs={12}>
-                            <TextField
-                                fullWidth
-                                label="Email Address"
-                                name="email"
-                                onChange={handleChange}
-                                required
-                                value={values.email}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item md={6} xs={12}>
-                            <TextField
-                                fullWidth
-                                label="Phone Number"
-                                name="phone"
-                                onChange={handleChange}
-                                type="number"
-                                value={values.phone || ''}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item md={6} xs={12}>
-                            <TextField
-                                fullWidth
-                                label="Country"
-                                name="country"
-                                onChange={handleChange}
-                                required
-                                value={values.country}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item md={6} xs={12}>
-                            <TextField
-                                fullWidth
-                                label="Select State"
-                                name="state"
-                                onChange={handleChange}
-                                required
-                                select
-                                SelectProps={{ native: true }}
-                                value={values.state}
-                                variant="outlined"
-                            >
-                                {states.map((option) => (
-                                    <option key={option.value} value={option.value}>
-                                        {option.label}
-                                    </option>
-                                ))}
-                            </TextField>
-                        </Grid>
+                        {profile.items.map((item, index) => (
+                            <Grid item md={6} xs={12} key={index}>
+                                <TextField
+                                    {...item}
+                                    fullWidth
+                                    label={profile.labels[item.label]}
+                                    onChange={handleChange}
+                                    value={values[item.value]}
+                                    SelectProps={{ native: true }}
+                                    variant="outlined"
+                                >
+                                    {item.options?.map(({ value, label }) => (
+                                        <option key={value} value={value}>
+                                            {profile.labels[label]}
+                                        </option>
+                                    ))}
+                                </TextField>
+                            </Grid>
+                        ))}
                     </Grid>
                 </CardContent>
                 <Divider />
@@ -121,7 +95,7 @@ const UserInfo = (props) => {
                     }}
                 >
                     <Button color="primary" variant="contained">
-                        Save details
+                        {profile.labels.save}
                     </Button>
                 </Box>
             </Card>

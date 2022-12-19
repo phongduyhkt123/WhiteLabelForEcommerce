@@ -1,18 +1,16 @@
-import React, { useCallback, useState, useEffect, useRef, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { Button, Checkbox, Divider, Pagination, Paper, Skeleton, Stack, Typography } from '@mui/material';
-import { ProductCard } from '~/layouts/components/ProductCard/ProductCard';
+import { Pagination } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import { Box } from '@mui/system';
-import { header, route } from '~/config';
-import * as request from '~/utils/httpRequest';
-import useGetProduct from '~/hooks/useGetProduct';
+import { useSearchParams } from 'react-router-dom';
 import { ProductCardSkeleton } from '~/components/Skeleton';
 import { AlertContext, AlertTypes } from '~/context/AlertContext';
-import { useSearchParams } from 'react-router-dom';
-import { makeStyles } from '@mui/styles';
+import useGetProduct from '~/hooks/useGetProduct';
+import { ProductCard } from '~/layouts/components/ProductCard/ProductCard';
+import FilterBar from './FilterBar';
+import Title from '~/components/Title/Title';
 
-const Product = () => {
+const Product = ({ title }) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const { setShowMessage, setMessage } = useContext(AlertContext);
     const initFilter = {
@@ -26,27 +24,6 @@ const Product = () => {
         category && setFilter({ ...initFilter, category: [parseInt(category)] });
     }, [searchParams]);
 
-    const { data: categories } = request.useAxios({ url: route.categoryAPI });
-
-    const filterSelect = (type, checked, item) => {
-        if (checked) {
-            switch (type) {
-                case 'CATEGORY':
-                    setFilter({ ...filter, category: [...filter.category, item] });
-                    break;
-                default:
-            }
-        } else {
-            switch (type) {
-                case 'CATEGORY':
-                    const newCategory = filter.category.filter((e) => e !== item);
-                    setFilter({ ...filter, category: newCategory });
-                    break;
-                default:
-            }
-        }
-    };
-
     const [page, setPage] = useState(1);
     const handleChangePage = ({}, page) => {
         setPage(page);
@@ -59,72 +36,28 @@ const Product = () => {
         setShowMessage(true);
     }
 
-    const clearFilter = () => setFilter(initFilter);
-
-    const filterRef = useRef(null);
-
     return (
-        <Grid2 container spacing={2}>
-            {/* Sidebar */}
-            <Grid2 item xs={12} sm={3} md={2}>
-                <Paper sx={{ position: 'sticky', top: header.styles.height ? header.styles.height + 5 : 90 }}>
-                    <div className="catalog__filter" ref={filterRef}>
-                        <div className="catalog__filter__close" onClick={() => {}}>
-                            <i className="bx bx-left-arrow-alt"></i>
-                        </div>
-
-                        <Stack
-                            direction={'column'}
-                            spacing={1}
-                            divider={<Divider variant="middle" sx={{ borderColor: 'white' }} />}
-                        >
-                            <div className="catalog__filter__widget">
-                                <Typography>Loại sản phẩm</Typography>
-                                <div className="catalog__filter__widget__content">
-                                    {categories?.map((item) => (
-                                        <Box key={item.id} display="flex" alignItems="center">
-                                            <Checkbox
-                                                label={item.name}
-                                                sx={{ color: 'primary.main' }}
-                                                onChange={(e) => filterSelect('CATEGORY', e.target.checked, item.id)}
-                                                checked={filter.category.includes(item.id)}
-                                            />
-                                            <Typography>{item.name}</Typography>
-                                        </Box>
-                                    ))}
-                                </div>
-                            </div>
-                        </Stack>
-
-                        <div className="catalog__filter__widget">
-                            <div className="catalog__filter__widget__content">
-                                <Button size="sm" onClick={clearFilter}>
-                                    xóa bộ lọc
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="catalog__filter__toggle">
-                        <Button size="sm" onClick={() => {}}>
-                            bộ lọc
-                        </Button>
-                    </div>
-                </Paper>
-            </Grid2>
-            {/* Product list */}
-            <Grid2 item xs={12} sm={8} md={10}>
-                <Grid2 container spacing={2}>
-                    {loaded
-                        ? products.map((item, index) => (
-                              <Grid2 item xs={6} sm={6} md={4} lg={2.4} key={index}>
-                                  <ProductCard data={item} />
-                              </Grid2>
-                          ))
-                        : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => <ProductCardSkeleton key={item} />)}
+        <Title title={title}>
+            <Grid2 container spacing={2}>
+                {/* Sidebar */}
+                <Grid2 item xs={12} sm={3} md={2}>
+                    <FilterBar filter={filter} setFilter={setFilter} initFilter={initFilter} />
                 </Grid2>
-                <Pagination color="primary" count={10} size="large" sx={{ mt: 2 }} onChange={handleChangePage} />
+                {/* Product list */}
+                <Grid2 item xs={12} sm={8} md={10}>
+                    <Grid2 container spacing={2}>
+                        {loaded
+                            ? products.map((item, index) => (
+                                  <Grid2 item xs={6} sm={6} md={4} lg={2.4} key={index}>
+                                      <ProductCard data={item} />
+                                  </Grid2>
+                              ))
+                            : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => <ProductCardSkeleton key={item} />)}
+                    </Grid2>
+                    <Pagination color="primary" count={10} size="large" sx={{ mt: 2 }} onChange={handleChangePage} />
+                </Grid2>
             </Grid2>
-        </Grid2>
+        </Title>
     );
 };
 

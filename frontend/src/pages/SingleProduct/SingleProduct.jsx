@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import { useParams } from 'react-router-dom';
+import Title from '~/components/Title/Title';
 import { route } from '~/config';
 import { ProductProvider } from '~/context/ProductContext';
 
@@ -16,14 +17,16 @@ function SingleProduct() {
     return (
         <Box>
             {loaded && (
-                <Grid2 container spacing={2} my={1} mx="auto">
-                    {/* images */}
-                    <ProductImages images={product.images} />
-                    {/* info */}
-                    <ProductProvider>
-                        <ProductInfo product={product} />
-                    </ProductProvider>
-                </Grid2>
+                <Title title={product.name}>
+                    <Grid2 container spacing={2} my={1} mx="auto">
+                        {/* images */}
+                        <ProductImages images={product.images} />
+                        {/* info */}
+                        <ProductProvider>
+                            <ProductInfo product={product} />
+                        </ProductProvider>
+                    </Grid2>
+                </Title>
             )}
         </Box>
     );

@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Skeleton, Stack, Typography } from '@mui/material';
+import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { useContext, useState } from 'react';
 
@@ -6,16 +6,15 @@ import { Link } from 'react-router-dom';
 import PaymentMethodItem from '~/components/PaymentMethodItem/PaymentMethodItem';
 import { CartItemSkeleton } from '~/components/Skeleton';
 import StaticAlert from '~/components/StaticAlert/StaticAlert';
-import { paymentMethods, route } from '~/config';
+import { checkout as checkOutConfig, paymentMethods, route } from '~/config';
 import { AlertContext, AlertTypes } from '~/context/AlertContext';
-import config from '~/data/config.json';
 import CartItem from '~/layouts/components/CartItem/CartItem';
 import { commas } from '~/utils/formater';
 import * as request from '~/utils/httpRequest';
 import DeliveryAddressItem from './DeliveryAddressItem';
 
 const Checkout = () => {
-    const labels = config.checkout.labels;
+    const labels = checkOutConfig.labels;
 
     const [paymentMethod, setPaymentMethod] = useState(1);
 
@@ -118,7 +117,7 @@ const Checkout = () => {
                                     <Typography>{commas(100000)}</Typography>
                                 </div>
                                 <div>
-                                    <Button LinkComponent={Link} to={route.home} size="large" variant="outlined">
+                                    <Button LinkComponent={Link} to={route.home.path} size="large" variant="outlined">
                                         {labels.addMoreProducts}
                                     </Button>
                                     <Button size="large" variant="contained" onClick={handleCheckout}>

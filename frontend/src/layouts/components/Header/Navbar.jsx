@@ -1,5 +1,5 @@
 import { Reorder } from '@mui/icons-material';
-import { Box, Divider, IconButton, Paper, Stack, Typography } from '@mui/material';
+import { Box, Divider, IconButton, Stack, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useContext, useState } from 'react';
 import { header } from '~/config';
@@ -27,10 +27,9 @@ const Navbar = () => {
     const [hide, setHide] = useState(true);
 
     const { isMobile } = useContext(GlobalContext);
-    console.log(hide);
 
     return (
-        <div style={{ height: '3.5rem' }}>
+        <Box height="3.5rem" display="flex">
             <IconButton size="small" className={!isMobile ? classes.hide : ''} onClick={() => setHide(!hide)}>
                 <Reorder />
             </IconButton>
@@ -38,6 +37,7 @@ const Navbar = () => {
                 direction={isMobile ? 'column' : 'row'}
                 className={[isMobile ? classes.mobileNav : classes.nav, hide && isMobile && classes.hide].join(' ')}
                 spacing={2}
+                margin="auto"
                 divider={<Divider orientation="vertical" flexItem />}
             >
                 {navBar.item.map((item, index) => (
@@ -46,7 +46,7 @@ const Navbar = () => {
                     </NavbarItem>
                 ))}
             </Stack>
-        </div>
+        </Box>
     );
 };
 

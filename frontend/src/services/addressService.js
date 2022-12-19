@@ -25,7 +25,6 @@ export const getWards = async (districtId) => {
         headers: { Token: token },
         params: { district_id: districtId },
     });
-    console.log(res);
     const data = res.data.data.map((item) => ({ id: item.WardCode, name: item.WardName }));
     return { data };
 };

@@ -15,6 +15,19 @@ const theme = createTheme({
                 },
             },
         },
+        // change hover color
+        MuiButton: {
+            styleOverrides: {
+                root: ({ ownerState }) => ({
+                    ...(ownerState.variant === 'contained' && {
+                        '&:hover': {
+                            backgroundColor: constants.color.primary.main,
+                            opacity: 0.8,
+                        },
+                    }),
+                }),
+            },
+        },
 
         ...config.global.components,
     },

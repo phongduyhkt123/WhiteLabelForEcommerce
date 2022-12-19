@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { useContext, useEffect } from 'react';
 import OldPrice from '~/components/OldPrice';
 import { ProductContext } from '~/context/ProductContext';
-import config from '~/data/config.json';
+import { singleProduct as singleProductConfig } from '~/config';
 import { commas } from '~/utils/formater';
 import ButtonControll from './ButtonControll';
 import ProductDescription from './ProductDescription';
@@ -13,14 +13,11 @@ import ProductDescription from './ProductDescription';
 const ProductInfo = ({ product }) => {
     const { quantity, setQuantity, variant, setVariant } = useContext(ProductContext);
 
-    const labels = config.singleProduct.labels;
+    const labels = singleProductConfig.labels;
 
     const updateQuantity = (type) => {
         type === 'plus' ? setQuantity(quantity + 1) : setQuantity(() => (quantity - 1 < 1 ? 1 : quantity - 1));
     };
-
-    console.log(product);
-    console.log(variant);
 
     useEffect(() => {
         const variations = product.variations;

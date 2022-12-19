@@ -6,11 +6,12 @@ import DeliveryAddressDialog from '~/components/Dialog/DeliveryAddressDialog';
 import { route } from '~/config';
 import * as request from '~/utils/httpRequest';
 import DeliveryAddressItem from './DeliveryAddressItem';
-import config from '~/data/config.json';
+import { deliveryAddress as defaultAddressConfig } from '~/config';
 import { GlobalContext } from '~/context/GlobalContext';
+import Title from '~/components/Title/Title';
 
-const DeliveryAddress = () => {
-    const labels = config.deliveryAddress.labels;
+const DeliveryAddress = ({ title }) => {
+    const labels = defaultAddressConfig.labels;
 
     const [deliveryAddress, setDeliveryAddress] = useState({});
 
@@ -57,7 +58,7 @@ const DeliveryAddress = () => {
     };
 
     return (
-        <>
+        <Title title={title}>
             <Button variant="contained" startIcon={<Add fontSize="small" />} onClick={handleAddClick}>
                 {labels.addNewAddress}
             </Button>
@@ -70,7 +71,7 @@ const DeliveryAddress = () => {
                 isDefault={deliveryAddress.id === userInfo?.defaultAddress.id}
                 handleClose={() => setshowDialog(false)}
             />
-        </>
+        </Title>
     );
 };
 

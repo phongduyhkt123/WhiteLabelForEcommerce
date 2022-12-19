@@ -6,11 +6,11 @@ import { route } from '~/config';
 import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import { GlobalContext } from '~/context/GlobalContext';
 import { ProductContext } from '~/context/ProductContext';
-import config from '~/data/config.json';
+import { singleProduct as singleProductConfig } from '~/config';
 import * as request from '~/utils/httpRequest';
 
 const ButtonControll = () => {
-    const labels = config.singleProduct.labels;
+    const labels = singleProductConfig.labels;
 
     const { quantity, variant } = useContext(ProductContext);
 

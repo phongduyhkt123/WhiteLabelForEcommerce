@@ -1,11 +1,40 @@
-import route from './route';
-import themes from './themes';
-import footer from './footer';
-import header from './header';
-import signin from './signin';
-import signup from './signup';
 import constants from './constants';
-import paymentMethods from './paymentMethod';
-import home from './home';
+import themes from './themes';
 
-export { route, footer, header, themes, constants, paymentMethods, home, signin, signup };
+const {
+    routes,
+    footer,
+    header,
+    home,
+    signin,
+    signup,
+    paymentMethods,
+    productCard,
+    cart,
+    checkout,
+    order,
+    deliveryAddress,
+    singleProduct,
+    profile,
+    global,
+} = require('~/data/config.json');
+
+export {
+    routes as route,
+    footer,
+    header,
+    themes,
+    constants,
+    paymentMethods,
+    home,
+    signin,
+    signup,
+    productCard,
+    cart,
+    checkout,
+    order,
+    deliveryAddress,
+    singleProduct,
+    profile,
+    global,
+};

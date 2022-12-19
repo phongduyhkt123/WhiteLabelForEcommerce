@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import { CartItemSkeleton } from '~/components/Skeleton';
 import { route } from '~/config';
 import { GlobalContext } from '~/context/GlobalContext';
-import config from '~/data/config.json';
+import { cart as cartConfig } from '~/config';
 import CartItem from '~/layouts/components/CartItem/CartItem';
 import { commas } from '~/utils/formater';
 import * as request from '~/utils/httpRequest';
+import Title from '~/components/Title/Title';
 
-const Cart = () => {
-    const labels = config.cart.labels;
+const Cart = ({ title }) => {
+    const labels = cartConfig.labels;
 
     const { setTotalCartItem } = useContext(GlobalContext);
 
@@ -22,8 +23,6 @@ const Cart = () => {
         setData: setCartProducts,
         loaded,
     } = request.useAxios({ url: route.cartAPI, isAuthen: true });
-
-    console.log(cartProducts);
 
     useEffect(() => {
         if (loaded) {
@@ -84,33 +83,35 @@ const Cart = () => {
     };
 
     return (
-        <Box my={3} display="flex" flexDirection="column" alignItems="center">
-            <Box width="100%" p={2} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
-                {/* List Cart Items */}
-                <Stack spacing={1} divider={<Divider />}>
-                    {loaded ? renderCartItem() : <CartItemSkeleton />}
-                </Stack>
-            </Box>
+        <Title title={title}>
+            <Box my={3} display="flex" flexDirection="column" alignItems="center">
+                <Box width="100%" p={2} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
+                    {/* List Cart Items */}
+                    <Stack spacing={1} divider={<Divider />}>
+                        {loaded ? renderCartItem() : <CartItemSkeleton />}
+                    </Stack>
+                </Box>
 
-            <Box width="100%" p={2} mt={3} sx={{ boxShadow: 1, bgcolor: 'background.white', borderRadius: 2 }}>
-                {/* Price and checkout */}
-                <div>
+                <Box width="100%" p={2} mt={3} sx={{ boxShadow: 1, bgcolor: 'background.white', borderRadius: 2 }}>
+                    {/* Price and checkout */}
                     <div>
                         <div>
-                            <span>{labels.total}:</span> <span>{commas(totalPrice)}</span>
+                            <div>
+                                <span>{labels.total}:</span> <span>{commas(totalPrice)}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <Button LinkComponent={Link} to={route.home.path} size="large" variant="outlined">
+                                {labels.continueShopping}
+                            </Button>
+                            <Button LinkComponent={Link} to={route.checkout.path} size="large" variant="contained">
+                                {labels.checkout}
+                            </Button>
                         </div>
                     </div>
-                    <div>
-                        <Button LinkComponent={Link} to={route.home} size="large" variant="outlined">
-                            {labels.continueShopping}
-                        </Button>
-                        <Button LinkComponent={Link} to={route.checkout} size="large" variant="contained">
-                            {labels.checkout}
-                        </Button>
-                    </div>
-                </div>
+                </Box>
             </Box>
-        </Box>
+        </Title>
     );
 };
 

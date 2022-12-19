@@ -1,17 +1,17 @@
 import Logout from '@mui/icons-material/Logout';
-import Settings from '@mui/icons-material/Settings';
-import { List, Paper, Popper } from '@mui/material';
+import { Box, List } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { GlobalContext } from '~/context/GlobalContext';
-import { route } from '~/config';
 import Menu from '~/components/Menu';
+import { route, header } from '~/config';
+import Icon from '~/config/Store/Icon';
+import { GlobalContext } from '~/context/GlobalContext';
 
 export default function AccountMenu({ anchorEl, open, setOpen }) {
+    const { profileMenu } = header;
     const { setTotalCartItem } = useContext(GlobalContext);
-    const auth = JSON.parse(localStorage.getItem('auth'));
 
     const handleLogout = () => {
         localStorage.removeItem('auth');
@@ -21,19 +21,22 @@ export default function AccountMenu({ anchorEl, open, setOpen }) {
     return (
         <Menu anchorEl={anchorEl} open={open} setOpen={setOpen}>
             <List>
-                <MenuItem>
-                    <Link to={route.profile}>
-                        <ListItemIcon>
-                            <Settings fontSize="small" />
-                        </ListItemIcon>
-                        Settings
-                    </Link>
-                </MenuItem>
+                {profileMenu.items.map((item, index) => (
+                    <MenuItem key={index}>
+                        <Box component={Link} to={route[item.to].path} display="flex" alignItems="center">
+                            <ListItemIcon>
+                                <Icon component={item.icon} fontSize="small" />
+                            </ListItemIcon>
+                            {profileMenu.labels[item.title]}
+                        </Box>
+                    </MenuItem>
+                ))}
+
                 <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
-                    Logout
+                    {profileMenu.labels.logout}
                 </MenuItem>
             </List>
         </Menu>

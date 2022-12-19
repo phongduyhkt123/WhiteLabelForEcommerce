@@ -8,12 +8,12 @@ import { route } from '~/config';
 
 const items = [
     {
-        to: '/',
+        to: '/profile',
         icon: <SignalCellularAlt />,
         title: 'Profile',
     },
     {
-        to: route.order,
+        to: route.order.path,
         icon: <Receipt />,
         title: 'Orders',
     },
