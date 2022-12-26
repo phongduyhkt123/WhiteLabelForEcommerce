@@ -6,21 +6,23 @@ import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Link } from 'react-router-dom';
 
 import { Add, DeleteForeverOutlined, Remove } from '@mui/icons-material';
-import { route } from '~/config';
+import { route, cart } from '~/config';
 import { commas } from '~/utils/formater';
 
 /// Set time out when update quantity
 const CartItem = ({ item, canControl = true, onDelete = () => {}, onChange = () => {} }) => {
     const itemRef = useRef(null);
 
+    console.log(item);
+
     return (
         <Box ref={itemRef}>
-            <Grid2 container width="100%" height="100%" direction="row">
+            <Grid2 container width="100%" height="100%" direction="row" columnSpacing={2} alignItems="center">
                 {/* image */}
-                <Grid2 item xs={3} md={2} height="100%" display="flex">
+                <Grid2 item xs={3} md={2} height="100%" display="flex" bgcolor="background.default">
                     <Box
                         component="img"
-                        src={item.productDetail.avatar}
+                        src={item.productVariation.avatar?.url}
                         alt=""
                         width="100%"
                         maxWidth="10rem"
@@ -42,18 +44,27 @@ const CartItem = ({ item, canControl = true, onDelete = () => {}, onChange = () 
                         <Typography
                             component={Link}
                             variant="body1"
-                            to={`${route.product.path}/${item.productDetail.id}`}
+                            to={`${route.product.path}/${item.productVariation.product.id}`}
                         >
-                            {item.productDetail.name}
+                            {item.productVariation.product.name}
                         </Typography>
-                        <Typography variant="body1">variant: {item.productVariation.variationName}</Typography>
+                        <Typography variant="body1">
+                            {cart.labels.variant}: {item.productVariation.variationName}
+                        </Typography>
                     </Grid2>
-                    <Grid2 item xs={6} md={3}>
+                    <Grid2
+                        item
+                        xs={6}
+                        md={3}
+                        alignSelf="stretch"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                    >
                         <Typography textAlign="center">{commas(item.productVariation.price)}</Typography>
                     </Grid2>
                     <Grid2 item xs={6} md={2} justifyContent="center" alignItems="center" display="flex">
-                        Qt:
-                        {/* quantity */}
+                        {cart.labels.quantity}:{/* quantity */}
                         {canControl && (
                             <IconButton onClick={() => onChange(item.productVariation.id, item.quantity, '-')}>
                                 <Remove />

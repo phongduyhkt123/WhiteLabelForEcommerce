@@ -64,7 +64,7 @@ export const ProductCard = ({ data }) => {
                 </Typography>
             )}
 
-            {!isMobile && (
+            {/* {!isMobile && (
                 <CardActions>
                     <Button
                         variant="contained"
@@ -86,7 +86,7 @@ export const ProductCard = ({ data }) => {
                         {pConfig.addToCart.label}
                     </Button>
                 </CardActions>
-            )}
+            )} */}
         </Card>
     );
 };

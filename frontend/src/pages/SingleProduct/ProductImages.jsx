@@ -7,7 +7,7 @@ const ProductImages = ({ images }) => {
     const [previewImg, setPreviewImg] = useState();
 
     useEffect(() => {
-        setPreviewImg({ id: images[0].id, url: images[0].url });
+        images.length > 0 && setPreviewImg({ id: images[0].id, url: images[0].url });
     }, []);
 
     return (

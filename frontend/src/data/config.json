@@ -10,7 +10,7 @@
         "profile": { "path": "/profile", "title": "Profile" },
         "search": { "path": "/search", "title": "Search" },
         "singleProduct": { "path": "/product/:id", "title": "Product" },
-        "product": { "path": "/product", "title": "Product" },
+        "product": { "path": "/product", "params": { "page": 1 }, "title": "Product" },
         "cart": { "path": "/cart", "title": "Cart" },
         "checkout": { "path": "/checkout", "title": "Checkout" },
         "singleOrder": { "path": "/order/:id", "title": "Order" },
@@ -19,16 +19,20 @@
         "userinfo": { "path": "/userinfo", "title": "Userinfo" },
         "payment": { "path": "/payment", "title": "Payment" },
 
-        "cartAPI": "/buyer/cart-detail",
-        "countCartAPI": "/buyer/cart-detail/count",
-        "signinAPI": "/signin",
+        "cartAPI": "/user/cart",
+        "countCartAPI": "/user/cart/count",
+        "signinAPI": "/login",
+        "signupAPI": "/signup",
         "productAPI": "/product",
+        "productSearchAPI": "/product/search",
         "categoryAPI": "/product-category",
-        "orderAPI": "/buyer/order",
-        "orderFromCartAPI": "/buyer/order/cart",
-        "deliveryAddressAPI": "/buyer/delivery-address",
+        "orderAPI": "/user/order",
+        "deliveryAddressAPI": "/user/address",
         "userinfoAPI": "/buyer/userinfo",
-        "singleProductAPI": "/product/"
+        "singleProductAPI": "/product/",
+
+        "signinAdminAPI": "/login",
+        "productAdminAPI": "/admin/product"
     },
 
     "global": {
@@ -258,15 +262,6 @@
                 },
                 "api": "/product/lasted",
                 "limit": 10
-            },
-            {
-                "title": "Random",
-                "banner": {
-                    "src": "https://img.freepik.com/premium-psd/fitness-gym-training-facebook-cover-web-banner-psd-template_265396-140.jpg?w=2000",
-                    "alt": "image"
-                },
-                "api": "/product",
-                "limit": 10
             }
         ],
 
@@ -391,7 +386,24 @@
             "noItem": "No item in cart",
             "checkout": "Checkout",
             "total": "Total",
-            "continueShopping": "Continue shopping"
+            "continueShopping": "Continue shopping",
+            "quantity": "Qt",
+            "variant": "Variant"
+        }
+    },
+
+    "product": {
+        "labels": {
+            "clearFilter": "Clear filter",
+            "filter": "Filter",
+            "sortBy": "Sort by",
+            "price": "Price",
+            "priceRange": "Price range",
+            "priceRangeFrom": "From",
+            "priceRangeTo": "To",
+            "priceRangeApply": "Apply",
+            "productCategory": "Product category",
+            "searchResult": "Search result for"
         }
     },
 
@@ -450,16 +462,20 @@
             "paymentMethod": "Payment Method",
             "noProducts": "No thing to checkout",
             "orderSummary": "Order Summary",
+            "shipFee": "Shiping fee",
+            "total": "Total",
             "order": "Order",
             "addMoreProducts": "Add more products",
-            "checkoutSuccess": "Checkout success"
+            "checkoutSuccess": "Checkout success",
+            "changeDeliveryAddress": "Change"
         }
     },
 
     "order": {
         "labels": {
             "total": "Total",
-            "note": "Note"
+            "note": "Note",
+            "cancel": "Cancel"
         }
     },
 
@@ -467,14 +483,12 @@
         "items": [
             {
                 "label": "fullname",
-                "component": "TextFeild",
                 "value": "fullname",
                 "name": "fullname",
                 "required": true
             },
             {
                 "label": "email",
-                "component": "TextFeild",
                 "value": "email",
                 "name": "email",
                 "type": "email",
@@ -482,21 +496,18 @@
             },
             {
                 "label": "phone",
-                "component": "TextFeild",
                 "value": "phone",
                 "name": "phone",
                 "type": "tel"
             },
             {
                 "label": "username",
-                "component": "TextFeild",
                 "value": "username",
                 "name": "username",
                 "required": true
             },
             {
                 "label": "gender",
-                "component": "TextFeild",
                 "value": "username",
                 "name": "username",
                 "required": true,
@@ -525,6 +536,77 @@
             "female": "Female",
             "save": "Save details",
             "changeAvatar": "Change Avatar"
+        }
+    },
+
+    "profileSideBar": {
+        "items": [
+            {
+                "to": "/profile",
+                "icon": "SignalCellularAlt",
+                "title": "Profile"
+            },
+            {
+                "to": "/order",
+                "icon": "Receipt",
+                "title": "Orders"
+            },
+            {
+                "to": "/delivery-address",
+                "icon": "Room",
+                "title": "Delivery Address"
+            }
+        ]
+    },
+
+    "orderStatus": {
+        "items": {
+            "WAIT_FOR_PAYMENT": {
+                "id": 0,
+                "name": "waitForPayment",
+                "color": "#ff9800",
+                "cancelable": true
+            },
+            "WAIT_FOR_CONFIRM": {
+                "id": 1,
+                "name": "waitForConfirm",
+                "color": "#4caf50",
+                "cancelable": true
+            },
+            "WAIT_FOR_SEND": {
+                "id": 2,
+                "name": "waitForSend",
+                "color": "#2196f3",
+                "cancelable": true
+            },
+            "DELIVERING": {
+                "id": 3,
+                "name": "delivering",
+                "color": "#2196f3",
+                "cancelable": true
+            },
+            "DELIVERED": {
+                "id": 4,
+                "name": "delivered",
+                "color": "#4caf50",
+                "cancelable": true
+            },
+            "CANCELED": {
+                "id": 5,
+                "name": "canceled",
+                "color": "#f44336",
+                "cancelable": true
+            }
+        },
+
+        "labels": {
+            "waitForPayment": "Wait for payment",
+            "waitForConfirm": "Wait for confirm",
+            "waitForSend": "Wait for send",
+            "delivering": "Delivering",
+            "delivered": "Delivered",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
         }
     }
 }

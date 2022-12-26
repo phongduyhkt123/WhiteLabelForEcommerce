@@ -29,6 +29,8 @@ const Action = () => {
 
     const avatarRef = useRef();
 
+    const to = !auth ? { to: route.signin.path } : {}; // need to separate to avoid url change when click on avatar if already login
+
     return (
         <>
             <Stack direction={'row'} gap={1}>
@@ -48,7 +50,7 @@ const Action = () => {
                     ref={avatarRef}
                     LinkComponent={Link}
                     aria-label="account"
-                    to={!auth ? route.signin.path : '#'}
+                    {...to}
                     onClick={auth ? handleToggleMenu : null}
                     sx={{ display: 'flex', margin: 'auto' }}
                 >

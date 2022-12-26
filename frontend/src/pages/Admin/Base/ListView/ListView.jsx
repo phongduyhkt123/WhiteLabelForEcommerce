@@ -5,7 +5,7 @@ export const ListView = ({ fields }) => {
         <List>
             <Datagrid rowClick="show">
                 {fields.map(({ Element, ...rest }, index) => {
-                    return <Element key={index} {...rest} />;
+                    return <Element key={index} {...rest} sx={{ fontSize: '14px' }} />;
                 })}
             </Datagrid>
         </List>

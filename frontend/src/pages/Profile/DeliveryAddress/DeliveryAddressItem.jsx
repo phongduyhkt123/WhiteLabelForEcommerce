@@ -11,7 +11,7 @@ const DeliveryAddressItem = ({
 }) => {
     return (
         <Box display="flex" justifyContent="space-between" alignItems="center">
-            <DeliveryAddressItemInfo item={item} isDefault={isDefault} canSetDefault />
+            <DeliveryAddressItemInfo item={item} isDefault={isDefault} canEdit />
             <Box>
                 <Box display="flex">
                     <IconButton onClick={() => handleUpdateClick(item.id)}>

@@ -4,7 +4,7 @@ import { Stack } from '@mui/system';
 import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Input from '~/components/Input';
-import { signin } from '~/config';
+import { signin, route } from '~/config';
 import * as request from '~/utils/httpRequest';
 
 import Logo from '~/components/Logo';
@@ -28,7 +28,7 @@ const Signin = () => {
 
         const login = async (loginKey, password) => {
             try {
-                const response = await request.post('buyer/login', {
+                const response = await request.post(route.signinAPI, {
                     loginKey,
                     password,
                 });
@@ -40,7 +40,7 @@ const Signin = () => {
                 } else {
                     console.log(response);
                     setMessage({
-                        text: response?.message || 'Something went wrong',
+                        text: response?.detail?.message || 'Login failed',
                         severity: 'error',
                         type: AlertTypes.STATIC,
                     });
@@ -48,7 +48,7 @@ const Signin = () => {
                 }
             } catch (error) {
                 setMessage({
-                    text: error.response.data.message || 'Something went wrong',
+                    text: error.response.data.detail.message || 'Something went wrong',
                     severity: 'error',
                     type: AlertTypes.STATIC,
                 });

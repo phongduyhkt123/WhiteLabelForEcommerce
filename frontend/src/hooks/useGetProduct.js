@@ -7,9 +7,15 @@ const useGetProduct = (filter, page) => {
     if (filter?.category.length > 0)
         params = {
             ...params,
+            ...filter,
             idCategory: filter.category[0],
         };
-    return useAxios({ url: route.productAPI, config: { params }, dep: [filter, page] });
+    let url = route.productAPI;
+    if (filter?.key) {
+        params.key = filter.key;
+        url = route.productSearchAPI;
+    }
+    return useAxios({ url: url, config: { params }, dep: [filter, page] });
 };
 
 export default useGetProduct;

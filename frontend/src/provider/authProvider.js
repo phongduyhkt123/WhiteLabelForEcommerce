@@ -1,4 +1,5 @@
 import * as request from '~/utils/httpRequest';
+import { route } from '~/config';
 import jwt_decode from 'jwt-decode';
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
@@ -7,10 +8,14 @@ export const authProvider = {
     login: ({ username: loginKey, password }) => {
         const login = async () => {
             try {
-                const response = await request.post('admin/login', { loginKey, password });
+                const response = await request.post(route.signinAdminAPI, { loginKey, password });
                 const { token, type, userInfo } = response.data;
-                localStorage.setItem('auth', JSON.stringify({ token, type, userInfo }));
-                return { redirectTo: '/admin' };
+                if (userInfo.role.toLowerCase() !== 'admin') {
+                    throw new Error('You are not admin');
+                } else {
+                    localStorage.setItem('auth', JSON.stringify({ token, type, userInfo }));
+                    return { redirectTo: '/admin' };
+                }
             } catch (error) {
                 throw new Error(error.data?.message || JSON.stringify(error.data));
             }
@@ -24,9 +29,12 @@ export const authProvider = {
     },
     // call whenever
     checkAuth: () => {
-        const token = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')).token : null;
-        if (token) {
-            const exp = jwt_decode(token).exp * 1000;
+        const auth = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : null;
+        if (auth) {
+            const exp = jwt_decode(auth.token).exp * 1000;
+            if (auth.userInfo.role.toLowerCase() !== 'admin') {
+                return Promise.reject('You are not admin');
+            }
             if (exp > Date.now()) return Promise.resolve();
         }
         localStorage.removeItem('auth');

@@ -1,28 +1,42 @@
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import ListAddressDialog from '~/components/Dialog/ListAddressDialog/ListAddressDialog';
 import PaymentMethodItem from '~/components/PaymentMethodItem/PaymentMethodItem';
 import { CartItemSkeleton } from '~/components/Skeleton';
-import StaticAlert from '~/components/StaticAlert/StaticAlert';
 import { checkout as checkOutConfig, paymentMethods, route } from '~/config';
 import { AlertContext, AlertTypes } from '~/context/AlertContext';
-import CartItem from '~/layouts/components/CartItem/CartItem';
 import { commas } from '~/utils/formater';
 import * as request from '~/utils/httpRequest';
+import CheckOutItem from './CheckOutItem';
 import DeliveryAddressItem from './DeliveryAddressItem';
+import * as addressService from '~/services/addressService';
 
 const Checkout = () => {
     const labels = checkOutConfig.labels;
 
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const [paymentMethod, setPaymentMethod] = useState(1);
 
+    const [shipFee, setShipFee] = useState(30000);
+
+    const [orderSummary, setOrderSummary] = useState(0);
+
     const { setMessage, setShowMessage } = useContext(AlertContext);
+
+    const [showListAddressDialog, setShowListAddressDialog] = useState(false);
+
+    const navigate = useNavigate();
 
     const [deliveryAddress, setDeliveryAddress] = useState(
         JSON.parse(localStorage.getItem('auth')).userInfo.defaultAddress,
     );
+
+    const idProductBuyNow = searchParams.get('id');
+    const isBuyNow = idProductBuyNow !== null;
 
     const {
         data: checkoutProducts,
@@ -30,37 +44,96 @@ const Checkout = () => {
         loaded,
     } = request.useAxios({ url: route.cartAPI, isAuthen: true });
 
+    useEffect(() => {
+        let price = 0;
+        console.log(checkoutProducts);
+        checkoutProducts?.forEach((product) => {
+            price += product.productVariation.price * product.quantity;
+        });
+
+        setOrderSummary(price);
+    }, [checkoutProducts]);
+
+    useEffect(() => {
+        if (deliveryAddress) {
+            addressService
+                .getShipFee({
+                    to_district_id: deliveryAddress?.ward.district.districtID,
+                    to_ward_code: deliveryAddress?.ward.wardCode,
+                })
+                .then((res) => {
+                    console.log(res);
+                    setShipFee(res.data.total);
+                });
+        }
+    }, [deliveryAddress]);
+
     const handleCheckout = async () => {
         const params = {
-            idAddress: deliveryAddress.id,
-            note: 'note',
+            address: deliveryAddress.addressDetail,
+            receiverName: deliveryAddress.receiverName,
+            receiverPhone: deliveryAddress.receiverPhone,
             paymentMethod: paymentMethod - 1,
-            idProductVariations: checkoutProducts.map((item) => item.productVariation.id),
+            shipPrice: shipFee,
+            products: checkoutProducts.map((item) => {
+                return { id: item.productVariation.id, quantity: item.quantity };
+            }),
         };
         try {
-            const res = await request.post(route.orderFromCartAPI, params);
+            const res = await request.post(route.orderAPI, params);
             if (res.status === 200 && paymentMethod === 1) {
                 setMessage({ text: 'Checkout success', severity: 'success', type: AlertTypes.SNACKBAR_LARGE });
                 setShowMessage(true);
                 setCheckoutProducts([]);
+                navigate('/order');
             }
         } catch (error) {
+            console.log(error);
             setMessage({
                 severity: 'error',
-                text: error.response.data.message,
-                type: AlertTypes.STATIC,
+                text:
+                    error?.response?.data?.message ||
+                    error?.response?.data?.errors[0] ||
+                    'Checkout failed. Please try again later',
+                type: AlertTypes.SNACKBAR_LARGE,
             });
             setShowMessage(true);
         }
     };
 
-    const handleOpenModal = () => {};
+    const handleToggleModal = () => {
+        setShowListAddressDialog(!showListAddressDialog);
+    };
 
     const renderCheckoutItems = () => {
-        if (checkoutProducts.length > 0)
-            return checkoutProducts.map((item, index) => <CartItem key={index} item={item} canControl={false} />);
+        if (isBuyNow) {
+            return checkoutProducts.map((item, index) => (
+                <CheckOutItem
+                    key={index}
+                    avatar={item.productVariation.avatar.url}
+                    idProduct={item.productDetail.id}
+                    price={item.productVariation.price}
+                    productName={item.productDetail.name}
+                    productVariationName={item.productVariation.variationName}
+                    quantity={item.quantity}
+                />
+            ));
+        } else if (checkoutProducts.length > 0)
+            return checkoutProducts.map((item, index) => (
+                <CheckOutItem
+                    key={index}
+                    avatar={item.productVariation.avatar.url}
+                    idProduct={item.productVariation.product.id}
+                    price={item.productVariation.price}
+                    productName={item.productVariation.product.name}
+                    productVariationName={item.productVariation.variationName}
+                    quantity={item.quantity}
+                />
+            ));
         else return <Typography variant="h5">{labels.noProducts}</Typography>;
     };
+
+    const header = document.getElementById('header');
 
     return (
         <>
@@ -76,13 +149,27 @@ const Checkout = () => {
                     </Grid2>
                     {/* delivery address */}
                     <Grid2 item xs={12} md={6}>
-                        <Box width="100%" height="auto" p={2} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
+                        <Box
+                            width="100%"
+                            height="auto"
+                            p={2}
+                            sx={{
+                                boxShadow: 1,
+                                bgcolor: 'background.white',
+                                position: 'sticky',
+                                top: header?.clientHeight + 5,
+                            }}
+                        >
                             <Typography variant="h6">{labels.deliveryAddress}</Typography>
                             {deliveryAddress ? (
-                                <Box display="flex" justifyContent="space-between">
+                                <Box display="flex" justifyContent="space-between" mt={2}>
                                     <DeliveryAddressItem address={deliveryAddress} />
-                                    <Button variant="outlined" onClick={handleOpenModal}>
-                                        Change
+                                    <Button
+                                        variant="contained"
+                                        onClick={handleToggleModal}
+                                        sx={{ alignSelf: 'center', ml: 2 }}
+                                    >
+                                        {labels.changeDeliveryAddress}
                                     </Button>
                                 </Box>
                             ) : (
@@ -110,26 +197,60 @@ const Checkout = () => {
                             </Stack>
                         </Grid2>
                         {/* Price and checkout */}
-                        <Grid2 item xs={12} md={6} display="flex" justifyContent="center">
+                        <Grid2
+                            item
+                            xs={12}
+                            md={6}
+                            display="flex"
+                            direction="column"
+                            component={Stack}
+                            spacing={2}
+                            justifyContent="center"
+                            alignItems="center"
+                            bgcolor="background.default"
+                        >
+                            <Box display="flex" flexDirection="column">
+                                <Box display="flex" alignItems="center">
+                                    <Typography variant="h6">{labels.orderSummary}: </Typography>
+                                    <Typography variant="h5" ml={2}>
+                                        {commas(orderSummary || 0)}
+                                    </Typography>
+                                </Box>
+                                <Box display="flex" alignItems="center">
+                                    <Typography variant="h6">{labels.shipFee}: </Typography>
+                                    <Typography variant="h5" ml={2}>
+                                        {commas(shipFee || 0)}
+                                    </Typography>
+                                </Box>
+
+                                <Box display="flex" alignItems="center" mt={2}>
+                                    <Typography variant="h6" color="primary">
+                                        {labels.total}:{' '}
+                                    </Typography>
+                                    <Typography variant="h5" ml={2}>
+                                        {commas(orderSummary + shipFee || 0)}
+                                    </Typography>
+                                </Box>
+                            </Box>
                             <div>
-                                <div>
-                                    <Typography>{labels.orderSummary}: </Typography>
-                                    <Typography>{commas(100000)}</Typography>
-                                </div>
-                                <div>
-                                    <Button LinkComponent={Link} to={route.home.path} size="large" variant="outlined">
-                                        {labels.addMoreProducts}
-                                    </Button>
-                                    <Button size="large" variant="contained" onClick={handleCheckout}>
-                                        {labels.order}
-                                    </Button>
-                                </div>
+                                <Button LinkComponent={Link} to={route.home.path} size="large" variant="outlined">
+                                    {labels.addMoreProducts}
+                                </Button>
+                                <Button size="large" variant="contained" onClick={handleCheckout}>
+                                    {labels.order}
+                                </Button>
                             </div>
                         </Grid2>
                     </Grid2>
                 </Box>
             </Box>
-            <StaticAlert />
+            {showListAddressDialog && (
+                <ListAddressDialog
+                    selected={deliveryAddress}
+                    handleClose={handleToggleModal}
+                    handleSaveDeliveryAddress={setDeliveryAddress}
+                />
+            )}
         </>
     );
 };

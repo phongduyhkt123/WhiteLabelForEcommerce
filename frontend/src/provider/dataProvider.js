@@ -78,18 +78,21 @@ const SpringDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => {
                     const formData = new FormData();
                     const info = {};
                     Object.keys(params.data).forEach((key) => {
-                        if (params.data[key]?.rawFile) {
-                            formData.append(key, params.data[key].rawFile);
+                        console.log(key);
+                        if (!params.data[key]) return;
+                        if (params?.data[key]?.rawFile) {
+                            const newKey = key.includes('_') ? key.slice(key.indexOf('_') + 1, key.length) : key;
+                            formData.append(newKey, params.data[key].rawFile);
                         } else if (typeof params.data[key] === 'object') {
                             // may be this is a nested object
                             // if key contains prefix 'id_' then cut it
-                            const newKey = key.includes('_') ? key.slice(0, key.indexOf('_')) : key;
+                            const newKey = key.includes('_') ? key.slice(key.indexOf('_') + 1, key.length) : key;
                             info[newKey] = info[newKey] ? [...info[newKey], params.data[key]] : [params.data[key]];
                         } else {
                             info[key] = params.data[key];
                         }
                     });
-                    formData.append('info', JSON.stringify(info));
+                    formData.append('productInfo', JSON.stringify(info));
 
                     options.data = formData;
                 } else {
@@ -122,8 +125,8 @@ const SpringDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => {
             case GET_LIST:
             case GET_MANY_REFERENCE:
                 return {
-                    data: data.data,
-                    total: parseInt(data.data.length, 10),
+                    data: data.data.data,
+                    total: parseInt(data.data.data.length, 10),
                 };
             case CREATE:
             case UPDATE:

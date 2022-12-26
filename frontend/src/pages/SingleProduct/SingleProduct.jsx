@@ -20,7 +20,7 @@ function SingleProduct() {
                 <Title title={product.name}>
                     <Grid2 container spacing={2} my={1} mx="auto">
                         {/* images */}
-                        <ProductImages images={product.images} />
+                        <ProductImages images={[...Object.values(product.allImgVar), ...product.allImgUrl]} />
                         {/* info */}
                         <ProductProvider>
                             <ProductInfo product={product} />

@@ -1,9 +1,9 @@
-import { Button, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import times from 'lodash.times';
 import { useState } from 'react';
-import { Create, ImageField, SimpleForm, TextInput } from 'react-admin';
+import { Button, Edit, ImageField, SimpleForm } from 'react-admin';
 
-export const CreateView = ({ fields, headers }) => {
+export const EditView = ({ fields }) => {
     const [fieldsState, setFieldsState] = useState(fields);
 
     const handleAdd = (index) => {
@@ -11,21 +11,20 @@ export const CreateView = ({ fields, headers }) => {
 
         setFieldsState([...fieldsState]);
     };
-
     return (
-        <Create mutationOptions={{ meta: { headers: headers } }}>
+        <Edit>
             <SimpleForm>
-                <Grid container>
-                    {fieldsState.map(({ Element, type, label, quantity, ...rest }, index) =>
-                        renderElement(Element, type, label, quantity, index, handleAdd, rest),
-                    )}
+                <Grid container spacing={2}>
+                    {fields.map(({ Element, readOnly, type, label, quantity, ...rest }, index) => {
+                        return renderElement({ Element, type, label, quantity, index, handleAdd, rest });
+                    })}
                 </Grid>
             </SimpleForm>
-        </Create>
+        </Edit>
     );
 };
 
-const renderElement = (Element, type, label, quantity, index, handleAdd, rest) => {
+export const renderElement = ({ Element, type, label, quantity, index, handleAdd = () => {}, rest }) => {
     if (type === 'sub') {
         return (
             // if type is sub, render sub fields (see product-create-field)

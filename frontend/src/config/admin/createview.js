@@ -7,6 +7,16 @@ export const productCreate = [
         type: 'text',
     },
     {
+        source: 'description',
+        Element: TextInput,
+        type: 'text',
+    },
+    {
+        source: 'categoryId',
+        Element: NumberInput,
+        type: 'text',
+    },
+    {
         type: 'sub',
         label: 'variations',
         quantity: 1,
@@ -14,12 +24,6 @@ export const productCreate = [
             {
                 source: 'variations.variationName',
                 label: 'variation name',
-                Element: TextInput,
-                type: 'text',
-            },
-            {
-                source: 'variations.tier',
-                label: 'tier',
                 Element: TextInput,
                 type: 'text',
             },
@@ -41,17 +45,13 @@ export const productCreate = [
                 Element: NumberInput,
                 type: 'text',
             },
+            {
+                source: 'imagesVar',
+                label: 'Image',
+                Element: ImageInput,
+                type: 'image',
+            },
         ],
-    },
-    {
-        source: 'description',
-        Element: TextInput,
-        type: 'text',
-    },
-    {
-        source: 'idCategory',
-        Element: NumberInput,
-        type: 'text',
     },
     {
         source: 'avatar',
@@ -59,7 +59,7 @@ export const productCreate = [
         type: 'image',
     },
     {
-        source: 'images',
+        source: 'imagesPro',
         Element: ImageInput,
         type: 'image',
         quantity: 1,

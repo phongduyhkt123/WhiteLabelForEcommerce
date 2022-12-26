@@ -3,9 +3,7 @@ import { useMediaQuery } from '@mui/material';
 import { themes } from '~/config';
 
 const AppThemeProvider = ({ children }) => {
-    const appThemes = responsiveFontSizes(createTheme(themes));
-
-    return <ThemeProvider theme={appThemes}>{children}</ThemeProvider>;
+    return <ThemeProvider theme={themes}>{children}</ThemeProvider>;
 };
 
 export default AppThemeProvider;

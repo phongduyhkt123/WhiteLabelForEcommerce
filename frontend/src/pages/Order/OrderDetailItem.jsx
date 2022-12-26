@@ -13,7 +13,7 @@ const OrderDetailItem = ({ item }) => {
                 <Grid item xs={3} md={2} height="100%" display="flex">
                     <Box
                         component="img"
-                        src={item.productVariation.product.avatar}
+                        src={item.productVariation.avatar?.url}
                         alt=""
                         width="100%"
                         maxWidth="10rem"

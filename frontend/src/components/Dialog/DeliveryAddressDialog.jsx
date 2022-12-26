@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, Switch, Typography } from '@mui/material';
+import { FormControl, FormControlLabel, Switch } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -6,11 +6,16 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Select from '~/components/Select';
+import { deliveryAddress, route } from '~/config';
+import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import * as addressService from '~/services/addressService';
+import * as request from '~/utils/httpRequest';
 
-export default function DeliveryAddressDialog({ data, open, isDefault = false, handleClose }) {
+export default function DeliveryAddressDialog({ data, open, isDefault = false, handleClose, setDeliveryAddresses }) {
+    const { setMessage, setShowMessage } = useContext(AlertContext);
+
     const [citys, setCitys] = useState([]);
     const [districts, setDistricts] = useState('');
 
@@ -20,16 +25,6 @@ export default function DeliveryAddressDialog({ data, open, isDefault = false, h
     const [wards, setWards] = useState('');
     const [ward, setWard] = useState('');
 
-    // const getCitys = () => {
-    //     if (citys.length > 0) return;
-
-    //     addressService.getCitys().then((res) => {
-    //         setCitys(res.data);
-    //         if (data) {
-    //             setCity(citys.find((item) => item.name === data.city));
-    //         }
-    //     });
-    // };
     useEffect(() => {
         // get citys when component is mounted
         addressService.getCitys().then((res) => {
@@ -40,7 +35,7 @@ export default function DeliveryAddressDialog({ data, open, isDefault = false, h
     useEffect(() => {
         if (open) {
             // if dialog is open then set city from data
-            data && setCity(citys.find((item) => item.name === data.addressWard.district.provinceCity.name));
+            data && setCity(citys.find((item) => item.name === data.ward.district.province.provinceName));
         } else {
             // if dialog is closed then reset city
             setCity('');
@@ -51,7 +46,7 @@ export default function DeliveryAddressDialog({ data, open, isDefault = false, h
         if (city) {
             addressService.getDistricts(city.id).then((res) => {
                 setDistricts(res.data);
-                data && setDistrict(res.data.find((item) => item.name === data.addressWard.district.name) || '');
+                data && setDistrict(res.data.find((item) => item.name === data.ward.district.districtName) || '');
             });
         }
     }, [city]);
@@ -60,26 +55,62 @@ export default function DeliveryAddressDialog({ data, open, isDefault = false, h
         if (district) {
             addressService.getWards(district.id).then((res) => {
                 setWards(res.data);
-                data && setWard(res.data.find((item) => item.name === data.addressWard.name) || '');
+                data && setWard(res.data.find((item) => item.name === data.ward.wardName) || '');
             });
         }
     }, [district]);
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let params = {
+            ...Object.fromEntries(new FormData(e.target)),
+        };
+        params['isDefault'] = e.target.isDefault.checked; // unless value is not boolean ("on")
+
+        params = {
+            ...params,
+            wardCode: ward?.id,
+            wardName: ward?.name,
+            districtID: district?.id,
+            districtName: district?.name,
+            provinceID: city?.id,
+            provinceName: city?.name,
+        };
+
+        const id = data?.id;
+
+        const { data: data_, message } = await addressService.saveAddress({ params, id });
+        if (data_) {
+            if (id) {
+                // update
+                setDeliveryAddresses((prev) => prev.map((item) => (item.id === id ? data_ : item)));
+            } else {
+                // create
+                setDeliveryAddresses((prev) => [...prev, data_]);
+            }
+            handleClose();
+        }
+        setMessage(message);
+        setShowMessage(true);
+    };
+
     return (
         <Dialog open={open}>
-            <DialogTitle>Delivery Address</DialogTitle>
-            <DialogContent>
-                <DialogContentText>Fill in the form below to add a new delivery address</DialogContentText>
-                <form>
+            <form onSubmit={handleSubmit}>
+                <DialogTitle>Delivery Address</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>Fill in the form below to add a new delivery address</DialogContentText>
                     <FormControl fullWidth>
                         <TextField
                             autoFocus
                             margin="dense"
                             label="Receiver Name"
                             type="text"
+                            name="receiverName"
+                            required
                             fullWidth
                             variant="standard"
-                            value={data.receiverName}
+                            defaultValue={data?.receiverName}
                             placeholder="Name of the receiver"
                         />
                     </FormControl>
@@ -88,9 +119,11 @@ export default function DeliveryAddressDialog({ data, open, isDefault = false, h
                             margin="dense"
                             label="Receiver Phone"
                             type="tel"
+                            name="receiverPhone"
+                            required
                             fullWidth
                             variant="standard"
-                            value={data.receiverPhone}
+                            defaultValue={data.receiverPhone}
                             placeholder="Phone number of the receiver"
                         />
                     </FormControl>
@@ -102,6 +135,7 @@ export default function DeliveryAddressDialog({ data, open, isDefault = false, h
                             options={citys}
                             defaultValue=""
                             fullWidth
+                            required
                             onChange={(e) => setCity(e.target.value)}
                         />
                     </FormControl>
@@ -112,6 +146,7 @@ export default function DeliveryAddressDialog({ data, open, isDefault = false, h
                             onChange={(e) => setDistrict(e.target.value)}
                             label="District"
                             fullWidth
+                            required
                             margin="dense"
                         />
                     </FormControl>
@@ -122,6 +157,7 @@ export default function DeliveryAddressDialog({ data, open, isDefault = false, h
                             value={ward}
                             options={wards}
                             fullWidth
+                            required
                             onChange={(e) => setWard(e.target.value)}
                         />
                     </FormControl>
@@ -130,20 +166,25 @@ export default function DeliveryAddressDialog({ data, open, isDefault = false, h
                             margin="dense"
                             label="Address Detail"
                             type="text"
+                            name="addressDetail"
+                            required
                             fullWidth
                             variant="standard"
-                            value={data.addressDetail}
+                            defaultValue={data.addressDetail}
                         />
                     </FormControl>
                     <FormControl sx={{ color: 'text.secondary' }}>
-                        <FormControlLabel control={<Switch defaultChecked={isDefault} />} label="Set as default" />
+                        <FormControlLabel
+                            control={<Switch defaultValue={isDefault} name="isDefault" />}
+                            label="Set as default"
+                        />
                     </FormControl>
-                </form>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose}>Save</Button>
-            </DialogActions>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button type="submit">Save</Button>
+                </DialogActions>
+            </form>
         </Dialog>
     );
 }

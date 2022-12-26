@@ -20,7 +20,7 @@ const getHeaders = () => {
 
 const request = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
-    timeout: 10000,
+    timeout: 20000,
     headers: headers,
     // transformResponse: [
     //     (data, headers, status) => {
@@ -40,7 +40,7 @@ export const get = async (url, config = {}) => {
 };
 
 export const post = async (url, data, config = {}) => {
-    config.headers = getHeaders();
+    config.headers = { ...getHeaders(), ...config.headers };
     try {
         const response = await request.post(url, data, config);
         return response;

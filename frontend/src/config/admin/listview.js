@@ -123,8 +123,8 @@ export const orderList = [
         Element: TextField,
     },
     {
-        source: 'price',
-        name: 'PRICE',
+        source: 'total',
+        name: 'TOTAL',
         Element: TextField,
     },
     {

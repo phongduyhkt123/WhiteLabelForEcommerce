@@ -1,6 +1,6 @@
 import constants from './constants';
 import config from '~/data/config.json';
-import { createTheme } from '@mui/material';
+import { createTheme, responsiveFontSizes } from '@mui/material';
 
 const theme = createTheme({
     palette: {
@@ -19,7 +19,7 @@ const theme = createTheme({
         MuiButton: {
             styleOverrides: {
                 root: ({ ownerState }) => ({
-                    ...(ownerState.variant === 'contained' && {
+                    ...(ownerState?.variant === 'contained' && {
                         '&:hover': {
                             backgroundColor: constants.color.primary.main,
                             opacity: 0.8,
@@ -38,7 +38,7 @@ const theme = createTheme({
     },
 });
 
-export default theme;
+export default responsiveFontSizes(theme);
 
 // logo: {},
 

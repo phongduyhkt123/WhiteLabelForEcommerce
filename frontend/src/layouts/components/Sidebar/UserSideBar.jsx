@@ -1,28 +1,11 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Box, Divider, Typography, useMediaQuery } from '@mui/material';
-import { Person, Receipt, Room, SignalCellularAlt } from '@mui/icons-material';
+import { Person } from '@mui/icons-material';
 import { NavItem } from './NavItem';
 import { Stack } from '@mui/system';
-import { route } from '~/config';
-
-const items = [
-    {
-        to: '/profile',
-        icon: <SignalCellularAlt />,
-        title: 'Profile',
-    },
-    {
-        to: route.order.path,
-        icon: <Receipt />,
-        title: 'Orders',
-    },
-    {
-        to: '/delivery-address',
-        icon: <Room />,
-        title: 'Delivery Address',
-    },
-];
+import { route, profileSideBar } from '~/config';
+import Icon from '~/config/Store/Icon';
 
 const UserSidebar = (props) => {
     const { open, onClose } = props;
@@ -68,8 +51,8 @@ const UserSidebar = (props) => {
             </Box>
             <Divider />
             <Stack sx={{ flexGrow: 1 }} spacing={1} py={2}>
-                {items.map((item, index) => (
-                    <NavItem to={item.to} key={index} title={item.title} icon={item.icon} />
+                {profileSideBar.items.map((item, index) => (
+                    <NavItem to={item.to} key={index} title={item.title} icon={<Icon component={item.icon} />} />
                 ))}
             </Stack>
         </Box>

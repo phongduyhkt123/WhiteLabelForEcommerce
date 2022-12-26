@@ -25,11 +25,6 @@ const DeliveryAddress = ({ title }) => {
         loaded,
     } = request.useAxios({ url: route.deliveryAddressAPI, isAuthen: true });
 
-    const updateDeliveryAddress = async ({ id, receiverName, receiverPhone, addressDetail, isDefault }) => {
-        const params = { id, receiverName, receiverPhone, addressDetail, isDefault };
-        const res = await request.put(route.deliveryAddressAPI, params);
-    };
-
     const handleSetDefaultClick = () => {};
     const handleRemoveClick = () => {};
     const handleUpdateClick = (id) => {
@@ -69,6 +64,7 @@ const DeliveryAddress = ({ title }) => {
                 open={showDialog}
                 data={deliveryAddress}
                 isDefault={deliveryAddress.id === userInfo?.defaultAddress.id}
+                setDeliveryAddresses={setDeliveryAddresses}
                 handleClose={() => setshowDialog(false)}
             />
         </Title>

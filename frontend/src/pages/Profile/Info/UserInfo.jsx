@@ -72,7 +72,7 @@ const UserInfo = (props) => {
                                     fullWidth
                                     label={profile.labels[item.label]}
                                     onChange={handleChange}
-                                    value={values[item.value]}
+                                    value={values[item.value] || ''}
                                     SelectProps={{ native: true }}
                                     variant="outlined"
                                 >

@@ -8,6 +8,9 @@ import {
     Phone,
     AddShoppingCart,
     AccountCircle,
+    SignalCellularAlt,
+    Receipt,
+    Room,
 } from '@mui/icons-material';
 import Paypal from '~/components/Icons';
 
@@ -22,6 +25,9 @@ const Components = {
     Paypal: Paypal,
     AddShoppingCart: AddShoppingCart,
     AccountCircle: AccountCircle,
+    SignalCellularAlt: SignalCellularAlt,
+    Receipt: Receipt,
+    Room: Room,
 };
 
 const Icon = ({ component, ...rest }) => {

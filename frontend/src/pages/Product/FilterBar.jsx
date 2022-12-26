@@ -1,6 +1,6 @@
 import { Button, Checkbox, Divider, Paper, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
-import { route } from '~/config';
+import { route, product } from '~/config';
 import React, { useRef } from 'react';
 import * as request from '~/utils/httpRequest';
 
@@ -34,8 +34,8 @@ const FilterBar = ({ filter, setFilter, initFilter }) => {
 
     return (
         <Paper sx={{ position: 'sticky', top: header?.clientHeight + 5 }}>
-            <div className="catalog__filter" ref={filterRef}>
-                <div className="catalog__filter__close" onClick={() => {}}>
+            <div ref={filterRef}>
+                <div onClick={() => {}}>
                     <i className="bx bx-left-arrow-alt"></i>
                 </div>
 
@@ -44,9 +44,11 @@ const FilterBar = ({ filter, setFilter, initFilter }) => {
                     spacing={1}
                     divider={<Divider variant="middle" sx={{ borderColor: 'white' }} />}
                 >
-                    <div className="catalog__filter__widget">
-                        <Typography>Loại sản phẩm</Typography>
-                        <div className="catalog__filter__widget__content">
+                    <div>
+                        <Typography variant="h6" p={1}>
+                            {product.labels.productCategory}
+                        </Typography>
+                        <div>
                             {categories?.map((item) => (
                                 <Box key={item.id} display="flex" alignItems="center">
                                     <Checkbox
@@ -65,14 +67,14 @@ const FilterBar = ({ filter, setFilter, initFilter }) => {
                 <div className="catalog__filter__widget">
                     <div className="catalog__filter__widget__content">
                         <Button size="sm" onClick={clearFilter}>
-                            xóa bộ lọc
+                            {product.labels.clearFilter}
                         </Button>
                     </div>
                 </div>
             </div>
             <div className="catalog__filter__toggle">
                 <Button size="sm" onClick={() => {}}>
-                    bộ lọc
+                    {product.labels.filter}
                 </Button>
             </div>
         </Paper>

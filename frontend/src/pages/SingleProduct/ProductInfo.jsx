@@ -1,5 +1,5 @@
 import { Add, Remove } from '@mui/icons-material';
-import { Button, IconButton, Rating, TextField, Typography } from '@mui/material';
+import { Button, Chip, IconButton, List, Rating, Stack, TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Box } from '@mui/system';
 import { useContext, useEffect } from 'react';
@@ -33,17 +33,23 @@ const ProductInfo = ({ product }) => {
 
     return (
         <Grid2 xs={12} md={6}>
-            <Typography variant="h5">{product.name}</Typography>
-            <Rating name="simple-controlled" size="large" value={5} onChange={(event, newValue) => {}} />
-            <Box>
-                {variant && variant?.discount !== 0 && <OldPrice price={variant?.price || product.maxPrice || 0} />}
-                <Typography variant="body">
-                    {commas(Math.round(variant?.price * (1 - variant?.discount / 100) || product.minPrice || 0))} đ
-                </Typography>
+            <Stack spacing={3}>
+                <Typography variant="h5">{product.name}</Typography>
+                <Rating name="simple-controlled" size="large" value={5} onChange={(event, newValue) => {}} />
+                <Box bgcolor="background.default" p={2} m={1} display="flex" alignItems="center">
+                    {variant && variant?.discount !== 0 && <OldPrice price={variant?.price || product.maxPrice || 0} />}
+                    <Typography variant="h5" display="inline">
+                        {commas(Math.round(variant?.price * (1 - variant?.discount / 100) || product.minPrice || 0))} đ
+                    </Typography>
+                    {variant && variant?.discount !== 0 && (
+                        <Chip label={`-${variant.discount}%`} color="primary" sx={{ ml: 2 }}></Chip>
+                    )}
+                </Box>
 
+                {/* variants */}
                 {product.variations.length > 1 && (
                     <div>
-                        <Typography>{labels.variant}</Typography>
+                        <Typography variant="h6">{labels.variant}</Typography>
                         <Grid2 container spacing={2}>
                             {product.variations.map((item) => (
                                 <Grid2 key={item.id}>
@@ -66,12 +72,14 @@ const ProductInfo = ({ product }) => {
                     </div>
                 )}
                 <div>
-                    <Typography variant="body1" display="inline-block" paddingRight={2}>
+                    {/* quantity */}
+                    <Typography variant="h6" display="inline-block" paddingRight={2}>
                         {labels.quantity}
                     </Typography>
                     <Typography variant="body2" display="inline-block">
                         {labels.inStock}: {variant?.quantity}
                     </Typography>
+                    {/* quantity button */}
                     <Box>
                         <IconButton onClick={() => updateQuantity('minus')}>
                             <Remove />
@@ -96,10 +104,11 @@ const ProductInfo = ({ product }) => {
                         </IconButton>
                     </Box>
                 </div>
+
                 <ButtonControll />
-            </Box>
-            {/*  Description*/}
-            <ProductDescription description={product.description} />
+                {/*  Description*/}
+                <ProductDescription description={product.description} />
+            </Stack>
         </Grid2>
     );
 };

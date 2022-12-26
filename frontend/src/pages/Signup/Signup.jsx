@@ -4,17 +4,17 @@ import { Stack } from '@mui/system';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from '~/components/Input';
-import { signup } from '~/config';
+import { route, signup } from '~/config';
 import * as request from '~/utils/httpRequest';
 
 import Logo from '~/components/Logo';
-import { AlertContext } from '~/context/AlertContext';
+import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import AuthContainer from '~/layouts/components/AuthContainer';
 
 const Signup = () => {
     const fields = Object.entries(signup.form);
 
-    const { message, setMessage, showMessage, setShowMessage } = React.useContext(AlertContext);
+    const { setMessage, setShowMessage } = React.useContext(AlertContext);
 
     const navigate = useNavigate();
 
@@ -22,18 +22,26 @@ const Signup = () => {
         e.preventDefault();
         const payload = Object.fromEntries(new FormData(e.target).entries());
 
-        try {
-            const response = await request.post('buyer/signup', payload);
-            if (response.status === 200) {
-                setMessage({ text: 'Account created successfully', severity: 'success' });
-                navigate('/signin');
-            } else {
-                setMessage({ text: response?.data?.message || 'Something went wrong', severity: 'error' });
-            }
-        } catch (error) {
-            setMessage({ text: error?.data?.message || 'Something went wrong', severity: 'error' });
-        }
-        setShowMessage(true);
+        request
+            .post(route.signupAPI, payload)
+            .then((res) => {
+                console.log(res);
+                setMessage({
+                    text: 'Account created successfully',
+                    severity: 'success',
+                    type: AlertTypes.SNACKBAR_LARGE,
+                });
+            })
+            .catch((err) => {
+                setMessage({
+                    text: err?.data?.message || 'Something went wrong',
+                    severity: 'error',
+                    type: AlertTypes.SNACKBAR_LARGE,
+                });
+            })
+            .finally(() => {
+                setShowMessage(true);
+            });
     };
 
     return (
