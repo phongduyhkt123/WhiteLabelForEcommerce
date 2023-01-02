@@ -61,7 +61,14 @@ const CartItem = ({ item, canControl = true, onDelete = () => {}, onChange = () 
                         alignItems="center"
                         justifyContent="center"
                     >
-                        <Typography textAlign="center">{commas(item.productVariation.price)}</Typography>
+                        <Typography textAlign="center">
+                            {commas(
+                                item.productVariation.discount
+                                    ? item.productVariation.price -
+                                          (item.productVariation.price * item.productVariation.discount) / 100
+                                    : item.productVariation.price,
+                            )}
+                        </Typography>
                     </Grid2>
                     <Grid2 item xs={6} md={2} justifyContent="center" alignItems="center" display="flex">
                         {cart.labels.quantity}:{/* quantity */}

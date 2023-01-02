@@ -67,37 +67,11 @@ export const productCreate = [
 ];
 
 /**
- * userEdit
+ * Category Create
  */
-export const userCreate = [
-    {
-        source: 'username',
-        Element: TextInput,
-    },
-    {
-        source: 'fullname',
-        Element: TextInput,
-    },
-    {
-        source: 'role.name',
-        Element: TextInput,
-    },
-    {
-        source: 'status',
-        Element: TextInput,
-    },
-];
-
-/**
- * Buyer Rank Edit
- */
-export const buyerrankCreate = [
+export const categoryCreate = [
     {
         source: 'name',
         Element: TextInput,
-    },
-    {
-        Element: TextInput,
-        source: 'discountRate',
     },
 ];

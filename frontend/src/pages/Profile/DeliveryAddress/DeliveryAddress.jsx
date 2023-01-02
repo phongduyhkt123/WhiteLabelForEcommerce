@@ -15,7 +15,7 @@ const DeliveryAddress = ({ title }) => {
 
     const [deliveryAddress, setDeliveryAddress] = useState({});
 
-    const { userInfo } = useContext(GlobalContext);
+    const { data: userInfo } = request.useAxios({ url: route.userProfileAPI, isAuthen: true });
 
     const [showDialog, setshowDialog] = useState(false);
 
@@ -25,7 +25,14 @@ const DeliveryAddress = ({ title }) => {
         loaded,
     } = request.useAxios({ url: route.deliveryAddressAPI, isAuthen: true });
 
-    const handleSetDefaultClick = () => {};
+    const handleSetDefaultClick = (id) => {
+        request
+            .patch(route.setDefaultAddressAPI + id)
+            .then((res) => {})
+            .catch((err) => {
+                console.log(err);
+            });
+    };
     const handleRemoveClick = () => {};
     const handleUpdateClick = (id) => {
         setDeliveryAddress(deliveryAddresses.find((item) => item.id === id));
@@ -43,7 +50,7 @@ const DeliveryAddress = ({ title }) => {
                 <DeliveryAddressItem
                     key={index}
                     item={item}
-                    isDefault={userInfo?.defaultAddress.id === item.id}
+                    isDefault={userInfo?.defaultAddress?.id === item.id}
                     handleSetDefaultClick={handleSetDefaultClick}
                     handleRemoveClick={handleRemoveClick}
                     handleUpdateClick={handleUpdateClick}
@@ -63,7 +70,7 @@ const DeliveryAddress = ({ title }) => {
             <DeliveryAddressDialog
                 open={showDialog}
                 data={deliveryAddress}
-                isDefault={deliveryAddress.id === userInfo?.defaultAddress.id}
+                isDefault={deliveryAddress?.id === userInfo?.defaultAddress?.id}
                 setDeliveryAddresses={setDeliveryAddresses}
                 handleClose={() => setshowDialog(false)}
             />

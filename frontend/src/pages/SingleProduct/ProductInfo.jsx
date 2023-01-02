@@ -39,7 +39,7 @@ const ProductInfo = ({ product }) => {
                 <Box bgcolor="background.default" p={2} m={1} display="flex" alignItems="center">
                     {variant && variant?.discount !== 0 && <OldPrice price={variant?.price || product.maxPrice || 0} />}
                     <Typography variant="h5" display="inline">
-                        {commas(Math.round(variant?.price * (1 - variant?.discount / 100) || product.minPrice || 0))} đ
+                        {commas(Math.round(variant?.price * (1 - variant?.discount / 100) || product.minPrice || 0))}
                     </Typography>
                     {variant && variant?.discount !== 0 && (
                         <Chip label={`-${variant.discount}%`} color="primary" sx={{ ml: 2 }}></Chip>

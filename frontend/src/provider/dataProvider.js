@@ -65,9 +65,10 @@ const SpringDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => {
                 break;
             }
             case UPDATE:
+                console.log('pa', params);
                 url = `${apiUrl}/${resource}/${params.id}`;
-                options.method = 'PUT';
-                options.body = JSON.stringify(params.data);
+                options.method = params?.meta?.method || 'PUT';
+                options.data = JSON.stringify(params.data);
                 break;
             case CREATE:
                 url = `${apiUrl}/${resource}`;
@@ -97,7 +98,7 @@ const SpringDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => {
                     options.data = formData;
                 } else {
                     // else send json
-                    options.body = JSON.stringify(params.data);
+                    options.data = JSON.stringify(params.data);
                 }
 
                 break;
@@ -125,8 +126,8 @@ const SpringDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => {
             case GET_LIST:
             case GET_MANY_REFERENCE:
                 return {
-                    data: data.data.data,
-                    total: parseInt(data.data.data.length, 10),
+                    data: data.data.data || data.data,
+                    total: parseInt(data.data.data?.length, 10),
                 };
             case CREATE:
             case UPDATE:
@@ -184,15 +185,6 @@ const SpringDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => {
             // Add headers to all requests
             options.user = user;
             options.headers = { ...options.headers, Authorization: user.token };
-
-            // const fetch = async () => {
-            //     const response = await httpClient(url, options);
-            //     return response;
-            // };
-
-            // const response = fetch();
-
-            // return convertHTTPResponse(response, type, resource, params);
 
             return httpClient(url, options).then((response) => {
                 const data = convertHTTPResponse(response, type, resource, params);

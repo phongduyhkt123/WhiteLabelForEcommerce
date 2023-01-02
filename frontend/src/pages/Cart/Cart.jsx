@@ -60,22 +60,25 @@ const Cart = ({ title }) => {
         }
         if (change) {
             const data = {
-                quantity: newQuantity,
+                quantity: newQuantity - quantity,
             };
-            request.put(`${route.cartAPI}/${id}`, data);
-            setCartProducts(
-                cartProducts.map((item) => {
-                    if (item.productVariation.id === id) {
-                        item.quantity = newQuantity;
-                    }
-                    return item;
-                }),
-            );
+            request.patch(`${route.cartAPI}/${id}`, data).then((res) => {
+                if (res.status === 200) {
+                    setCartProducts(
+                        cartProducts.map((item) => {
+                            if (item.productVariation.id === id) {
+                                item.quantity = res.data.data.quantity;
+                            }
+                            return item;
+                        }),
+                    );
+                }
+            });
         }
     };
 
     const renderCartItem = () => {
-        if (cartProducts.length > 0)
+        if (cartProducts?.length > 0)
             return cartProducts.map((item, index) => (
                 <CartItem key={index} item={item} onDelete={removeItem} onChange={updateQuantity} />
             ));

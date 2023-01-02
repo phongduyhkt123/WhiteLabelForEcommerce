@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import times from 'lodash.times';
 import { useState } from 'react';
-import { Button, Edit, ImageField, SimpleForm } from 'react-admin';
+import { Button, Edit, ImageField, SimpleForm, TextInput } from 'react-admin';
 
 export const EditView = ({ fields }) => {
     const [fieldsState, setFieldsState] = useState(fields);
@@ -15,7 +15,7 @@ export const EditView = ({ fields }) => {
         <Edit>
             <SimpleForm>
                 <Grid container spacing={2}>
-                    {fields.map(({ Element, readOnly, type, label, quantity, ...rest }, index) => {
+                    {fields.map(({ Element, type, label, quantity, ...rest }, index) => {
                         return renderElement({ Element, type, label, quantity, index, handleAdd, rest });
                     })}
                 </Grid>
@@ -50,7 +50,17 @@ export const renderElement = ({ Element, type, label, quantity, index, handleAdd
         );
     } else {
         return withQuantity(
-            (prefix) => <Element {...rest} source={`${prefix || ''}${rest.source}`} style={{ display: 'flex' }} />,
+            (prefix) => (
+                <Element
+                    {...rest}
+                    inputProps={(prev) => {
+                        return { ...prev, readOnly: rest.readOnly };
+                    }}
+                    aria-readonly={true}
+                    source={`${prefix || ''}${rest.source}`}
+                    style={{ display: 'flex' }}
+                />
+            ),
             quantity,
             index,
             handleAdd,

@@ -9,19 +9,22 @@ import { AlertProvider } from '~/context/AlertContext';
 import { GlobalProvider } from './context/GlobalContext';
 import './assets/fonts/Lato/Lato-Bold.ttf';
 import './assets/fonts/Lato/Lato-Regular.ttf';
+import { ConfigProvider } from './context/ConfigContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
     <React.StrictMode>
-        <GlobalProvider>
-            <AppThemeProvider>
-                <AlertProvider>
-                    <CssBaseline />
-                    <App />
-                </AlertProvider>
-            </AppThemeProvider>
-        </GlobalProvider>
+        <ConfigProvider>
+            <GlobalProvider>
+                <AppThemeProvider>
+                    <AlertProvider>
+                        <CssBaseline />
+                        <App />
+                    </AlertProvider>
+                </AppThemeProvider>
+            </GlobalProvider>
+        </ConfigProvider>
     </React.StrictMode>,
 );
 

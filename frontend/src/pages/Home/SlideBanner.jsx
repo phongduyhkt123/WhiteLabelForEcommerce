@@ -11,7 +11,7 @@ import { IconButton } from '@mui/material';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-function SlideBanner({ images }) {
+function SlideBanner({ images, height = '60rem' }) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const maxSteps = images.length;
@@ -43,10 +43,10 @@ function SlideBanner({ images }) {
                             <Box
                                 component="img"
                                 sx={{
-                                    aspectRatio: '16 / 6',
+                                    width: '100%',
                                     display: 'block',
                                     objectFit: 'cover',
-                                    width: '100%',
+                                    height: height,
                                 }}
                                 {...image}
                             />

@@ -57,6 +57,8 @@ const Product = ({ title }) => {
 
     const { loaded, data: products, error } = useGetProduct(filter, page);
 
+    console.log(products);
+
     useEffect(() => {
         if (error) {
             setMessage({ text: error.message, severity: 'error', type: AlertTypes.SNACKBAR_SMALL });

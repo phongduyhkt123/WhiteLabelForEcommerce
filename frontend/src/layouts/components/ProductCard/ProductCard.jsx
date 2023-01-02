@@ -43,10 +43,12 @@ export const ProductCard = ({ data }) => {
                             {data?.name}
                         </Typography>
                     </Box>
-                    {data.maxPrice !== data.minPrice && <OldPrice price={data.maxPrice} />}
+                    {data.maxDiscount !== 0 && (
+                        <OldPrice price={data?.minPrice + (data.maxDiscount / 100) * data.minPrice} />
+                    )}
 
                     <Typography variant="body" color="text.secondary">
-                        {commas(data?.minPrice || 0)} đ
+                        {commas(data?.minPrice || 0)}
                     </Typography>
                 </CardContent>
             </CardActionArea>

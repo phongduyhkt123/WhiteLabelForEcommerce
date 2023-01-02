@@ -19,7 +19,7 @@ const getHeaders = () => {
 };
 
 const request = axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL,
+    baseURL: 'http://localhost:8080/api/', //process.env.REACT_APP_BASE_URL,
     timeout: 20000,
     headers: headers,
     // transformResponse: [
@@ -59,6 +59,16 @@ export const put = async (url, data, config = {}) => {
     }
 };
 
+export const patch = async (url, data, config = {}) => {
+    config.headers = getHeaders();
+    try {
+        const response = await request.patch(url, data, config);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
 const _delete = async (url, config = {}) => {
     config.headers = getHeaders();
     try {
@@ -74,6 +84,7 @@ export { _delete as delete };
 export const fetch = async (url, options = {}) => {
     options.headers = { ...getHeaders(), ...options.headers };
     try {
+        console.log('options', options);
         const response = await request.request({ url, ...options });
         return response;
     } catch (error) {

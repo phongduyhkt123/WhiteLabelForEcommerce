@@ -1,4 +1,4 @@
-const { TextField, ImageField, FunctionField } = require('react-admin');
+const { TextField, ImageField, FunctionField, BooleanInput } = require('react-admin');
 
 export const productList = [
     {
@@ -17,14 +17,15 @@ export const productList = [
         Element: TextField,
     },
     {
-        source: 'status',
-        name: 'STATUS',
-        Element: TextField,
-    },
-    {
         source: 'avatar',
         name: '',
         Element: ImageField,
+    },
+    {
+        source: 'status',
+        name: 'STATUS',
+        editable: true,
+        Element: BooleanInput,
     },
 ];
 
@@ -48,42 +49,20 @@ export const userList = [
         Element: TextField,
     },
     {
-        source: 'role.name',
+        source: 'role',
         name: 'ROLE',
         Element: TextField,
     },
     {
-        source: 'status',
+        source: 'isEnabled',
         name: 'STATUS',
-        Element: TextField,
+        editable: true,
+        Element: BooleanInput,
     },
 ];
 
 /**
- * Buyer Rank List
- */
-export const buyerrankList = [
-    {
-        source: 'id',
-        name: 'ID',
-        Element: TextField,
-    },
-    {
-        source: 'name',
-        name: 'NAME',
-        Element: TextField,
-    },
-    {
-        label: 'Discount',
-        Element: FunctionField,
-        render: (record) => {
-            return `${record.discountRate * 100}%`;
-        },
-    },
-];
-
-/**
- * Buyer Rank List
+ * Category List
  */
 export const categoryList = [
     {
@@ -99,7 +78,8 @@ export const categoryList = [
     {
         source: 'status',
         name: 'STATUS',
-        Element: TextField,
+        editable: true,
+        Element: BooleanInput,
     },
 ];
 
@@ -131,5 +111,18 @@ export const orderList = [
         source: 'status',
         name: 'STATUS',
         Element: TextField,
+    },
+];
+
+export const configList = [
+    {
+        source: 'id',
+        name: 'ID',
+        Element: TextField,
+    },
+    {
+        source: 'isSelected',
+        editable: true,
+        Element: BooleanInput,
     },
 ];

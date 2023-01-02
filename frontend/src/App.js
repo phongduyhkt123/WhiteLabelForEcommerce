@@ -12,8 +12,23 @@ import { NavigateSetter } from './components/NavigateSetter/NavigateSetter';
 import ToastContainer from './components/ToastContainer/ToastContainer';
 import AuthCheck from './pages/Signin/AuthCheck';
 import { global } from '~/config';
+import { useTheme } from '@mui/material';
+import { defaultTheme } from 'react-admin';
 
 function App() {
+    const theme = useTheme();
+    const aTheme = {
+        ...defaultTheme,
+        palette: {
+            ...defaultTheme.palette,
+            ...theme.palette,
+        },
+        typography: {
+            ...defaultTheme.typography,
+            fontSize: theme.typography.fontSize,
+        },
+    };
+
     useEffect(() => {
         let link = document.querySelector("link[rel~='icon']");
         if (!link) {
@@ -71,7 +86,7 @@ function App() {
                         })}
 
                         {/* React Admin */}
-                        <Route path="/admin/*" element={<StoreAdmin />} />
+                        <Route path="/admin/*" element={<StoreAdmin aTheme={aTheme} />} />
                     </Routes>
                 </Box>
             </Router>

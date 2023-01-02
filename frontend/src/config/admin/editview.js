@@ -1,4 +1,12 @@
-const { TextInput, ImageField, SelectInput, ArrayField, TextField } = require('react-admin');
+const {
+    TextInput,
+    ImageField,
+    SelectInput,
+    ArrayField,
+    TextField,
+    FunctionField,
+    BooleanInput,
+} = require('react-admin');
 
 export const productEdit = [
     {
@@ -34,28 +42,32 @@ export const productEdit = [
 export const userEdit = [
     {
         source: 'id',
-        name: 'ID',
+        readOnly: true,
         Element: TextInput,
     },
     {
         source: 'username',
-        name: 'USERNAME',
+        readOnly: true,
         Element: TextInput,
     },
     {
         source: 'fullname',
-        name: 'NAME',
+        readOnly: true,
         Element: TextInput,
     },
     {
-        source: 'role.name',
-        name: 'ROLE',
+        source: 'email',
+        readOnly: true,
         Element: TextInput,
     },
     {
-        source: 'status',
-        name: 'STATUS',
+        source: 'role',
+        readOnly: true,
         Element: TextInput,
+    },
+    {
+        source: 'isEnabled',
+        Element: BooleanInput,
     },
 ];
 
@@ -195,5 +207,35 @@ export const orderEdit = [
                 readOnly: true,
             },
         ],
+    },
+];
+
+export const configEdit = [
+    {
+        source: 'id',
+        name: 'ID',
+        Element: TextInput,
+    },
+    {
+        source: 'isSelected',
+        name: 'SELECTED',
+        Element: TextInput,
+    },
+    {
+        name: 'value',
+        Element: FunctionField,
+        render: (record) => record.value,
+    },
+];
+
+export const categoryEdit = [
+    {
+        source: 'id',
+        readOnly: true,
+        Element: TextInput,
+    },
+    {
+        source: 'name',
+        Element: TextInput,
     },
 ];

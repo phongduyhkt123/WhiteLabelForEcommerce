@@ -20,11 +20,9 @@ export const EditOrder = ({ fields }) => {
     return (
         <Edit>
             <SimpleForm onSubmit={handleSubmit}>
-                <Grid container spacing={2} direction="column">
-                    {fields.map(({ Element, readOnly, type, source, ...rest }, index) => {
-                        return renderElement({ Element, type, source, readOnly, index, rest });
-                    })}
-                </Grid>
+                {fields.map(({ Element, readOnly, type, source, ...rest }, index) => {
+                    return renderElement({ Element, type, source, readOnly, index, rest });
+                })}
             </SimpleForm>
         </Edit>
     );
@@ -53,6 +51,6 @@ const renderElement = ({ Element, type, index, readOnly, source, rest }) => {
         });
         return <SelectInput {...rest} source={source} choices={choices} key={index} />;
     } else {
-        return <Element {...rest} source={source} key={index} inputProps={{ readOnly, sx: { fontSize: 12 } }} />;
+        return <Element {...rest} source={source} key={index} inputProps={{ readOnly: true }} />;
     }
 };

@@ -31,9 +31,17 @@ const Checkout = () => {
 
     const navigate = useNavigate();
 
-    const [deliveryAddress, setDeliveryAddress] = useState(
-        JSON.parse(localStorage.getItem('auth')).userInfo.defaultAddress,
-    );
+    const { data: userInfo } = request.useAxios({ url: route.userProfileAPI, isAuthen: true });
+
+    console.log(userInfo);
+
+    const [deliveryAddress, setDeliveryAddress] = useState();
+
+    useEffect(() => {
+        if (userInfo?.defaultAddress) {
+            setDeliveryAddress(userInfo?.defaultAddress);
+        }
+    }, [userInfo]);
 
     const idProductBuyNow = searchParams.get('id');
     const isBuyNow = idProductBuyNow !== null;
@@ -48,7 +56,10 @@ const Checkout = () => {
         let price = 0;
         console.log(checkoutProducts);
         checkoutProducts?.forEach((product) => {
-            price += product.productVariation.price * product.quantity;
+            price += product.productVariation.discount
+                ? product.productVariation.price -
+                  (product.productVariation.price * product.productVariation.discount) / 100
+                : product.productVariation.price;
         });
 
         setOrderSummary(price);
@@ -81,11 +92,14 @@ const Checkout = () => {
         };
         try {
             const res = await request.post(route.orderAPI, params);
-            if (res.status === 200 && paymentMethod === 1) {
+            if (paymentMethod === 1) {
                 setMessage({ text: 'Checkout success', severity: 'success', type: AlertTypes.SNACKBAR_LARGE });
                 setShowMessage(true);
                 setCheckoutProducts([]);
                 navigate('/order');
+            } else if (paymentMethod === 2) {
+                console.log(res);
+                window.location.href = `${res.data.data.payUrl}`;
             }
         } catch (error) {
             console.log(error);
@@ -112,7 +126,11 @@ const Checkout = () => {
                     key={index}
                     avatar={item.productVariation.avatar.url}
                     idProduct={item.productDetail.id}
-                    price={item.productVariation.price}
+                    price={
+                        item.productVariation.discount
+                            ? item.productVariation.price - (item.productVariation.price * item.discount) / 100
+                            : item.productVariation.price
+                    }
                     productName={item.productDetail.name}
                     productVariationName={item.productVariation.variationName}
                     quantity={item.quantity}
@@ -124,7 +142,12 @@ const Checkout = () => {
                     key={index}
                     avatar={item.productVariation.avatar.url}
                     idProduct={item.productVariation.product.id}
-                    price={item.productVariation.price}
+                    price={
+                        item.productVariation.discount
+                            ? item.productVariation.price -
+                              (item.productVariation.price * item.productVariation.discount) / 100
+                            : item.productVariation.price
+                    }
                     productName={item.productVariation.product.name}
                     productVariationName={item.productVariation.variationName}
                     quantity={item.quantity}
