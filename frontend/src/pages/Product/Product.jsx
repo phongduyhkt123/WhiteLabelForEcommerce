@@ -8,15 +8,16 @@ import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import useGetProduct from '~/hooks/useGetProduct';
 import { ProductCard } from '~/layouts/components/ProductCard/ProductCard';
 import FilterBar from './FilterBar';
-import Title from '~/components/Title/Title';
 import times from 'lodash.times';
 import useTraceUpdate from '~/hooks/useTrackUpdate';
 import { useTitle } from '~/hooks';
-import { product } from '~/config';
+import { ConfigContext } from '~/context/ConfigContext';
 
 const Product = ({ title }) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const { setShowMessage, setMessage } = useContext(AlertContext);
+
+    const { product } = useContext(ConfigContext);
 
     const [setTitle] = useTitle(title);
 

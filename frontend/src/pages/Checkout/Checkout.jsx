@@ -6,16 +6,18 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import ListAddressDialog from '~/components/Dialog/ListAddressDialog/ListAddressDialog';
 import PaymentMethodItem from '~/components/PaymentMethodItem/PaymentMethodItem';
 import { CartItemSkeleton } from '~/components/Skeleton';
-import { checkout as checkOutConfig, paymentMethods, route } from '~/config';
 import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import { commas } from '~/utils/formater';
 import * as request from '~/utils/httpRequest';
 import CheckOutItem from './CheckOutItem';
 import DeliveryAddressItem from './DeliveryAddressItem';
 import * as addressService from '~/services/addressService';
+import { ConfigContext } from '~/context/ConfigContext';
 
 const Checkout = () => {
-    const labels = checkOutConfig.labels;
+    const { checkout, paymentMethods, routes: route } = useContext(ConfigContext);
+
+    const labels = checkout.labels;
 
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -81,11 +83,12 @@ const Checkout = () => {
 
     const handleCheckout = async () => {
         const params = {
-            address: deliveryAddress.addressDetail,
+            address: deliveryAddress.addressString,
             receiverName: deliveryAddress.receiverName,
             receiverPhone: deliveryAddress.receiverPhone,
             paymentMethod: paymentMethod - 1,
             shipPrice: shipFee,
+            toDistrict: deliveryAddress.ward.district.districtID,
             products: checkoutProducts.map((item) => {
                 return { id: item.productVariation.id, quantity: item.quantity };
             }),

@@ -7,7 +7,6 @@ export const CustomMenu = () => {
         <Menu>
             <Menu.DashboardItem />
             {Object.keys(resources).map((name) => {
-                console.log(name);
                 return <Menu.ResourceItem key={name} name={name} />;
             })}
 

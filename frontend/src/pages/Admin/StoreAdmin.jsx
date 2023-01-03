@@ -1,4 +1,4 @@
-import { Admin, CustomRoutes, Layout, Resource, defaultTheme } from 'react-admin';
+import { Admin, CustomRoutes, Layout, Resource } from 'react-admin';
 import { Route } from 'react-router-dom';
 import { categoryCreate, productCreate } from '~/config/admin/createview';
 import { categoryEdit, orderEdit, userEdit } from '~/config/admin/editview';
@@ -9,11 +9,10 @@ import { CreateView } from './Base/CreateView/CreateView';
 import { EditView } from './Base/EditView/EditView';
 import { ListView } from './Base/ListView/ListView';
 import { EditConfig } from './Config/EditConfig';
+import { CustomMenu } from './CustomMenu/CustomMenu';
 import { EditOrder } from './Order/EditOrder';
 import { EditProduct } from './Product/EditProduct';
 import Report from './Report';
-import { useTheme } from '@mui/material';
-import { CustomMenu } from './CustomMenu/CustomMenu';
 
 const dataProvider = SpringDataProvider('http://localhost:8080/api/admin', request.fetch);
 
@@ -24,7 +23,6 @@ const StoreAdmin = ({ aTheme }) => {
     const OrderList = <ListView fields={orderList} />;
     const ConfigList = <ListView fields={configList} />;
 
-    // const EditProduct = <EditView fields={productEdit} />;
     const EditUser = <EditView fields={userEdit} />;
 
     const CreateProduct = <CreateView fields={productCreate} headers={{ 'Content-Type': 'multipart/form-data' }} />;

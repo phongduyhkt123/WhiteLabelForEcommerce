@@ -8,7 +8,7 @@ const useGetProduct = (filter, page) => {
         params = {
             ...params,
             ...filter,
-            idCategory: filter.category[0],
+            category: filter.category[0],
         };
     let url = route.productAPI;
     if (filter?.key) {

@@ -12,6 +12,7 @@ import {
     ImageInput,
     ImageField,
     useRecordContext,
+    useUpdate,
 } from 'react-admin';
 
 const PreviewImage = ({ source }) => {
@@ -25,8 +26,10 @@ const PreviewImage = ({ source }) => {
 };
 
 export const EditProduct = () => {
+    const [update, { isLoading: isSubmitting }] = useUpdate();
+
     return (
-        <Edit>
+        <Edit mutationOptions={{ meta: { headers: { 'Content-Type': 'multipart/form-data' } } }}>
             <SimpleForm sx={{ backgroundColor: 'background.paper' }}>
                 <TextInput source="name" inputProps={{ sx: { p: '1rem' } }} />
                 <ImageInput source="avatar" accept="image/*">
@@ -43,32 +46,28 @@ export const EditProduct = () => {
                     <AccordionDetails>
                         <ArrayInput source="variations" sx={{ m: 2 }}>
                             <SimpleFormIterator inline sx={{ m: 2 }} fullWidth>
-                                <Grid2 container sx={{ mt: 2 }}>
-                                    <Grid2 item xs={4}>
-                                        <TextInput
-                                            source="variationName"
-                                            helperText={false}
-                                            inputProps={{ sx: { p: '1rem' } }}
-                                            fullWidth
-                                        />
-                                        <NumberInput
-                                            source="price"
-                                            helperText={false}
-                                            inputProps={{ sx: { p: '1rem' } }}
-                                            fullWidth
-                                        />
-                                        <NumberInput
-                                            source="availableQuantity"
-                                            helperText={false}
-                                            inputProps={{ sx: { p: '1rem' } }}
-                                            fullWidth
-                                        />
+                                <TextInput
+                                    source="variationName"
+                                    helperText={false}
+                                    inputProps={{ sx: { p: '1rem' } }}
+                                    fullWidth
+                                />
+                                <NumberInput
+                                    source="price"
+                                    helperText={false}
+                                    inputProps={{ sx: { p: '1rem' } }}
+                                    fullWidth
+                                />
+                                <NumberInput
+                                    source="availableQuantity"
+                                    helperText={false}
+                                    inputProps={{ sx: { p: '1rem' } }}
+                                    fullWidth
+                                />
 
-                                        <ImageInput source="avatar" accept="image/*">
-                                            <ImageField source="url" title="title" />
-                                        </ImageInput>
-                                    </Grid2>
-                                </Grid2>
+                                <ImageInput source="avatar" accept="image/*">
+                                    <ImageField source="url" title="title" />
+                                </ImageInput>
                             </SimpleFormIterator>
                         </ArrayInput>
                     </AccordionDetails>

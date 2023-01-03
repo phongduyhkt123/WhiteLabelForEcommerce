@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
-import { useGetOne, useUpdate, Title, TextInput } from 'react-admin';
+import { useGetOne, useUpdate, Title, TextInput, Form } from 'react-admin';
 import { Card, TextField, Button, Stack } from '@mui/material';
 
 export const EditConfig = () => {
     const { id } = useParams();
     const { handleSubmit, reset, control } = useForm();
-    const { isLoading } = useGetOne('config', { id }, { onSuccess: (data) => reset(data) });
+    const { isLoading, data } = useGetOne('config', { id });
     const [update, { isLoading: isSubmitting }] = useUpdate();
     const navigate = useNavigate();
     const onSubmit = (data) => {
+        console.log(data);
         update(
             'config',
             { id, data },
@@ -27,13 +28,9 @@ export const EditConfig = () => {
         <div>
             <Title title="Config Edition" />
             <Card sx={{ mt: 4 }}>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <Form record={data} onSubmit={onSubmit}>
                     <Stack spacing={2} p={3}>
-                        <Controller
-                            name="id"
-                            render={({ field }) => <TextField label="Id" {...field} />}
-                            control={control}
-                        />
+                        <Controller name="id" render={({ field }) => <TextField label="Id" {...field} />} />
                         <Controller
                             name="value"
                             render={({ field }) => {
@@ -48,6 +45,15 @@ export const EditConfig = () => {
                                             key={item}
                                             defaultValue={JSON.stringify(config[item], null, 2)}
                                             onChange={(e) => {
+                                                // console.log(
+                                                //     JSON.stringify(
+                                                //         {
+                                                //             [item]: JSON.parse(e.target.value),
+                                                //         },
+                                                //         null,
+                                                //         2,
+                                                //     ),
+                                                // );
                                                 field.onChange(
                                                     JSON.stringify(
                                                         {
@@ -63,14 +69,13 @@ export const EditConfig = () => {
                                     );
                                 });
                             }}
-                            control={control}
                         />
 
                         <Button type="submit" variant="contained" disabled={isSubmitting}>
                             Save
                         </Button>
                     </Stack>
-                </form>
+                </Form>
             </Card>
         </div>
     );

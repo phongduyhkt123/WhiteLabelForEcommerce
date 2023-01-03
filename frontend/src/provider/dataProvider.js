@@ -65,10 +65,40 @@ const SpringDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => {
                 break;
             }
             case UPDATE:
-                console.log('pa', params);
+                console.log('pa', options);
                 url = `${apiUrl}/${resource}/${params.id}`;
                 options.method = params?.meta?.method || 'PUT';
-                options.data = JSON.stringify(params.data);
+
+                // if send form data (multipart/form-data) then map data to FormData
+                if (options.headers['Content-Type'] === 'multipart/form-data') {
+                    const formData = new FormData();
+                    const info = {};
+                    Object.keys(params.data).forEach((key) => {
+                        console.log(key);
+                        if (!params.data[key]) return;
+                        if (params?.data[key]?.rawFile) {
+                            const newKey = key.includes('_') ? key.slice(key.indexOf('_') + 1, key.length) : key;
+                            formData.append(newKey, params.data[key].rawFile);
+                        } else if (typeof params.data[key] === 'object') {
+                            // may be this is a nested object
+                            // if key contains prefix 'id_' then cut it
+                            const newKey = key.includes('_') ? key.slice(key.indexOf('_') + 1, key.length) : key;
+                            info[newKey] = info[newKey] ? [...info[newKey], params.data[key]] : [params.data[key]];
+                        } else {
+                            info[key] = params.data[key];
+                        }
+                    });
+                    formData.append('productInfo', JSON.stringify(info));
+
+                    options.data = formData;
+                } else {
+                    if (params?.meta?.method === 'PATCH') {
+                        options.params = params.params;
+                    } else {
+                        options.data = JSON.stringify(params.data);
+                    }
+                }
+
                 break;
             case CREATE:
                 url = `${apiUrl}/${resource}`;

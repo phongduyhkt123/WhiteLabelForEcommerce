@@ -1,6 +1,14 @@
 import { Switch } from '@mui/material';
-import { useState } from 'react';
-import { Datagrid, EditButton, Form, List, useRecordContext } from 'react-admin';
+import {
+    Datagrid,
+    EditButton,
+    Form,
+    List,
+    useDataProvider,
+    useRecordContext,
+    useResourceDefinition,
+} from 'react-admin';
+import { useMutation } from 'react-query';
 
 export const ListView = ({ fields }) => {
     return (
@@ -24,6 +32,31 @@ export const ListView = ({ fields }) => {
 
 const CustomSwitch = ({ source, Element, ...rest }) => {
     const record = useRecordContext();
+    console.log(record);
+
+    const dataProvider = useDataProvider();
+
+    const resource = useResourceDefinition().name;
+
+    const params = {};
+    //check type of record source
+    if (typeof record[source] === 'boolean') {
+        params[source] = !record[source];
+    } else {
+        params[source] = record[source] === 'ENABLED' ? 'DISABLED' : 'ENABLED';
+    }
+
+    const { mutate, isLoading } = useMutation([resource, 'update', {}], () =>
+        dataProvider.update(resource, {
+            id: record.id,
+            params: params,
+            meta: { method: 'PATCH' },
+        }),
+    );
+
+    rest.onChange = () => {
+        mutate();
+    };
 
     //check type of record source
     if (typeof record[source] === 'boolean') {

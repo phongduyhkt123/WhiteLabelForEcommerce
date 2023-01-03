@@ -14,8 +14,9 @@ const useStyles = makeStyles((theme) => ({
     },
     mobileNav: {
         display: 'none',
-        width: '40%',
-        textAlign: 'left',
+        width: '100%',
+        textAlign: 'center',
+        boxShadow: '0 1px 1px rgb(0 0 0 / 12%)',
         padding: '4px 12px',
         backgroundColor: theme.palette.background.paper,
     },

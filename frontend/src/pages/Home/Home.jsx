@@ -11,8 +11,7 @@ import SlideBanner from './SlideBanner';
 import { ConfigContext } from '~/context/ConfigContext';
 
 function Home({ title }) {
-    const config = useContext(ConfigContext);
-    const home = config?.home;
+    const { home } = useContext(ConfigContext);
 
     const { isMobile } = useContext(GlobalContext);
 
@@ -26,7 +25,7 @@ function Home({ title }) {
     };
 
     useEffect(() => {
-        home?.groupProducts.forEach((groupProduct, index) => {
+        home.groupProducts.forEach((groupProduct, index) => {
             getProducts(groupProduct, index);
         });
     }, [home]);
@@ -35,15 +34,15 @@ function Home({ title }) {
         <Title title={title}>
             <Box width="100%" display="flex" flexDirection="column" alignItems="center" margin="auto">
                 {/* Banner */}
-                <SlideBanner images={home?.topBanner.images || []} height={home?.topBanner.height} />
+                <SlideBanner images={home.topBanner.images || []} height={home.topBanner.height} />
 
                 <Box width="100%" mt={8}>
                     <Stack spacing={2}>
                         {/* show group product */}
-                        {home?.groupProducts.map((group, index) => (
+                        {home.groupProducts.map((group, index) => (
                             <Paper sx={{ px: 0.5, py: 2, bgcolor: 'background.default' }} key={index}>
                                 <Typography variant="h5" color="primary">
-                                    {home?.labels[group.title]}
+                                    {home.labels[group.title]}
                                 </Typography>
                                 {/* Banner */}
                                 <Box

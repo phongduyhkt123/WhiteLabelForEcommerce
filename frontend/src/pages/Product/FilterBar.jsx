@@ -1,10 +1,12 @@
 import { Button, Checkbox, Divider, Paper, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
-import { route, product } from '~/config';
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import * as request from '~/utils/httpRequest';
+import { ConfigContext } from '~/context/ConfigContext';
 
 const FilterBar = ({ filter, setFilter, initFilter }) => {
+    const { routes: route, product } = useContext(ConfigContext);
+
     const filterRef = useRef(null);
 
     const { data: categories } = request.useAxios({ url: route.categoryAPI });

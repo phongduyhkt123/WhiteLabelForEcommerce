@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import times from 'lodash.times';
 import { useState } from 'react';
-import { Button, Edit, ImageField, SimpleForm, TextInput } from 'react-admin';
+import { Button, Edit, ImageField, SimpleForm } from 'react-admin';
 
 export const EditView = ({ fields }) => {
     const [fieldsState, setFieldsState] = useState(fields);
@@ -53,9 +53,7 @@ export const renderElement = ({ Element, type, label, quantity, index, handleAdd
             (prefix) => (
                 <Element
                     {...rest}
-                    inputProps={(prev) => {
-                        return { ...prev, readOnly: rest.readOnly };
-                    }}
+                    inputProps={{ readOnly: rest.readOnly, padding: '10px 14px' }}
                     aria-readonly={true}
                     source={`${prefix || ''}${rest.source}`}
                     style={{ display: 'flex' }}

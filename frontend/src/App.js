@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { publicRoute, privateRoute } from '~/routes';
 import DefaultLayout from '~/layouts/DefaultLayout';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import { Box } from '@mui/system';
 
 import 'slick-carousel/slick/slick.css'; // Add this line
@@ -14,6 +14,7 @@ import AuthCheck from './pages/Signin/AuthCheck';
 import { global } from '~/config';
 import { useTheme } from '@mui/material';
 import { defaultTheme } from 'react-admin';
+import { ConfigContext } from './context/ConfigContext';
 
 function App() {
     const theme = useTheme();
@@ -27,6 +28,20 @@ function App() {
             ...defaultTheme.typography,
             fontSize: theme.typography.fontSize,
         },
+        components: {
+            ...defaultTheme.components,
+            MuiTextField: {
+                defaultProps: {
+                    variant: 'outlined',
+                    InputProps: {
+                        style: { padding: '10px 14px' },
+                    },
+                    inputProps: {
+                        style: { padding: '10px 14px' },
+                    },
+                },
+            },
+        },
     };
 
     useEffect(() => {
@@ -39,57 +54,63 @@ function App() {
         link.href = global.favicon.src;
     }, []);
 
+    const config = useContext(ConfigContext);
+
     return (
         <Box margin="auto">
-            <Router>
-                <NavigateSetter />
-                <Box className="App">
-                    <Routes>
-                        {/* Public route */}
-                        {publicRoute.map((route, index) => {
-                            let Layout = DefaultLayout;
-                            if (route.layout) Layout = route.layout;
-                            else if (route.layout === null) Layout = Fragment;
-                            const Page = route.element;
-                            return (
-                                <Route
-                                    key={index}
-                                    path={route.path}
-                                    element={
-                                        <Layout>
-                                            {route.authCheck && <AuthCheck />} <Page title={route.title} />
-                                        </Layout>
-                                    }
-                                />
-                            );
-                        })}
-                        {/* Private Route */}
+            <div>
+                {config && (
+                    <Router>
+                        <NavigateSetter />
+                        <Box className="App">
+                            <Routes>
+                                {/* Public route */}
+                                {publicRoute.map((route, index) => {
+                                    let Layout = DefaultLayout;
+                                    if (route.layout) Layout = route.layout;
+                                    else if (route.layout === null) Layout = Fragment;
+                                    const Page = route.element;
+                                    return (
+                                        <Route
+                                            key={index}
+                                            path={route.path}
+                                            element={
+                                                <Layout>
+                                                    {route.authCheck && <AuthCheck />} <Page title={route.title} />
+                                                </Layout>
+                                            }
+                                        />
+                                    );
+                                })}
+                                {/* Private Route */}
 
-                        {privateRoute.map((route, index) => {
-                            let Layout = DefaultLayout;
-                            if (route.layout) Layout = route.layout;
-                            else if (route.layout === null) Layout = Fragment;
-                            const Page = route.element;
-                            return (
-                                <Route
-                                    key={index}
-                                    path={route.path}
-                                    element={
-                                        <AuthRequire>
-                                            <Layout>
-                                                <Page title={route.title} />
-                                            </Layout>
-                                        </AuthRequire>
-                                    }
-                                />
-                            );
-                        })}
+                                {privateRoute.map((route, index) => {
+                                    let Layout = DefaultLayout;
+                                    if (route.layout) Layout = route.layout;
+                                    else if (route.layout === null) Layout = Fragment;
+                                    const Page = route.element;
+                                    return (
+                                        <Route
+                                            key={index}
+                                            path={route.path}
+                                            element={
+                                                <AuthRequire>
+                                                    <Layout>
+                                                        <Page title={route.title} />
+                                                    </Layout>
+                                                </AuthRequire>
+                                            }
+                                        />
+                                    );
+                                })}
 
-                        {/* React Admin */}
-                        <Route path="/admin/*" element={<StoreAdmin aTheme={aTheme} />} />
-                    </Routes>
-                </Box>
-            </Router>
+                                {/* React Admin */}
+                                <Route path="/admin/*" element={<StoreAdmin aTheme={aTheme} />} />
+                            </Routes>
+                        </Box>
+                    </Router>
+                )}
+            </div>
 
             <ToastContainer />
         </Box>

@@ -1,8 +1,9 @@
-import { Card, CardContent } from '@mui/material';
+import { Card, CardContent, TextField } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Stack } from '@mui/system';
 import { Title, useGetList, useGetMany, useGetOne } from 'react-admin';
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts';
+import Select from '~/components/Select';
 import { useAxios } from '~/utils/httpRequest';
 
 const Report = () => {
@@ -16,6 +17,11 @@ const Report = () => {
         <Card sx={{ mt: 4 }}>
             <Title title="Report" />
             <CardContent>
+                <form>
+                    <TextField label="Year" type="number" name="year" />
+                    <Select label="Type of time" options={[{ name: 'Month' }, { name: 'Week' }, { name: 'Day' }]} />
+                </form>
+
                 <Stack direction="column" spacing={4} bgcolor="background.default">
                     <Grid2>
                         <BarChart width={730} height={250} data={data}>

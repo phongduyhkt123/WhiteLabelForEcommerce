@@ -3,16 +3,16 @@ import { useContext, useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { CartItemSkeleton } from '~/components/Skeleton';
-import { route } from '~/config';
 import { GlobalContext } from '~/context/GlobalContext';
-import { cart as cartConfig } from '~/config';
 import CartItem from '~/layouts/components/CartItem/CartItem';
 import { commas } from '~/utils/formater';
 import * as request from '~/utils/httpRequest';
 import Title from '~/components/Title/Title';
+import { ConfigContext } from '~/context/ConfigContext';
 
 const Cart = ({ title }) => {
-    const labels = cartConfig.labels;
+    const { routes: route, cart } = useContext(ConfigContext);
+    const labels = cart.labels;
 
     const { setTotalCartItem } = useContext(GlobalContext);
 
@@ -30,7 +30,9 @@ const Cart = ({ title }) => {
             let price = 0;
             cartProducts.forEach((item) => {
                 total += item.quantity;
-                price += item.productVariation.price * item.quantity;
+                price += item.productVariation.discount
+                    ? item.productVariation.price - (item.productVariation.price * item.productVariation.discount) / 100
+                    : item.productVariation.price;
             });
             setTotalCartItem(total);
             setTotalPrice(price);
