@@ -19,7 +19,7 @@ const Action = () => {
     };
 
     const getTotalCartItem = async () => {
-        const res = await request.get(route.countCartAPI);
+        const res = await request.get(route.countCartAPI.url);
         setTotalCartItem(res.data.data);
     };
 

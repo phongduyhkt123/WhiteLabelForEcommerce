@@ -33,7 +33,7 @@ const Checkout = () => {
 
     const navigate = useNavigate();
 
-    const { data: userInfo } = request.useAxios({ url: route.userProfileAPI, isAuthen: true });
+    const { data: userInfo } = request.useAxios({ url: route.userProfileAPI.url, isAuthen: true });
 
     console.log(userInfo);
 
@@ -48,21 +48,33 @@ const Checkout = () => {
     const idProductBuyNow = searchParams.get('id');
     const isBuyNow = idProductBuyNow !== null;
 
-    const {
-        data: checkoutProducts,
-        setData: setCheckoutProducts,
-        loaded,
-    } = request.useAxios({ url: route.cartAPI, isAuthen: true });
+    const axiosConfig = isBuyNow
+        ? {
+              url: `${route.productVariationAPI.url}/${idProductBuyNow}`,
+              isAuthen: true,
+          }
+        : {
+              url: route.cartAPI.url,
+              isAuthen: true,
+          };
+
+    const { data: checkoutProducts, setData: setCheckoutProducts, loaded } = request.useAxios(axiosConfig);
 
     useEffect(() => {
+        if (!loaded) return;
         let price = 0;
-        console.log(checkoutProducts);
-        checkoutProducts?.forEach((product) => {
-            price += product.productVariation.discount
-                ? product.productVariation.price -
-                  (product.productVariation.price * product.productVariation.discount) / 100
-                : product.productVariation.price;
-        });
+        if (isBuyNow) {
+            price = checkoutProducts.discount
+                ? checkoutProducts.price - (checkoutProducts.price * checkoutProducts.discount) / 100
+                : checkoutProducts.price;
+        } else {
+            checkoutProducts?.forEach((product) => {
+                price += product.productVariation.discount
+                    ? product.productVariation.price -
+                      (product.productVariation.price * product.productVariation.discount) / 100
+                    : product.productVariation.price;
+            });
+        }
 
         setOrderSummary(price);
     }, [checkoutProducts]);
@@ -89,12 +101,15 @@ const Checkout = () => {
             paymentMethod: paymentMethod - 1,
             shipPrice: shipFee,
             toDistrict: deliveryAddress.ward.district.districtID,
-            products: checkoutProducts.map((item) => {
-                return { id: item.productVariation.id, quantity: item.quantity };
-            }),
+            products: isBuyNow
+                ? [{ id: idProductBuyNow, quantity: searchParams.get('quantity') }]
+                : checkoutProducts.map((item) => {
+                      return { id: item.productVariation.id, quantity: item.quantity };
+                  }),
+            isBuyNow: isBuyNow,
         };
         try {
-            const res = await request.post(route.orderAPI, params);
+            const res = await request.post(route.orderAPI.url, params);
             if (paymentMethod === 1) {
                 setMessage({ text: 'Checkout success', severity: 'success', type: AlertTypes.SNACKBAR_LARGE });
                 setShowMessage(true);
@@ -123,22 +138,18 @@ const Checkout = () => {
     };
 
     const renderCheckoutItems = () => {
+        if (!loaded) return null;
         if (isBuyNow) {
-            return checkoutProducts.map((item, index) => (
+            return (
                 <CheckOutItem
-                    key={index}
-                    avatar={item.productVariation.avatar.url}
-                    idProduct={item.productDetail.id}
-                    price={
-                        item.productVariation.discount
-                            ? item.productVariation.price - (item.productVariation.price * item.discount) / 100
-                            : item.productVariation.price
-                    }
-                    productName={item.productDetail.name}
-                    productVariationName={item.productVariation.variationName}
-                    quantity={item.quantity}
+                    avatar={checkoutProducts.avatar.url}
+                    idProduct={checkoutProducts.product.id}
+                    price={orderSummary}
+                    productName={checkoutProducts.product.name}
+                    productVariationName={checkoutProducts.variationName}
+                    quantity={searchParams.get('quantity')}
                 />
-            ));
+            );
         } else if (checkoutProducts.length > 0)
             return checkoutProducts.map((item, index) => (
                 <CheckOutItem

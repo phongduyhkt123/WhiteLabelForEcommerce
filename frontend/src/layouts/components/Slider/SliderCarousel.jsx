@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     root: {},
 });
 
-export default function SliderCarousel({ children, isMobile }) {
+export default function SliderCarousel({ children, isMobile, slidesToShow = 6 }) {
     // const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     //     <img src={LeftArrow} alt="prevArrow" {...props} />
     // );
@@ -20,7 +20,7 @@ export default function SliderCarousel({ children, isMobile }) {
     const settings = {
         dots: true,
         infinite: true,
-        slidesToShow: 6,
+        slidesToShow: slidesToShow,
         slidesToScroll: 6,
         initialSlide: 0,
         arrows: !isMobile,

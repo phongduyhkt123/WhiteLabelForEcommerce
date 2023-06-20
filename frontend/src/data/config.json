@@ -5,39 +5,79 @@
             "component": "Home",
             "title": "Home"
         },
-        "signin": { "path": "/signin", "title": "Signin" },
-        "signup": { "path": "/signup", "title": "Signup" },
-        "profile": { "path": "/profile", "title": "Profile" },
-        "search": { "path": "/search", "title": "Search" },
-        "singleProduct": { "path": "/product/:id", "title": "Product" },
-        "product": { "path": "/product", "params": { "page": 1 }, "title": "Product" },
-        "cart": { "path": "/cart", "title": "Cart" },
-        "checkout": { "path": "/checkout", "title": "Checkout" },
-        "singleOrder": { "path": "/order/:id", "title": "Order" },
-        "order": { "path": "/order", "title": "Order" },
-        "deliveryAddress": { "path": "/delivery-address", "title": "Delivery Address" },
-        "userinfo": { "path": "/userinfo", "title": "Userinfo" },
-        "payment": { "path": "/payment", "title": "Payment" },
-
-        "cartAPI": "/user/cart",
-        "countCartAPI": "/user/cart/count",
-        "signinAPI": "/login",
-        "signupAPI": "/signup",
-        "productAPI": "/product",
-        "productSearchAPI": "/product/search",
-        "categoryAPI": "/product-category",
-        "orderAPI": "/user/order",
-        "deliveryAddressAPI": "/user/address",
-        "userinfoAPI": "/buyer/userinfo",
-        "singleProductAPI": "/product/",
-        "userProfileAPI": "/user/profile",
-
-        "signinAdminAPI": "/login",
-        "productAdminAPI": "/admin/product"
+        "signin": {
+            "path": "/signin",
+            "title": "Signin"
+        },
+        "signup": {
+            "path": "/signup",
+            "title": "Signup"
+        },
+        "profile": {
+            "path": "/profile",
+            "title": "Profile"
+        },
+        "search": {
+            "path": "/search",
+            "title": "Search"
+        },
+        "singleProduct": {
+            "path": "/product/:id",
+            "title": "Product"
+        },
+        "product": {
+            "path": "/product",
+            "title": "Product"
+        },
+        "cart": {
+            "path": "/cart",
+            "title": "Cart"
+        },
+        "checkout": {
+            "path": "/checkout",
+            "title": "Checkout"
+        },
+        "singleOrder": {
+            "path": "/order/:id",
+            "title": "Order"
+        },
+        "order": {
+            "path": "/order",
+            "title": "Order"
+        },
+        "deliveryAddress": {
+            "path": "/delivery-address",
+            "title": "DeliveryAddress"
+        },
+        "userinfo": {
+            "path": "/userinfo",
+            "title": "Userinfo"
+        },
+        "payment": {
+            "path": "/payment",
+            "title": "Payment"
+        },
+        "cartAPI": { "url": "/user/cart" },
+        "countCartAPI": { "url": "/user/cart/count" },
+        "signinAPI": { "url": "/login" },
+        "signupAPI": { "url": "/signup" },
+        "productAPI": { "url": "/product" },
+        "productSearchAPI": { "url": "/product/search" },
+        "categoryAPI": { "url": "/product-category" },
+        "orderAPI": { "url": "/user/order" },
+        "deliveryAddressAPI": { "url": "/user/address" },
+        "userinfoAPI": { "url": "/buyer/userinfo" },
+        "singleProductAPI": { "url": "/product/" },
+        "userProfileAPI": { "url": "/user/profile" },
+        "signinAdminAPI": { "url": "/login" },
+        "productAdminAPI": { "url": "/admin/product" }
     },
-
     "global": {
-        "font": { "fontFamily": "Lato, Roboto", "fontSize": 15, "fontWeight": 400 },
+        "font": {
+            "fontFamily": "Lato,Roboto",
+            "fontSize": 15,
+            "fontWeight": 400
+        },
         "logo": {
             "type": "html",
             "src": "https://inkythuatso.com/uploads/images/2021/11/logo-coca-cola-inkythuatso-3-01-17-10-15-33.jpg"
@@ -45,10 +85,9 @@
         "favicon": {
             "src": "https://inkythuatso.com/uploads/images/2021/11/logo-coca-cola-inkythuatso-3-01-17-10-15-33.jpg"
         },
-
         "color": {
             "primary": {
-                "main": "#b71c1c",
+                "main": "#1565c0",
                 "light": "#f5f5f5",
                 "dark": "#f5f5f5",
                 "contrastText": "#fff"
@@ -72,15 +111,13 @@
                 "primary": "#000",
                 "secondary": "#fff"
             },
-            "divider": "#e57373",
-
+            "divider": "#bbdefb",
             "background": {
-                "default": "#ef9a9a",
-                "paper": "#ef5350",
+                "default": "#bbdefb",
+                "paper": "#90caf9",
                 "white": "#fff"
             }
         },
-
         "components": {
             "MuiPaginationItem": {
                 "styleOverrides": {
@@ -89,41 +126,43 @@
                     }
                 }
             },
-
             "MuiCard": {
                 "styleOverrides": {
                     "root": {
-                        "boxShadow": "0px 0px 2px 2px rgb(0 0 0 / 20%)"
+                        "boxShadow": "0px0px2px2pxrgb(000/20%)"
                     }
                 }
             }
         },
-
         "currency": {
             "symbol": "₫"
         }
     },
-
     "footer": {
         "styles": {
             "height": "30rem"
         },
-
-        "font": { "font-family": "Roboto", "fontsize": "1.5rem" },
-
-        "logo": { "url": "https://i.imgur.com/4Q1YQqg.png", "alt": "logo", "width": 100, "height": 100 },
-
+        "font": {
+            "font-family": "Roboto",
+            "fontsize": "1.5rem"
+        },
+        "logo": {
+            "url": "https://i.imgur.com/4Q1YQqg.png",
+            "alt": "logo",
+            "width": 100,
+            "height": 100
+        },
         "items": [
             {
-                "title": "About Us",
+                "title": "AboutUs",
                 "subItems": [
                     {
-                        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                        "content": "Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua."
                     }
                 ]
             },
             {
-                "title": "Contact Us",
+                "title": "ContactUs",
                 "subItems": [
                     {
                         "icon": "Facebook",
@@ -140,29 +179,30 @@
                 ]
             },
             {
-                "title": "Follow Us",
+                "title": "FollowUs",
                 "subItems": []
             }
         ],
-
         "copyRight": {
-            "content": "© 2021 React Admin. All rights reserved."
+            "content": "©2021ReactAdmin.Allrightsreserved."
         }
     },
-
     "header": {
         "styles": {
             "width": "100%"
         },
-
-        "font": { "font-family": "Roboto", "fontsize": "1.5rem" },
-
-        "logo": { "to": "https://i.imgur.com/4Q1YQqg.png", "alt": "logo", "width": "10rem", "height": "10rem" },
-
+        "font": {
+            "font-family": "Roboto",
+            "fontsize": "1.5rem"
+        },
+        "logo": {
+            "to": "https://i.imgur.com/4Q1YQqg.png",
+            "alt": "logo",
+            "width": "10rem",
+            "height": "10rem"
+        },
         "button": {},
-
         "search": {},
-
         "navBar": {
             "item": [
                 {
@@ -189,9 +229,10 @@
                     "title": "Contact",
                     "to": "/contact"
                 }
-            ]
+            ],
+            "horizontal": "center",
+            "vertical": "top"
         },
-
         "profileMenu": {
             "items": [
                 {
@@ -200,14 +241,12 @@
                     "icon": "AccountCircle"
                 }
             ],
-
             "labels": {
                 "profile": "Profile",
                 "logout": "Logout"
             }
         }
     },
-
     "home": {
         "title": "Home",
         "styles": {},
@@ -237,13 +276,14 @@
         },
         "groupProducts": [
             {
-                "title": "Best Seller",
+                "title": "BestSeller",
                 "banner": {
                     "src": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/6139fe95757635.5e9f0237cf687.png",
                     "alt": "image"
                 },
                 "api": "/product/most-sold",
-                "limit": 10
+                "limit": 10,
+                "slidesToShow": 5
             },
             {
                 "title": "Most View",
@@ -252,7 +292,8 @@
                     "alt": "image"
                 },
                 "api": "/product/most-viewed",
-                "limit": 10
+                "limit": 10,
+                "slidesToShow": 5
             },
             {
                 "title": "Sale Off",
@@ -261,7 +302,8 @@
                     "alt": "image"
                 },
                 "api": "/product/sale",
-                "limit": 10
+                "limit": 10,
+                "slidesToShow": 5
             },
             {
                 "title": "Latest",
@@ -270,10 +312,10 @@
                     "alt": "image"
                 },
                 "api": "/product/lasted",
-                "limit": 10
+                "limit": 10,
+                "slidesToShow": 5
             }
         ],
-
         "bottomBanner": {
             "height": "500px",
             "display": "block",
@@ -286,16 +328,14 @@
                 }
             ]
         },
-
         "labels": {
-            "bestSeller": "Best Seller",
-            "mostView": "Most View",
-            "saleOff": "Sale Off",
+            "bestSeller": "BestSeller",
+            "mostView": "MostView",
+            "saleOff": "SaleOff",
             "latest": "Latest",
             "random": "Random"
         }
     },
-
     "signin": {
         "image": "",
         "logo": {},
@@ -317,14 +357,13 @@
         "labels": {
             "username": "Username",
             "password": "Password",
-            "signin": "Sign In",
-            "dontHaveAccount": "Don't have an account?",
-            "signup": "Register here",
-            "forgotPassword": "Forgot password?",
-            "signInToYourAccount": "Sign in to your account"
+            "signin": "SignIn",
+            "dontHaveAccount": "Don'thaveanaccount?",
+            "signup": "Registerhere",
+            "forgotPassword": "Forgotpassword?",
+            "signInToYourAccount": "Signintoyouraccount"
         }
     },
-
     "signup": {
         "image": "",
         "logo": {},
@@ -357,29 +396,28 @@
             }
         },
         "labels": {
-            "welcome": "Welcome to our community",
-            "fullname": "Full Name",
+            "welcome": "Welcometoourcommunity",
+            "fullname": "FullName",
             "username": "Username",
-            "email": "Email Address",
-            "phone": "Phone Number",
+            "email": "EmailAddress",
+            "phone": "PhoneNumber",
             "password": "Password",
             "signup": "Register",
-            "alreadyHaveAccount": "Already have an account?",
-            "signin": "Sign in here"
+            "alreadyHaveAccount": "Alreadyhaveanaccount?",
+            "signin": "Signinhere"
         }
     },
-
     "paymentMethods": [
         {
             "id": 1,
             "code": "CASH",
-            "name": "Cash on delivery",
+            "name": "Cashondelivery",
             "icon": "AttachMoney"
         },
         {
             "id": 2,
             "code": "CARD",
-            "name": "Credit Card",
+            "name": "CreditCard",
             "icon": "CreditCard"
         },
         {
@@ -389,71 +427,66 @@
             "icon": "Paypal"
         }
     ],
-
     "cart": {
         "labels": {
-            "noItem": "No item in cart",
+            "noItem": "Noitemincart",
             "checkout": "Checkout",
             "total": "Total",
-            "continueShopping": "Continue shopping",
+            "continueShopping": "Continueshopping",
             "quantity": "Qt",
             "variant": "Variant"
         }
     },
-
     "product": {
         "labels": {
-            "clearFilter": "Clear filter",
+            "clearFilter": "Clearfilter",
             "filter": "Filter",
-            "sortBy": "Sort by",
+            "sortBy": "Sortby",
             "price": "Price",
-            "priceRange": "Price range",
+            "priceRange": "Pricerange",
             "priceRangeFrom": "From",
             "priceRangeTo": "To",
             "priceRangeApply": "Apply",
-            "productCategory": "Product category",
-            "searchResult": "Search result for"
+            "productCategory": "Productcategory",
+            "searchResult": "Searchresultfor"
         }
     },
-
     "singleProduct": {
         "labels": {
             "variant": "Variant",
             "quantity": "Quantity",
-            "addToCart": "Add to cart",
-            "buyNow": "Buy now",
+            "addToCart": "Addtocart",
+            "buyNow": "Buynow",
             "description": "Description",
             "expand": "Expand",
             "collapse": "Collapse",
-            "addToCartSuccess": "Add to cart success",
-            "addToCartUnKnownError": "Somthing went wrong",
-            "variantRequired": "Please select variant",
-            "inStock": "In stock"
+            "addToCartSuccess": "Addtocartsuccess",
+            "addToCartUnKnownError": "Somthingwentwrong",
+            "variantRequired": "Pleaseselectvariant",
+            "inStock": "Instock"
         }
     },
-
     "productCard": {
         "addToCart": {
-            "label": "Add to cart",
+            "label": "Addtocart",
             "icon": "AddShoppingCart"
         }
     },
-
     "deliveryAddress": {
         "labels": {
-            "noDeliveryAddress": "No delivery address",
-            "addNewAddress": "Add new address",
-            "editAddress": "Edit address",
-            "deleteAddress": "Delete address",
-            "setAsDefault": "Set as default",
-            "deleteAddressConfirm": "Are you sure to delete this address?",
-            "deleteAddressSuccess": "Delete address success",
-            "deleteAddressUnKnownError": "Somthing went wrong",
-            "addNewAddressSuccess": "Add new address success",
-            "addNewAddressUnKnownError": "Somthing went wrong",
-            "editAddressSuccess": "Edit address success",
-            "editAddressUnKnownError": "Somthing went wrong",
-            "fullName": "Full Name",
+            "noDeliveryAddress": "Nodeliveryaddress",
+            "addNewAddress": "Addnewaddress",
+            "editAddress": "Editaddress",
+            "deleteAddress": "Deleteaddress",
+            "setAsDefault": "Setasdefault",
+            "deleteAddressConfirm": "Areyousuretodeletethisaddress?",
+            "deleteAddressSuccess": "Deleteaddresssuccess",
+            "deleteAddressUnKnownError": "Somthingwentwrong",
+            "addNewAddressSuccess": "Addnewaddresssuccess",
+            "addNewAddressUnKnownError": "Somthingwentwrong",
+            "editAddressSuccess": "Editaddresssuccess",
+            "editAddressUnKnownError": "Somthingwentwrong",
+            "fullName": "FullName",
             "phone": "Phone",
             "address": "Address",
             "city": "City",
@@ -463,23 +496,21 @@
             "cancel": "Cancel"
         }
     },
-
     "checkout": {
         "labels": {
-            "deliveryAddress": "Delivery Address",
-            "noDeliveryAddress": "No delivery address",
-            "paymentMethod": "Payment Method",
-            "noProducts": "No thing to checkout",
-            "orderSummary": "Order Summary",
-            "shipFee": "Shiping fee",
+            "deliveryAddress": "DeliveryAddress",
+            "noDeliveryAddress": "Nodeliveryaddress",
+            "paymentMethod": "PaymentMethod",
+            "noProducts": "Nothingtocheckout",
+            "orderSummary": "OrderSummary",
+            "shipFee": "Shipingfee",
             "total": "Total",
             "order": "Order",
-            "addMoreProducts": "Add more products",
-            "checkoutSuccess": "Checkout success",
+            "addMoreProducts": "Addmoreproducts",
+            "checkoutSuccess": "Checkoutsuccess",
             "changeDeliveryAddress": "Change"
         }
     },
-
     "order": {
         "labels": {
             "total": "Total",
@@ -487,7 +518,6 @@
             "cancel": "Cancel"
         }
     },
-
     "profile": {
         "items": [
             {
@@ -533,21 +563,19 @@
                 ]
             }
         ],
-
         "labels": {
             "profile": "Profile",
-            "fullname": "Full Name",
+            "fullname": "FullName",
             "email": "Email",
             "phone": "Phone",
             "username": "Username",
             "gender": "Gender",
             "male": "Male",
             "female": "Female",
-            "save": "Save details",
-            "changeAvatar": "Change Avatar"
+            "save": "Savedetails",
+            "changeAvatar": "ChangeAvatar"
         }
     },
-
     "profileSideBar": {
         "items": [
             {
@@ -567,7 +595,6 @@
             }
         ]
     },
-
     "orderStatus": {
         "items": {
             "WAIT_FOR_PAYMENT": {
@@ -592,28 +619,21 @@
                 "id": 3,
                 "name": "delivering",
                 "color": "#2196f3",
-                "cancelable": false
+                "cancelable": true
             },
             "DELIVERED": {
                 "id": 4,
                 "name": "delivered",
                 "color": "#4caf50",
-                "cancelable": false
-            },
-            "COMPLETED": {
-                "id": 5,
-                "name": "completed",
-                "color": "#f44336",
-                "cancelable": false
+                "cancelable": true
             },
             "CANCELED": {
-                "id": 6,
+                "id": 5,
                 "name": "canceled",
                 "color": "#f44336",
-                "cancelable": false
+                "cancelable": true
             }
         },
-
         "labels": {
             "waitForPayment": "Wait for payment",
             "waitForConfirm": "Wait for confirm",

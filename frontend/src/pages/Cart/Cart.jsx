@@ -22,7 +22,7 @@ const Cart = ({ title }) => {
         data: cartProducts,
         setData: setCartProducts,
         loaded,
-    } = request.useAxios({ url: route.cartAPI, isAuthen: true });
+    } = request.useAxios({ url: route.cartAPI.url, isAuthen: true });
 
     useEffect(() => {
         if (loaded) {
@@ -40,7 +40,7 @@ const Cart = ({ title }) => {
     }, [cartProducts]);
 
     const removeItem = async (id) => {
-        const res = await request.delete(`${route.cartAPI}/${id}`);
+        const res = await request.delete(`${route.cartAPI.url}/${id}`);
         if (res.status === 200) {
             setCartProducts(cartProducts.filter((item) => item.productVariation.id !== id));
         }
@@ -64,7 +64,7 @@ const Cart = ({ title }) => {
             const data = {
                 quantity: newQuantity - quantity,
             };
-            request.patch(`${route.cartAPI}/${id}`, data).then((res) => {
+            request.patch(`${route.cartAPI.url}/${id}`, data).then((res) => {
                 if (res.status === 200) {
                     setCartProducts(
                         cartProducts.map((item) => {

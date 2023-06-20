@@ -15,7 +15,7 @@ const DeliveryAddress = ({ title }) => {
 
     const [deliveryAddress, setDeliveryAddress] = useState({});
 
-    const { data: userInfo } = request.useAxios({ url: route.userProfileAPI, isAuthen: true });
+    const { data: userInfo } = request.useAxios({ url: route.userProfileAPI.url, isAuthen: true });
 
     const [showDialog, setshowDialog] = useState(false);
 
@@ -23,11 +23,11 @@ const DeliveryAddress = ({ title }) => {
         data: deliveryAddresses,
         setData: setDeliveryAddresses,
         loaded,
-    } = request.useAxios({ url: route.deliveryAddressAPI, isAuthen: true });
+    } = request.useAxios({ url: route.deliveryAddressAPI.url, isAuthen: true });
 
     const handleSetDefaultClick = (id) => {
         request
-            .patch(route.setDefaultAddressAPI + id)
+            .patch(route.setDefaultAddress.url + id)
             .then((res) => {})
             .catch((err) => {
                 console.log(err);

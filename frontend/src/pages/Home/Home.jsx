@@ -58,7 +58,7 @@ function Home({ title }) {
                                 ></Box>
                                 {/* List product */}
                                 <Box my={2} px={isMobile ? 0 : 3}>
-                                    <SliderCarousel isMobile={isMobile}>
+                                    <SliderCarousel isMobile={isMobile} slidesToShow={group.slidesToShow}>
                                         {group?.data?.map((item, index) => (
                                             <ProductCard key={index} data={item} />
                                         ))}

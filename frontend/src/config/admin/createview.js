@@ -75,3 +75,13 @@ export const categoryCreate = [
         Element: TextInput,
     },
 ];
+
+/**
+ * Category Create
+ */
+export const configCreate = [
+    {
+        source: 'value',
+        Element: TextInput,
+    },
+];

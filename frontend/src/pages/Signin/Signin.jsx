@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, IconButton, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Stack } from '@mui/system';
 import { useContext, useState } from 'react';
@@ -11,6 +11,7 @@ import Logo from '~/components/Logo';
 import StaticAlert from '~/components/StaticAlert/StaticAlert';
 import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import AuthContainer from '~/layouts/components/AuthContainer';
+import { Facebook, Google } from '~/assets/images';
 
 const Signin = () => {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Signin = () => {
 
         const login = async (loginKey, password) => {
             try {
-                const response = await request.post(route.signinAPI, {
+                const response = await request.post(route.signinAPI.url, {
                     loginKey,
                     password,
                 });
@@ -48,7 +49,7 @@ const Signin = () => {
                 }
             } catch (error) {
                 setMessage({
-                    text: error.response.data.detail.message || 'Something went wrong',
+                    text: error?.response?.data?.detail?.message || 'Something went wrong',
                     severity: 'error',
                     type: AlertTypes.STATIC,
                 });
@@ -118,6 +119,15 @@ const Signin = () => {
                                     {labels[button.label]}
                                 </Button>
                             </Box>
+                        </Box>
+
+                        <Box>
+                            <IconButton>
+                                <img src={Google} alt="google" />
+                            </IconButton>
+                            <IconButton>
+                                <img src={Facebook} alt="facebook" />
+                            </IconButton>
                         </Box>
 
                         {/* Forget Password */}

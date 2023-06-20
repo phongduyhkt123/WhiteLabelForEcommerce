@@ -9,7 +9,7 @@ const FilterBar = ({ filter, setFilter, initFilter }) => {
 
     const filterRef = useRef(null);
 
-    const { data: categories } = request.useAxios({ url: route.categoryAPI });
+    const { data: categories } = request.useAxios({ url: route.categoryAPI.url });
 
     const header = document.getElementById('header');
 

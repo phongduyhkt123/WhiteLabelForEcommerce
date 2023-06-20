@@ -8,7 +8,7 @@ export const authProvider = {
     login: ({ username: loginKey, password }) => {
         const login = async () => {
             try {
-                const response = await request.post(route.signinAdminAPI, { loginKey, password });
+                const response = await request.post(route.signinAdminAPI.url, { loginKey, password });
                 const { token, type, userInfo } = response.data;
                 if (userInfo.role.toLowerCase() !== 'admin') {
                     throw new Error('You are not admin');

@@ -155,9 +155,10 @@ const SpringDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson) => {
         switch (type) {
             case GET_LIST:
             case GET_MANY_REFERENCE:
+                console.log('data', data.data);
                 return {
                     data: data.data.data || data.data,
-                    total: parseInt(data.data.data?.length, 10),
+                    total: parseInt(data.data.data?.length * data.data.totalPage, 10),
                 };
             case CREATE:
             case UPDATE:

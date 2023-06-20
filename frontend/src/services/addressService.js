@@ -73,8 +73,8 @@ export const getService = async ({ from_district = 3695, to_district }) => {
 export const saveAddress = async ({ params, id }) => {
     try {
         const res = id
-            ? await request.put(`${route.deliveryAddressAPI}/${id}`, params)
-            : await request.post(route.deliveryAddressAPI, params);
+            ? await request.put(`${route.deliveryAddressAPI.url}/${id}`, params)
+            : await request.post(route.deliveryAddressAPI.url, params);
         return {
             data: res.data.data,
             message: {

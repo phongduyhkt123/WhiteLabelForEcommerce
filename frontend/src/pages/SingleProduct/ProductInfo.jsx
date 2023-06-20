@@ -5,15 +5,17 @@ import { Box } from '@mui/system';
 import { useContext, useEffect } from 'react';
 import OldPrice from '~/components/OldPrice';
 import { ProductContext } from '~/context/ProductContext';
-import { singleProduct as singleProductConfig } from '~/config';
 import { commas } from '~/utils/formater';
 import ButtonControll from './ButtonControll';
 import ProductDescription from './ProductDescription';
+import { ConfigContext } from '~/context/ConfigContext';
 
 const ProductInfo = ({ product }) => {
     const { quantity, setQuantity, variant, setVariant } = useContext(ProductContext);
 
-    const labels = singleProductConfig.labels;
+    const { singleProduct } = useContext(ConfigContext);
+
+    const labels = singleProduct.labels;
 
     const updateQuantity = (type) => {
         type === 'plus' ? setQuantity(quantity + 1) : setQuantity(() => (quantity - 1 < 1 ? 1 : quantity - 1));
@@ -35,6 +37,10 @@ const ProductInfo = ({ product }) => {
         <Grid2 xs={12} md={6}>
             <Stack spacing={3}>
                 <Typography variant="h5">{product.name}</Typography>
+                {/* numbers of sold  */}
+                <Typography variant="body2" display="inline-block" paddingRight={2}>
+                    {labels.sold}: {product?.sold}
+                </Typography>
                 <Rating name="simple-controlled" size="large" value={5} onChange={(event, newValue) => {}} />
                 <Box bgcolor="background.default" p={2} m={1} display="flex" alignItems="center">
                     {variant && variant?.discount !== 0 && <OldPrice price={variant?.price || product.maxPrice || 0} />}

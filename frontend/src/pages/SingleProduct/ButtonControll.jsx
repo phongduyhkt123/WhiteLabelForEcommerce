@@ -2,15 +2,16 @@ import { LoadingButton } from '@mui/lab';
 import { Button } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useContext } from 'react';
-import { route } from '~/config';
+import { Link } from 'react-router-dom';
 import { AlertContext, AlertTypes } from '~/context/AlertContext';
+import { ConfigContext } from '~/context/ConfigContext';
 import { GlobalContext } from '~/context/GlobalContext';
 import { ProductContext } from '~/context/ProductContext';
-import { singleProduct as singleProductConfig } from '~/config';
 import * as request from '~/utils/httpRequest';
 
 const ButtonControll = () => {
-    const labels = singleProductConfig.labels;
+    const { singleProduct, routes: route } = useContext(ConfigContext);
+    const labels = singleProduct.labels;
 
     const { quantity, variant } = useContext(ProductContext);
 
@@ -22,7 +23,7 @@ const ButtonControll = () => {
             setMessage({ text: labels.variantRequired, severity: 'warning', type: AlertTypes.SNACKBAR_LARGE });
         } else {
             try {
-                const response = await request.post(`${route.cartAPI}/${variant.id}`, {
+                const response = await request.post(`${route.cartAPI.url}/${variant.id}`, {
                     quantity,
                 });
                 if (response.status === 200) {
@@ -35,6 +36,14 @@ const ButtonControll = () => {
         }
         setShowMessage(true);
     };
+
+    const handleBuyNow = (e) => {
+        if (!variant) {
+            e.preventDefault();
+            setMessage({ text: labels.variantRequired, severity: 'warning', type: AlertTypes.SNACKBAR_LARGE });
+            setShowMessage(true);
+        }
+    };
     return (
         <Stack direction="row" spacing={2}>
             <LoadingButton
@@ -45,7 +54,14 @@ const ButtonControll = () => {
             >
                 {labels.addToCart}
             </LoadingButton>
-            <Button variant="contained" sx={{ flex: 1, fontSize: '2rem' }} fullWidth>
+            <Button
+                variant="contained"
+                sx={{ flex: 1, fontSize: '2rem' }}
+                fullWidth
+                LinkComponent={Link}
+                to={`${route.checkout.path}?id=${variant?.id}&quantity=${quantity}`}
+                onClick={(e) => handleBuyNow(e)}
+            >
                 {labels.buyNow}
             </Button>
         </Stack>

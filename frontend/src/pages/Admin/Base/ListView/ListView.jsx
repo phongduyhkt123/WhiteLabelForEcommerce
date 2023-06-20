@@ -6,7 +6,9 @@ import {
     List,
     useDataProvider,
     useRecordContext,
+    useRefresh,
     useResourceDefinition,
+    useUpdate,
 } from 'react-admin';
 import { useMutation } from 'react-query';
 
@@ -38,6 +40,8 @@ const CustomSwitch = ({ source, Element, ...rest }) => {
 
     const resource = useResourceDefinition().name;
 
+    const refresh = useRefresh();
+
     const params = {};
     //check type of record source
     if (typeof record[source] === 'boolean') {
@@ -46,12 +50,21 @@ const CustomSwitch = ({ source, Element, ...rest }) => {
         params[source] = record[source] === 'ENABLED' ? 'DISABLED' : 'ENABLED';
     }
 
-    const { mutate, isLoading } = useMutation([resource, 'update', {}], () =>
-        dataProvider.update(resource, {
-            id: record.id,
-            params: params,
-            meta: { method: 'PATCH' },
-        }),
+    const { mutate, isLoading } = useMutation(
+        [resource, 'update', {}],
+        () =>
+            dataProvider
+                .update(resource, {
+                    id: record.id,
+                    params: params,
+                    meta: { method: 'PATCH' },
+                })
+                .catch((error) => {}),
+        {
+            onSuccess: () => {
+                refresh();
+            },
+        },
     );
 
     rest.onChange = () => {

@@ -23,7 +23,7 @@ const Signup = () => {
         const payload = Object.fromEntries(new FormData(e.target).entries());
 
         request
-            .post(route.signupAPI, payload)
+            .post(route.signupAPI.url, payload)
             .then((res) => {
                 console.log(res);
                 setMessage({

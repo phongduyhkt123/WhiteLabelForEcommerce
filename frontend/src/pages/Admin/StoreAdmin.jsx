@@ -1,6 +1,6 @@
 import { Admin, CustomRoutes, Layout, Resource } from 'react-admin';
 import { Route } from 'react-router-dom';
-import { categoryCreate, productCreate } from '~/config/admin/createview';
+import { categoryCreate, productCreate, configCreate } from '~/config/admin/createview';
 import { categoryEdit, orderEdit, userEdit } from '~/config/admin/editview';
 import { categoryList, configList, orderList, productList, userList } from '~/config/admin/listview';
 import { SpringDataProvider, authProvider } from '~/provider';
@@ -27,6 +27,7 @@ const StoreAdmin = ({ aTheme }) => {
 
     const CreateProduct = <CreateView fields={productCreate} headers={{ 'Content-Type': 'multipart/form-data' }} />;
     const CreateCategory = <CreateView fields={categoryCreate} />;
+    const CreateConfig = <CreateView fields={configCreate} />;
 
     return (
         <Admin
@@ -49,7 +50,7 @@ const StoreAdmin = ({ aTheme }) => {
                 create={CreateCategory}
             />
             <Resource name="order" list={OrderList} edit={<EditOrder fields={orderEdit} />} />
-            <Resource name="config" list={ConfigList} edit={EditConfig} />
+            <Resource name="config" list={ConfigList} edit={EditConfig} create={CreateConfig} />
             <CustomRoutes>
                 <Route path="/report" element={<Report />} />
             </CustomRoutes>

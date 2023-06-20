@@ -17,10 +17,10 @@ const Report = () => {
         <Card sx={{ mt: 4 }}>
             <Title title="Report" />
             <CardContent>
-                <form>
+                {/* <form>
                     <TextField label="Year" type="number" name="year" />
                     <Select label="Type of time" options={[{ name: 'Month' }, { name: 'Week' }, { name: 'Day' }]} />
-                </form>
+                </form> */}
 
                 <Stack direction="column" spacing={4} bgcolor="background.default">
                     <Grid2>
@@ -30,8 +30,9 @@ const Report = () => {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="income" fill="#8884d8" />
+                            <Bar dataKey="nbuyer" fill="#8884d8" />
                             <Bar dataKey="norder" fill="#82ca9d" />
+                            <Bar dataKey="nproduct" fill="#849995" />
                         </BarChart>
                     </Grid2>
 

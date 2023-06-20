@@ -1,13 +1,17 @@
 import { Box, Paper } from '@mui/material';
 import { Stack } from '@mui/system';
-import { header } from '~/config';
+// import { header } from '~/config';
 import Action from './Action';
 import Logo from '~/components/Logo';
 
 import Navbar from './Navbar';
 import Search from '~/components/Search';
+import { useContext } from 'react';
+import { ConfigContext } from '~/context/ConfigContext';
 
 const Header = ({ headerRef }) => {
+    const { header } = useContext(ConfigContext);
+
     return (
         <Box
             ref={headerRef}
@@ -20,7 +24,12 @@ const Header = ({ headerRef }) => {
             boxShadow="0 1px 1px rgb(0 0 0 / 12%)"
             zIndex="1000"
         >
-            <Stack direction="column" spacing={1} justifyContent="space-between" sx={{ width: '100%', margin: 'auto' }}>
+            <Stack
+                spacing={1}
+                justifyContent="space-between"
+                sx={{ width: '100%', margin: 'auto' }}
+                flexDirection={header.navBar?.vertical === 'top' ? 'column-reverse' : 'column'}
+            >
                 <Stack
                     direction="row"
                     justifyContent="space-between"
