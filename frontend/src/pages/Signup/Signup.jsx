@@ -1,17 +1,20 @@
 import { Box, Button, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Stack } from '@mui/system';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from '~/components/Input';
-import { route, signup } from '~/config';
 import * as request from '~/utils/httpRequest';
 
 import Logo from '~/components/Logo';
 import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import AuthContainer from '~/layouts/components/AuthContainer';
+import { motion } from 'framer-motion';
+import { ConfigContext } from '~/context/ConfigContext';
 
 const Signup = () => {
+    const { routes: route, signup } = useContext(ConfigContext);
+
     const fields = Object.entries(signup.form);
 
     const { setMessage, setShowMessage } = React.useContext(AlertContext);
@@ -45,47 +48,48 @@ const Signup = () => {
     };
 
     return (
-        <AuthContainer>
-            {/* Image Left */}
-            {signup.image && (
-                <Grid2 item xs={0} md={6}>
-                    <Box component="img" src={signup.image} alt="login form" maxWidth="100%" height={600} />
-                </Grid2>
-            )}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <AuthContainer>
+                {/* Image Left */}
+                {signup.image && (
+                    <Grid2 item xs={0} md={6}>
+                        <Box component="img" src={signup.image} alt="login form" maxWidth="100%" height={600} />
+                    </Grid2>
+                )}
 
-            <Grid2 item xs={12} md={6} my="auto">
-                <Stack>
-                    <Box display="flex">
-                        <Logo />
-                    </Box>
+                <Grid2 item xs={12} md={6} my="auto">
+                    <Stack>
+                        <Box display="flex">
+                            <Logo />
+                        </Box>
 
-                    <Typography variant="h6" style={{ letterSpacing: '1px' }}>
-                        {signup.labels.welcome}
-                    </Typography>
-                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
-                        {fields.map(([name, { label, ...props }], index) => (
-                            <Input name={name} {...props} label={signup.labels[label]} key={index} />
-                        ))}
-                        <Button
-                            size="large"
-                            variant="outlined"
-                            type="submit"
-                            sx={{ fontSize: '1.8rem', minWidth: '50%', mx: 'auto' }}
-                        >
-                            {signup.labels.signup}
-                        </Button>
-                    </form>
-
-                    <Typography component="p" style={{ color: '#393f81' }}>
-                        {signup.labels.alreadyHaveAccount}
-                        <Typography component={Link} to={'/signin'} style={{ color: '#393f81' }}>
-                            {' '}
-                            {signup.labels.signin}
+                        <Typography variant="h6" style={{ letterSpacing: '1px' }}>
+                            {signup.labels.welcome}
                         </Typography>
-                    </Typography>
-                </Stack>
-            </Grid2>
-        </AuthContainer>
+                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+                            {fields.map(([name, { label, ...props }], index) => (
+                                <Input name={name} {...props} label={signup.labels[label]} key={index} />
+                            ))}
+                            <Button
+                                size="large"
+                                variant="outlined"
+                                type="submit"
+                                sx={{ fontSize: '1.8rem', minWidth: '50%', mx: 'auto' }}
+                            >
+                                {signup.labels.signup}
+                            </Button>
+                        </form>
+
+                        <Typography component="p" style={{ color: '#393f81' }}>
+                            {signup.labels.alreadyHaveAccount}
+                            <Typography component={Link} to={'/signin'} style={{ color: '#393f81' }}>
+                                {signup.labels.signin}
+                            </Typography>
+                        </Typography>
+                    </Stack>
+                </Grid2>
+            </AuthContainer>
+        </motion.div>
     );
 };
 

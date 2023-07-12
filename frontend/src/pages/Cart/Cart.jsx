@@ -9,6 +9,7 @@ import { commas } from '~/utils/formater';
 import * as request from '~/utils/httpRequest';
 import Title from '~/components/Title/Title';
 import { ConfigContext } from '~/context/ConfigContext';
+import { motion } from 'framer-motion';
 
 const Cart = ({ title }) => {
     const { routes: route, cart } = useContext(ConfigContext);
@@ -88,35 +89,38 @@ const Cart = ({ title }) => {
     };
 
     return (
-        <Title title={title}>
-            <Box my={3} display="flex" flexDirection="column" alignItems="center">
-                <Box width="100%" p={2} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
-                    {/* List Cart Items */}
-                    <Stack spacing={1} divider={<Divider />}>
-                        {loaded ? renderCartItem() : <CartItemSkeleton />}
-                    </Stack>
-                </Box>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            {' '}
+            <Title title={title}>
+                <Box my={3} display="flex" flexDirection="column" alignItems="center">
+                    <Box width="100%" p={2} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>
+                        {/* List Cart Items */}
+                        <Stack spacing={1} divider={<Divider />}>
+                            {loaded ? renderCartItem() : <CartItemSkeleton />}
+                        </Stack>
+                    </Box>
 
-                <Box width="100%" p={2} mt={3} sx={{ boxShadow: 1, bgcolor: 'background.white', borderRadius: 2 }}>
-                    {/* Price and checkout */}
-                    <div>
+                    <Box width="100%" p={2} mt={3} sx={{ boxShadow: 1, bgcolor: 'background.white', borderRadius: 2 }}>
+                        {/* Price and checkout */}
                         <div>
                             <div>
-                                <span>{labels.total}:</span> <span>{commas(totalPrice)}</span>
+                                <div>
+                                    <span>{labels.total}:</span> <span>{commas(totalPrice)}</span>
+                                </div>
+                            </div>
+                            <div>
+                                <Button LinkComponent={Link} to={route.home.path} size="large" variant="outlined">
+                                    {labels.continueShopping}
+                                </Button>
+                                <Button LinkComponent={Link} to={route.checkout.path} size="large" variant="contained">
+                                    {labels.checkout}
+                                </Button>
                             </div>
                         </div>
-                        <div>
-                            <Button LinkComponent={Link} to={route.home.path} size="large" variant="outlined">
-                                {labels.continueShopping}
-                            </Button>
-                            <Button LinkComponent={Link} to={route.checkout.path} size="large" variant="contained">
-                                {labels.checkout}
-                            </Button>
-                        </div>
-                    </div>
+                    </Box>
                 </Box>
-            </Box>
-        </Title>
+            </Title>
+        </motion.div>
     );
 };
 

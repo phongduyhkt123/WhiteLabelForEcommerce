@@ -2,6 +2,8 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { useEffect, useState } from 'react';
 
+export const BASE_URL = 'http://localhost:8080/api/';
+
 const headers = {
     'Content-Type': 'application/json',
 };
@@ -19,7 +21,7 @@ const getHeaders = () => {
 };
 
 const request = axios.create({
-    baseURL: 'http://localhost:8080/api/', //process.env.REACT_APP_BASE_URL,
+    baseURL: BASE_URL, //process.env.REACT_APP_BASE_URL,
     timeout: 20000,
     headers: headers,
     // transformResponse: [

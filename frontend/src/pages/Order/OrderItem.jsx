@@ -1,14 +1,14 @@
 import { MonetizationOn } from '@mui/icons-material';
 import { Divider, Paper, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
+import { useContext } from 'react';
+import { Button } from 'react-admin';
 import OrderStatus from '~/components/OrderStatus/OrderStatus';
+import { ConfigContext } from '~/context/ConfigContext';
 import { commas } from '~/utils/formater';
 import OrderDetailItem from './OrderDetailItem';
-import { Button } from 'react-admin';
-import { useContext } from 'react';
-import { ConfigContext } from '~/context/ConfigContext';
 
-const OrderItem = ({ item }) => {
+const OrderItem = ({ item, onClickComment }) => {
     const { order, orderStatus } = useContext(ConfigContext);
     const labels = order.labels;
 
@@ -33,16 +33,22 @@ const OrderItem = ({ item }) => {
                     {labels.note}: {item.note}
                 </Typography>
             </Box>
-            {orderStatus.items[item.status]?.cancelable && (
-                <>
-                    <Divider sx={{ m: 0.5 }} />
-                    <Box textAlign="right">
-                        <Button variant="contained" color="warning" onClick={() => console.log('click')}>
+
+            <>
+                <Divider sx={{ m: 0.5 }} />
+                <Box textAlign="right">
+                    {orderStatus.items[item.status]?.cancelable && (
+                        <Button variant="contained" color="warning" sx={{ mr: 2 }} onClick={() => console.log('click')}>
                             {labels.cancel}
                         </Button>
-                    </Box>
-                </>
-            )}
+                    )}
+                    {orderStatus.items[item.status]?.ratingable && !item.isRated && (
+                        <Button variant="contained" color="info" sx={{ mr: 2 }} onClick={onClickComment}>
+                            {labels.rating}
+                        </Button>
+                    )}
+                </Box>
+            </>
         </Paper>
     );
 };

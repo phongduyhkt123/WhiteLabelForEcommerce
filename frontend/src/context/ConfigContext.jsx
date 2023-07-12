@@ -8,7 +8,7 @@ const ConfigProvider = ({ children }) => {
 
     useEffect(() => {
         get('/config').then((res) => {
-            setConfig(JSON.parse(res.data.data[0].value.replaceAll('\\"', '"')));
+            setConfig(JSON.parse(res.data.data[0].value));
         });
     }, []);
 

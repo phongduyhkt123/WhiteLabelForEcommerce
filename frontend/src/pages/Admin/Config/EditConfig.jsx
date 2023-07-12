@@ -1,11 +1,12 @@
-import { Key } from '@mui/icons-material';
 import { Box, Button, Card, Stack, TextField, Typography } from '@mui/material';
-import { Form, Title, useGetOne, useRecordContext, useUpdate } from 'react-admin';
-import { Controller, useForm } from 'react-hook-form';
+import { useContext, useState } from 'react';
+import { Form, Title, useGetOne, useUpdate } from 'react-admin';
+import { Controller } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import Drawer from '~/components/Drawer/Drawer';
+import { AlertContext, AlertTypes } from '~/context/AlertContext';
+import { downloadFile } from '~/utils/util';
 import ConfigDialog from './ConfigDialog';
-import { useState } from 'react';
 
 export const EditConfig = () => {
     const { id } = useParams();
@@ -13,67 +14,96 @@ export const EditConfig = () => {
     const [update, { isLoading: isSubmitting }] = useUpdate();
     const [openDialog, setOpenDialog] = useState(false);
     const [dialogValue, setDialogValue] = useState('');
+
+    const { setMessage, setShowMessage } = useContext(AlertContext);
+
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
-        console.log(data);
-        update(
-            'config',
-            { id, data },
-            {
-                onSuccess: () => {
-                    navigate('/admin/config');
-                },
-            },
-        );
-    };
-
-    const onChange = ({ config, value, item1, item2, item3 }) => {
-        return JSON.stringify(
-            {
-                ...config,
-                [item1]: {
-                    ...config[item1],
-                    [item2]: {
-                        ...config['routes'][item2],
-                        [item3]: value,
+        try {
+            const testIfJson = JSON.parse(data.value);
+            if (typeof testIfJson !== 'object') {
+                setMessage({
+                    text: 'Invalid JSON 1',
+                    severity: 'error',
+                    type: AlertTypes.SNACKBAR_LARGE,
+                });
+            } else {
+                update(
+                    'config',
+                    { id, data },
+                    {
+                        onSuccess: () => {
+                            setMessage({
+                                text: 'Config updated',
+                                severity: 'success',
+                                type: AlertTypes.SNACKBAR_LARGE,
+                            });
+                            navigate('/admin/config');
+                        },
                     },
-                },
-            },
-            null,
-            2,
-        );
+                );
+            }
+        } catch (error) {
+            setMessage({
+                text: 'Invalid JSON',
+                severity: 'error',
+                type: AlertTypes.SNACKBAR_LARGE,
+            });
+        }
+        setShowMessage(true);
     };
 
     const onChange2 = ({ config, value, stack = [], key }) => {
-        console.log('stack', stack);
         if (stack.length > 1) {
-            return {
-                ...config,
-                [stack[0]]: onChange2({
+            if (!Array.isArray(config)) {
+                return {
+                    ...config,
+                    [stack[0]]: onChange2({
+                        config: config[stack[0]],
+                        value,
+                        stack: stack.slice(1),
+                        key,
+                    }),
+                };
+            } else {
+                config[stack[0]] = onChange2({
                     config: config[stack[0]],
                     value,
                     stack: stack.slice(1),
                     key,
-                }),
-            };
+                });
+                return config;
+            }
         } else {
-            return {
-                ...config,
-                [stack[0]]: { ...config[stack[0]], [key]: value },
-            };
+            if (!Array.isArray(config)) {
+                return {
+                    ...config,
+                    [stack[0]]: { ...config[stack[0]], [key]: value },
+                };
+            } else {
+                config[stack[0]] = { ...config[stack[0]], [key]: value };
+                return config;
+            }
         }
+    };
+
+    const exportToJson = (e) => {
+        e.preventDefault();
+        downloadFile({
+            data: JSON.stringify(JSON.parse(data.value), null, 2),
+            fileName: 'config.json',
+            fileType: 'text/json',
+        });
     };
 
     const render = ({ config, parent, key, field, stack = [] }) => {
         if (typeof parent[key] === 'object') {
-            stack.push(key);
+            const tempStack = [...stack];
             return (
                 <Drawer title={key} key={key}>
                     {Object.keys(parent[key]).map((item) => {
-                        // key === 'groupProducts' && console.log('stack', stack);
-                        stack[1] === 'groupProducts' && console.log('stack', stack);
-                        return render({ config, parent: parent[key], key: item, field, stack: [...stack, item] });
+                        return render({ config, parent: parent[key], key: item, field, stack: [...tempStack, key] });
                     })}
                 </Drawer>
             );
@@ -117,47 +147,8 @@ export const EditConfig = () => {
                             render={({ field }) => {
                                 const config = JSON.parse(field.value);
 
-                                console.log('config', config);
-                                console.log('change', config['routes']);
-
                                 return (
                                     <>
-                                        {/* <Typography variant="h6" color="primary" m="auto">
-                                            Routes
-                                        </Typography>
-                                        {console.log(Object.keys(config['routes']))}
-                                        {Object.keys(config['routes']).map((item) => {
-                                            return (
-                                                <>
-                                                    <Typography variant="h6" color="primary" m="auto">
-                                                        {item}
-                                                    </Typography>
-                                                    {Object.keys(config['routes'][item]).map((i) => {
-                                                        return (
-                                                            <TextField
-                                                                label={i}
-                                                                multiline
-                                                                key={i}
-                                                                defaultValue={config['routes'][item][i]}
-                                                                onChange={(e) => {
-                                                                    console.log(e.target.value);
-                                                                    field.onChange(
-                                                                        onChange({
-                                                                            config: config,
-                                                                            value: e.target.value,
-                                                                            item1: 'routes',
-                                                                            item2: item,
-                                                                            item3: i,
-                                                                        }),
-                                                                    );
-                                                                }}
-                                                            />
-                                                        );
-                                                    })}
-                                                </>
-                                            );
-                                        })} */}
-
                                         <Box sx={{ mt: 4 }}>
                                             <Button
                                                 variant="outlined"
@@ -170,19 +161,64 @@ export const EditConfig = () => {
                                                 </Typography>
                                             </Button>
 
-                                            <Button variant="outlined" color="primary" onClick={() => {}}>
+                                            <label htmlFor="input-file">
+                                                <Button variant="outlined" color="primary" component="span">
+                                                    <Typography variant="h6" color="primary" m="auto">
+                                                        Upload json
+                                                    </Typography>
+                                                </Button>
+                                            </label>
+                                            <input
+                                                type="file"
+                                                id="input-file"
+                                                accept="application/json"
+                                                style={{ display: 'none' }}
+                                                onChange={(e) => {
+                                                    const file = e.target.files[0];
+                                                    const reader = new FileReader();
+                                                    reader.onload = (e) => {
+                                                        const text = e.target.result;
+                                                        field.onChange(text);
+                                                    };
+                                                    reader.readAsText(file);
+                                                }}
+                                            />
+
+                                            <Button variant="outlined" color="primary" onClick={(e) => exportToJson(e)}>
                                                 <Typography variant="h6" color="primary" m="auto">
-                                                    Select a theme
+                                                    Download json
                                                 </Typography>
                                             </Button>
                                         </Box>
 
                                         <ConfigDialog
                                             open={openDialog}
-                                            onCancel={() => setOpenDialog(false)}
-                                            onSubmit={() => {
-                                                field.onChange(dialogValue);
+                                            onCancel={() => {
                                                 setOpenDialog(false);
+                                                setDialogValue(JSON.stringify(config, null, 2));
+                                            }}
+                                            onSubmit={() => {
+                                                try {
+                                                    const testIfJson = JSON.parse(data);
+                                                    if (typeof testIfJson == 'object') {
+                                                        field.onChange(dialogValue);
+                                                        setOpenDialog(false);
+                                                        return;
+                                                    } else {
+                                                        setMessage({
+                                                            text: 'Invalid JSON 1',
+                                                            severity: 'error',
+                                                            type: AlertTypes.SNACKBAR_LARGE,
+                                                        });
+                                                    }
+                                                } catch {
+                                                    setMessage({
+                                                        text: 'Invalid JSON 2',
+                                                        severity: 'error',
+                                                        type: AlertTypes.SNACKBAR_LARGE,
+                                                    });
+                                                }
+                                                setShowMessage(true);
                                             }}
                                         >
                                             <TextField

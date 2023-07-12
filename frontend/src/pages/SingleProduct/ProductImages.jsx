@@ -2,6 +2,7 @@ import { Paper } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Box, Stack } from '@mui/system';
 import React, { useEffect, useState } from 'react';
+import { AnimatedOnScroll } from 'react-animated-css-onscroll';
 
 const ProductImages = ({ images }) => {
     const [previewImg, setPreviewImg] = useState();
@@ -25,36 +26,40 @@ const ProductImages = ({ images }) => {
                                 sx={{ direction: 'rtl' }}
                             >
                                 {images.map((image) => (
-                                    <Box
-                                        key={image.id}
-                                        component="img"
-                                        onClick={() => setPreviewImg({ id: image.id, url: image.url })}
-                                        src={image.url}
-                                        alt=""
-                                        height={80}
-                                        width="100%"
-                                        border={previewImg?.id === image.id ? '3px solid' : 'none'}
-                                        sx={{
-                                            objectFit: 'cover',
-                                            opacity: image.id === previewImg.id ? 1 : 0.5,
-                                            cursor: 'pointer',
-                                            borderColor: 'primary.main',
-                                            direction: 'ltr',
-                                        }}
-                                    />
+                                    <AnimatedOnScroll animationIn="swing" animationInDuration={1000}>
+                                        <Box
+                                            key={image.id}
+                                            component="img"
+                                            onClick={() => setPreviewImg({ id: image.id, url: image.url })}
+                                            src={image.url}
+                                            alt=""
+                                            height={80}
+                                            width="100%"
+                                            border={previewImg?.id === image.id ? '3px solid' : 'none'}
+                                            sx={{
+                                                objectFit: 'cover',
+                                                opacity: image.id === previewImg.id ? 1 : 0.5,
+                                                cursor: 'pointer',
+                                                borderColor: 'primary.main',
+                                                direction: 'ltr',
+                                            }}
+                                        />
+                                    </AnimatedOnScroll>
                                 ))}
                             </Stack>
                         </Grid2>
                         {/* image preview */}
                         <Grid2 item xs={10}>
-                            <Box
-                                component="img"
-                                src={previewImg?.url}
-                                alt=""
-                                width="100%"
-                                maxHeight={500}
-                                sx={{ objectFit: 'fill' }}
-                            />
+                            <AnimatedOnScroll animationIn="fadeIn" animationInDuration={1000}>
+                                <Box
+                                    component="img"
+                                    src={previewImg?.url}
+                                    alt=""
+                                    width="100%"
+                                    maxHeight={500}
+                                    sx={{ objectFit: 'fill' }}
+                                />
+                            </AnimatedOnScroll>
                         </Grid2>
                     </Grid2>
                 </Paper>

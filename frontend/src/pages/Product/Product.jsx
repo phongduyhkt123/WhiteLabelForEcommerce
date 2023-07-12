@@ -12,6 +12,7 @@ import times from 'lodash.times';
 import useTraceUpdate from '~/hooks/useTrackUpdate';
 import { useTitle } from '~/hooks';
 import { ConfigContext } from '~/context/ConfigContext';
+import { motion } from 'framer-motion';
 
 const Product = ({ title }) => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -70,36 +71,38 @@ const Product = ({ title }) => {
     useTraceUpdate({ filter, page, searchParams });
 
     return (
-        <Grid2 container spacing={2}>
-            {/* Sidebar */}
-            <Grid2 item xs={12} sm={3} md={2}>
-                <FilterBar filter={filter} setFilter={setFilter} initFilter={initFilter} />
-            </Grid2>
-            {/* Product list */}
-            <Grid2 item xs={12} sm={8} md={10}>
-                {searchParams.get('key') && (
-                    <Typography variant="h5" sx={{ mb: 2 }}>
-                        {product.labels.searchResult} "{searchParams.get('key')}"
-                    </Typography>
-                )}
-                <Grid2 container spacing={2}>
-                    {loaded
-                        ? products.data.map((item, index) => (
-                              <Grid2 item xs={6} sm={6} md={4} lg={2.4} key={index}>
-                                  <ProductCard data={item} />
-                              </Grid2>
-                          ))
-                        : times(10).map((item) => <ProductCardSkeleton key={item} />)}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <Grid2 container spacing={2}>
+                {/* Sidebar */}
+                <Grid2 item xs={12} sm={3} md={2}>
+                    <FilterBar filter={filter} setFilter={setFilter} initFilter={initFilter} />
                 </Grid2>
-                <Pagination
-                    color="primary"
-                    count={products?.totalPage}
-                    size="large"
-                    sx={{ mt: 2 }}
-                    onChange={handleChangePage}
-                />
+                {/* Product list */}
+                <Grid2 item xs={12} sm={8} md={10}>
+                    {searchParams.get('key') && (
+                        <Typography variant="h5" sx={{ mb: 2 }}>
+                            {product.labels.searchResult} "{searchParams.get('key')}"
+                        </Typography>
+                    )}
+                    <Grid2 container spacing={2}>
+                        {loaded
+                            ? products.data.map((item, index) => (
+                                  <Grid2 item xs={6} sm={6} md={4} lg={2.4} key={index}>
+                                      <ProductCard data={item} />
+                                  </Grid2>
+                              ))
+                            : times(10).map((item) => <ProductCardSkeleton key={item} />)}
+                    </Grid2>
+                    <Pagination
+                        color="primary"
+                        count={products?.totalPage}
+                        size="large"
+                        sx={{ mt: 2 }}
+                        onChange={handleChangePage}
+                    />
+                </Grid2>
             </Grid2>
-        </Grid2>
+        </motion.div>
     );
 };
 

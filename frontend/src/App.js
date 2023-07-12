@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { publicRoute, privateRoute } from '~/routes';
 import DefaultLayout from '~/layouts/DefaultLayout';
 import { Fragment, useContext, useEffect } from 'react';
@@ -15,6 +15,8 @@ import { global } from '~/config';
 import { useTheme } from '@mui/material';
 import { defaultTheme } from 'react-admin';
 import { ConfigContext } from './context/ConfigContext';
+import OAuth2Redirect from './pages/Signin/OAuth2Redirect';
+import AnimationRoutes from './components/AnimationRoutes/AnimationRoutes';
 
 function App() {
     const theme = useTheme();
@@ -58,12 +60,18 @@ function App() {
 
     return (
         <Box margin="auto">
+            <head>
+                <link
+                    rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+                />
+            </head>
             <div>
                 {config && (
                     <Router>
                         <NavigateSetter />
                         <Box className="App">
-                            <Routes>
+                            <AnimationRoutes>
                                 {/* Public route */}
                                 {publicRoute.map((route, index) => {
                                     let Layout = DefaultLayout;
@@ -104,9 +112,12 @@ function App() {
                                     );
                                 })}
 
+                                {/* oAuth2 result callback */}
+                                <Route path="/oauth2/callback" element={<OAuth2Redirect />} />
+
                                 {/* React Admin */}
                                 <Route path="/admin/*" element={<StoreAdmin aTheme={aTheme} />} />
-                            </Routes>
+                            </AnimationRoutes>
                         </Box>
                     </Router>
                 )}

@@ -4,7 +4,6 @@ import { Stack } from '@mui/system';
 import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Input from '~/components/Input';
-import { route, signin } from '~/config';
 import * as request from '~/utils/httpRequest';
 
 import Logo from '~/components/Logo';
@@ -12,9 +11,14 @@ import StaticAlert from '~/components/StaticAlert/StaticAlert';
 import { AlertContext, AlertTypes } from '~/context/AlertContext';
 import AuthContainer from '~/layouts/components/AuthContainer';
 import { Facebook, Google } from '~/assets/images';
+import { getSocialLoginUrl } from '~/services/mediaSocialService';
+import { motion } from 'framer-motion';
+import { ConfigContext } from '~/context/ConfigContext';
 
 const Signin = () => {
     const navigate = useNavigate();
+
+    const { routes: route, signin } = useContext(ConfigContext);
 
     const { image, form, button, redirect, labels } = signin;
     const { setMessage, setShowMessage } = useContext(AlertContext);
@@ -62,7 +66,7 @@ const Signin = () => {
     };
 
     return (
-        <>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <AuthContainer>
                 {/* Image Left */}
                 {image && (
@@ -122,10 +126,10 @@ const Signin = () => {
                         </Box>
 
                         <Box>
-                            <IconButton>
+                            <IconButton href={getSocialLoginUrl('google')}>
                                 <img src={Google} alt="google" />
                             </IconButton>
-                            <IconButton>
+                            <IconButton href={getSocialLoginUrl('facebook')}>
                                 <img src={Facebook} alt="facebook" />
                             </IconButton>
                         </Box>
@@ -145,7 +149,7 @@ const Signin = () => {
                     </Stack>
                 </Grid2>
             </AuthContainer>
-        </>
+        </motion.div>
     );
 };
 
