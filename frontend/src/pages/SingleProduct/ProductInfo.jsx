@@ -39,7 +39,7 @@ const ProductInfo = ({ product }) => {
                 <Typography variant="h5">{product.name}</Typography>
                 {/* numbers of sold  */}
                 <Typography variant="body2" display="inline-block" paddingRight={2}>
-                    {labels.sold}: {product?.sold}
+                    {labels.sold}: {product?.nsold}
                 </Typography>
                 <Rating name="simple-controlled" size="large" value={5} onChange={(event, newValue) => {}} />
                 <Box bgcolor="background.default" p={2} m={1} display="flex" alignItems="center">

@@ -1,5 +1,5 @@
 import { Box, Button, Card, Stack, TextField, Typography } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Form, Title, useGetOne, useUpdate } from 'react-admin';
 import { Controller } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -18,6 +18,12 @@ export const EditConfig = () => {
     const { setMessage, setShowMessage } = useContext(AlertContext);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (data) {
+            setDialogValue(JSON.stringify(JSON.parse(data.value), null, 2));
+        }
+    }, [data]);
 
     const onSubmit = (data) => {
         try {
@@ -47,6 +53,31 @@ export const EditConfig = () => {
         } catch (error) {
             setMessage({
                 text: 'Invalid JSON',
+                severity: 'error',
+                type: AlertTypes.SNACKBAR_LARGE,
+            });
+        }
+        setShowMessage(true);
+    };
+
+    const handleSubmitDialog = ({ field }) => {
+        try {
+            const testIfJson = JSON.parse(dialogValue);
+            if (typeof testIfJson == 'object') {
+                field.onChange(dialogValue);
+                setOpenDialog(false);
+                return;
+            } else {
+                setMessage({
+                    text: 'Invalid JSON 1',
+                    severity: 'error',
+                    type: AlertTypes.SNACKBAR_LARGE,
+                });
+            }
+        } catch (e) {
+            console.log('error', e);
+            setMessage({
+                text: 'Invalid JSON 2',
                 severity: 'error',
                 type: AlertTypes.SNACKBAR_LARGE,
             });
@@ -197,29 +228,7 @@ export const EditConfig = () => {
                                                 setOpenDialog(false);
                                                 setDialogValue(JSON.stringify(config, null, 2));
                                             }}
-                                            onSubmit={() => {
-                                                try {
-                                                    const testIfJson = JSON.parse(data);
-                                                    if (typeof testIfJson == 'object') {
-                                                        field.onChange(dialogValue);
-                                                        setOpenDialog(false);
-                                                        return;
-                                                    } else {
-                                                        setMessage({
-                                                            text: 'Invalid JSON 1',
-                                                            severity: 'error',
-                                                            type: AlertTypes.SNACKBAR_LARGE,
-                                                        });
-                                                    }
-                                                } catch {
-                                                    setMessage({
-                                                        text: 'Invalid JSON 2',
-                                                        severity: 'error',
-                                                        type: AlertTypes.SNACKBAR_LARGE,
-                                                    });
-                                                }
-                                                setShowMessage(true);
-                                            }}
+                                            onSubmit={() => handleSubmitDialog({ field })}
                                         >
                                             <TextField
                                                 autoFocus

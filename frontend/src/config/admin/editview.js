@@ -239,3 +239,31 @@ export const categoryEdit = [
         Element: TextInput,
     },
 ];
+
+export const commentEdit = [
+    {
+        source: 'id',
+        readOnly: true,
+        Element: TextInput,
+    },
+    {
+        source: 'description',
+        readOnly: true,
+        Element: TextInput,
+    },
+    {
+        source: 'rate',
+        readOnly: true,
+        Element: TextInput,
+    },
+    {
+        source: 'userId',
+        readOnly: true,
+        Element: TextInput,
+    },
+    {
+        source: 'productId',
+        readOnly: true,
+        Element: TextInput,
+    },
+];

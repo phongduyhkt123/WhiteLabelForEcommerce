@@ -1,8 +1,8 @@
 import { Admin, CustomRoutes, Layout, Resource } from 'react-admin';
 import { Route } from 'react-router-dom';
 import { categoryCreate, productCreate, configCreate } from '~/config/admin/createview';
-import { categoryEdit, orderEdit, userEdit } from '~/config/admin/editview';
-import { categoryList, configList, orderList, productList, userList } from '~/config/admin/listview';
+import { categoryEdit, orderEdit, userEdit, commentEdit } from '~/config/admin/editview';
+import { categoryList, configList, orderList, productList, userList, commentList } from '~/config/admin/listview';
 import { SpringDataProvider, authProvider } from '~/provider';
 import * as request from '~/utils/httpRequest';
 import { CreateView } from './Base/CreateView/CreateView';
@@ -13,6 +13,7 @@ import { CustomMenu } from './CustomMenu/CustomMenu';
 import { EditOrder } from './Order/EditOrder';
 import { EditProduct } from './Product/EditProduct';
 import Report from './Report';
+import { EditComment } from './Comment/EditComment';
 
 const dataProvider = SpringDataProvider('http://localhost:8080/api/admin', request.fetch);
 
@@ -22,6 +23,7 @@ const StoreAdmin = ({ aTheme }) => {
     const ListCategory = <ListView fields={categoryList} />;
     const OrderList = <ListView fields={orderList} />;
     const ConfigList = <ListView fields={configList} />;
+    const CommentList = <ListView fields={commentList} />;
 
     const EditUser = <EditView fields={userEdit} />;
 
@@ -32,7 +34,6 @@ const StoreAdmin = ({ aTheme }) => {
     return (
         <Admin
             layout={(props) => {
-                console.log(props);
                 return <Layout {...props} menu={CustomMenu} />;
             }}
             basename="/admin"
@@ -50,6 +51,7 @@ const StoreAdmin = ({ aTheme }) => {
                 create={CreateCategory}
             />
             <Resource name="order" list={OrderList} edit={<EditOrder fields={orderEdit} />} />
+            <Resource name="comment" list={CommentList} edit={<EditView fields={commentEdit} />} />
             <Resource name="config" list={ConfigList} edit={EditConfig} create={CreateConfig} />
             <CustomRoutes>
                 <Route path="/report" element={<Report />} />

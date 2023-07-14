@@ -126,3 +126,31 @@ export const configList = [
         Element: BooleanInput,
     },
 ];
+
+export const commentList = [
+    {
+        source: 'id',
+        name: 'ID',
+        Element: TextField,
+    },
+    {
+        source: 'description',
+        name: 'DESCRIPTION',
+        Element: TextField,
+    },
+    {
+        source: 'rate',
+        name: 'RATE',
+        Element: TextField,
+    },
+    {
+        source: 'productId',
+        name: 'PRODUCT ID',
+        Element: TextField,
+    },
+    {
+        source: 'userId',
+        name: 'USER ID',
+        Element: TextField,
+    },
+];

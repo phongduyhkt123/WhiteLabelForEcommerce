@@ -1,5 +1,6 @@
 import { Switch } from '@mui/material';
 import {
+    BulkDeleteButton,
     Datagrid,
     EditButton,
     Form,
@@ -15,7 +16,7 @@ import { useMutation } from 'react-query';
 export const ListView = ({ fields }) => {
     return (
         <List>
-            <Datagrid>
+            <Datagrid bulkActionButtons={<PostBulkActionButtons />}>
                 {fields.map(({ Element, editable, ...rest }, index) => {
                     if (editable) {
                         return (
@@ -78,3 +79,10 @@ const CustomSwitch = ({ source, Element, ...rest }) => {
 
     return <Switch defaultChecked={record[source] === 'ENABLED'} {...rest} />;
 };
+
+const PostBulkActionButtons = () => (
+    <>
+        {/* default bulk delete action */}
+        <BulkDeleteButton mutationMode="pessimistic" />
+    </>
+);

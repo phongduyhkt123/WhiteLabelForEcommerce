@@ -30,10 +30,15 @@ function SingleProduct() {
 
     const [relativeProducts, setRelativeProducts] = useState([]);
 
-    console.log(relativeProducts);
-
     useEffect(() => {
         if (home) {
+            const { token } = JSON.parse(localStorage.getItem('auth'));
+            if (true) {
+                request.get('/product/recommend', { params: { id } }).then((res) => {
+                    console.log('recommend', res);
+                });
+            }
+
             request.get(home.groupProducts[0].api).then((res) => {
                 console.log(res);
                 setRelativeProducts(res.data.data);
@@ -57,7 +62,7 @@ function SingleProduct() {
                     </Title>
                 )}
                 <AnimatedOnScroll animationIn="fadeIn" animationOut="fadeOut">
-                    <Box display="flex" flexDirection="column" width="100%">
+                    <Box display="flex" flexDirection="column" width="100%" my={20}>
                         <Typography variant="h3" color="primary" m="auto">
                             Buyer Reviews
                         </Typography>
@@ -85,11 +90,11 @@ function SingleProduct() {
                                                 </Typography>
                                                 <LinearProgress
                                                     variant="determinate"
-                                                    value={50}
+                                                    value={product?.rating5}
                                                     sx={{ height: 10, width: 200, borderRadius: 5 }}
                                                 />
                                                 <Typography variant="body" color="primary" ml={2}>
-                                                    11
+                                                    {product?.rating5}
                                                 </Typography>
                                             </Box>
                                             <Box display="flex" alignItems="center">
@@ -98,11 +103,11 @@ function SingleProduct() {
                                                 </Typography>
                                                 <LinearProgress
                                                     variant="determinate"
-                                                    value={50}
+                                                    value={product?.rating4}
                                                     sx={{ height: 10, width: 200, borderRadius: 5 }}
                                                 />
-                                                <Typography variant="h6" color="primary" ml={2}>
-                                                    11
+                                                <Typography variant="body" color="primary" ml={2}>
+                                                    {product?.rating4}
                                                 </Typography>
                                             </Box>
                                             <Box display="flex" alignItems="center">
@@ -111,11 +116,11 @@ function SingleProduct() {
                                                 </Typography>
                                                 <LinearProgress
                                                     variant="determinate"
-                                                    value={50}
+                                                    value={product?.rating3}
                                                     sx={{ height: 10, width: 200, borderRadius: 5 }}
                                                 />
-                                                <Typography variant="h6" color="primary" ml={2}>
-                                                    11
+                                                <Typography variant="body" color="primary" ml={2}>
+                                                    {product?.rating3}
                                                 </Typography>
                                             </Box>
                                             <Box display="flex" alignItems="center">
@@ -124,11 +129,11 @@ function SingleProduct() {
                                                 </Typography>
                                                 <LinearProgress
                                                     variant="determinate"
-                                                    value={50}
+                                                    value={product?.rating2}
                                                     sx={{ height: 10, width: 200, borderRadius: 5 }}
                                                 />
-                                                <Typography variant="h6" color="primary" ml={2}>
-                                                    11
+                                                <Typography variant="body" color="primary" ml={2}>
+                                                    {product?.rating2}
                                                 </Typography>
                                             </Box>
                                             <Box display="flex" alignItems="center">
@@ -137,11 +142,11 @@ function SingleProduct() {
                                                 </Typography>
                                                 <LinearProgress
                                                     variant="determinate"
-                                                    value={50}
+                                                    value={product?.rating1}
                                                     sx={{ height: 10, width: 200, borderRadius: 5 }}
                                                 />
-                                                <Typography variant="h6" color="primary" ml={2}>
-                                                    11
+                                                <Typography variant="body" color="primary" ml={2}>
+                                                    {product?.rating1}
                                                 </Typography>
                                             </Box>
                                         </Box>
@@ -157,12 +162,12 @@ function SingleProduct() {
                                         </Typography>
                                         <Box display="flex" alignItems="center">
                                             <Typography variant="h3" color="primary" mr={2}>
-                                                5
+                                                {product?.averageRating}
                                             </Typography>
                                             <Box display="flex" flexDirection="column" alignItems="center">
                                                 <Rating name="read-only" value={5} readOnly />
                                                 <Typography variant="body" color="primary" mr={2}>
-                                                    31 Reviews
+                                                    {product?.totalRatingTimes} Reviews
                                                 </Typography>
                                             </Box>
                                         </Box>
@@ -220,7 +225,7 @@ function SingleProduct() {
                 <AnimatedOnScroll animationIn="fadeIn" animationOut="fadeOut">
                     <Box display="flex" flexDirection="column" alignItems="center" width="100%" mt={10}>
                         <Typography variant="h3" color="primary" m="auto">
-                            Sản phẩm liên quan
+                            Recommend Products For You
                         </Typography>
                         {/* List product */}
                         <Box my={2} px={isMobile ? 0 : 3} width="100%">

@@ -57,20 +57,51 @@
             "path": "/payment",
             "title": "Payment"
         },
-        "cartAPI": { "url": "/user/cart" },
-        "countCartAPI": { "url": "/user/cart/count" },
-        "signinAPI": { "url": "/login" },
-        "signupAPI": { "url": "/signup" },
-        "productAPI": { "url": "/product" },
-        "productSearchAPI": { "url": "/product/search" },
-        "categoryAPI": { "url": "/product-category" },
-        "orderAPI": { "url": "/user/order" },
-        "deliveryAddressAPI": { "url": "/user/address" },
-        "userinfoAPI": { "url": "/buyer/userinfo" },
-        "singleProductAPI": { "url": "/product/" },
-        "userProfileAPI": { "url": "/user/profile" },
-        "signinAdminAPI": { "url": "/login" },
-        "productAdminAPI": { "url": "/admin/product" }
+        "cartAPI": {
+            "url": "/user/cart"
+        },
+        "countCartAPI": {
+            "url": "/user/cart/count"
+        },
+        "signinAPI": {
+            "url": "/login"
+        },
+        "signupAPI": {
+            "url": "/signup"
+        },
+        "productAPI": {
+            "url": "/product"
+        },
+        "productSearchAPI": {
+            "url": "/product/search"
+        },
+        "categoryAPI": {
+            "url": "/product-category"
+        },
+        "orderAPI": {
+            "url": "/user/order"
+        },
+        "deliveryAddressAPI": {
+            "url": "/user/address"
+        },
+        "userinfoAPI": {
+            "url": "/buyer/userinfo"
+        },
+        "singleProductAPI": {
+            "url": "/product/"
+        },
+        "commentAPI": {
+            "url": "/comment"
+        },
+        "userProfileAPI": {
+            "url": "/user/profile"
+        },
+        "signinAdminAPI": {
+            "url": "/login"
+        },
+        "productAdminAPI": {
+            "url": "/admin/product"
+        }
     },
     "global": {
         "font": {
@@ -80,7 +111,7 @@
         },
         "logo": {
             "type": "html",
-            "src": "https://inkythuatso.com/uploads/images/2021/11/logo-coca-cola-inkythuatso-3-01-17-10-15-33.jpg"
+            "src": "https://thumbs.dreamstime.com/b/man-barbell-gym-fitness-silhouettes-129424194.jpg"
         },
         "favicon": {
             "src": "https://inkythuatso.com/uploads/images/2021/11/logo-coca-cola-inkythuatso-3-01-17-10-15-33.jpg"
@@ -196,7 +227,7 @@
             "fontsize": "1.5rem"
         },
         "logo": {
-            "to": "https://i.imgur.com/4Q1YQqg.png",
+            "to": "https://th.bing.com/th/id/OIP.Ru3lwWgJ9Dj5c-5M-Vm5jgHaGh?pid=ImgDet&rs=1",
             "alt": "logo",
             "width": "10rem",
             "height": "10rem"
@@ -252,8 +283,7 @@
         "styles": {},
         "topBanner": {
             "height": "500px",
-            "display": "block",
-            "objectFit": "cover",
+            "display": "flex",
             "width": "100%",
             "images": [
                 {
@@ -276,7 +306,7 @@
         },
         "groupProducts": [
             {
-                "title": "BestSeller",
+                "title": "bestSeller",
                 "banner": {
                     "src": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/6139fe95757635.5e9f0237cf687.png",
                     "alt": "image"
@@ -286,7 +316,7 @@
                 "slidesToShow": 5
             },
             {
-                "title": "Most View",
+                "title": "mostView",
                 "banner": {
                     "src": "https://icolor.vn/wp-content/uploads/2018/07/Hinh-1-2.png",
                     "alt": "image"
@@ -296,7 +326,7 @@
                 "slidesToShow": 5
             },
             {
-                "title": "Sale Off",
+                "title": "saleOff",
                 "banner": {
                     "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/8936a423930933.56048f9fd2ac8.png",
                     "alt": "image"
@@ -306,7 +336,7 @@
                 "slidesToShow": 5
             },
             {
-                "title": "Latest",
+                "title": "latest",
                 "banner": {
                     "src": "https://www.shutterstock.com/image-photo/lignano-italy-august-08-2018-260nw-1215766054.jpg",
                     "alt": "image"
@@ -319,7 +349,6 @@
         "bottomBanner": {
             "height": "500px",
             "display": "block",
-            "objectFit": "cover",
             "width": "100%",
             "images": [
                 {
@@ -357,11 +386,11 @@
         "labels": {
             "username": "Username",
             "password": "Password",
-            "signin": "SignIn",
-            "dontHaveAccount": "Don'thaveanaccount?",
-            "signup": "Registerhere",
-            "forgotPassword": "Forgotpassword?",
-            "signInToYourAccount": "Signintoyouraccount"
+            "signin": "Sign In",
+            "dontHaveAccount": "Don't have an account?",
+            "signup": "Register here",
+            "forgotPassword": "Forgot password?",
+            "signInToYourAccount": "Sign into your account"
         }
     },
     "signup": {
@@ -396,15 +425,15 @@
             }
         },
         "labels": {
-            "welcome": "Welcometoourcommunity",
+            "welcome": "Welcome to our community",
             "fullname": "FullName",
             "username": "Username",
             "email": "EmailAddress",
             "phone": "PhoneNumber",
             "password": "Password",
             "signup": "Register",
-            "alreadyHaveAccount": "Alreadyhaveanaccount?",
-            "signin": "Signinhere"
+            "alreadyHaveAccount": "Already have an account?",
+            "signin": "Signin here"
         }
     },
     "paymentMethods": [
@@ -463,7 +492,8 @@
             "addToCartSuccess": "Addtocartsuccess",
             "addToCartUnKnownError": "Somthingwentwrong",
             "variantRequired": "Pleaseselectvariant",
-            "inStock": "Instock"
+            "inStock": "Instock",
+            "sold": "Sold"
         }
     },
     "productCard": {
@@ -498,16 +528,16 @@
     },
     "checkout": {
         "labels": {
-            "deliveryAddress": "DeliveryAddress",
-            "noDeliveryAddress": "Nodeliveryaddress",
-            "paymentMethod": "PaymentMethod",
-            "noProducts": "Nothingtocheckout",
-            "orderSummary": "OrderSummary",
-            "shipFee": "Shipingfee",
+            "deliveryAddress": "Delivery address",
+            "noDeliveryAddress": "No delivery address",
+            "paymentMethod": "Payment method",
+            "noProducts": "Nothing to checkout",
+            "orderSummary": "Order summary",
+            "shipFee": "Shipping fee",
             "total": "Total",
             "order": "Order",
-            "addMoreProducts": "Addmoreproducts",
-            "checkoutSuccess": "Checkoutsuccess",
+            "addMoreProducts": "Add more products",
+            "checkoutSuccess": "Check out success",
             "changeDeliveryAddress": "Change"
         }
     },
@@ -515,7 +545,8 @@
         "labels": {
             "total": "Total",
             "note": "Note",
-            "cancel": "Cancel"
+            "cancel": "Cancel",
+            "rating": "Assess"
         }
     },
     "profile": {
@@ -601,37 +632,43 @@
                 "id": 0,
                 "name": "waitForPayment",
                 "color": "#ff9800",
-                "cancelable": true
+                "cancelable": true,
+                "ratingable": true
             },
             "WAIT_FOR_CONFIRM": {
                 "id": 1,
                 "name": "waitForConfirm",
                 "color": "#4caf50",
-                "cancelable": true
+                "cancelable": true,
+                "ratingable": true
             },
             "WAIT_FOR_SEND": {
                 "id": 2,
                 "name": "waitForSend",
                 "color": "#2196f3",
-                "cancelable": true
+                "cancelable": true,
+                "ratingable": true
             },
             "DELIVERING": {
                 "id": 3,
                 "name": "delivering",
                 "color": "#2196f3",
-                "cancelable": true
+                "cancelable": true,
+                "ratingable": true
             },
             "DELIVERED": {
                 "id": 4,
                 "name": "delivered",
                 "color": "#4caf50",
-                "cancelable": true
+                "cancelable": true,
+                "ratingable": true
             },
             "CANCELED": {
                 "id": 5,
                 "name": "canceled",
                 "color": "#f44336",
-                "cancelable": true
+                "cancelable": true,
+                "ratingable": true
             }
         },
         "labels": {

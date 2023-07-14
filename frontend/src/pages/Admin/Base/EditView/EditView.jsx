@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import times from 'lodash.times';
 import { useState } from 'react';
-import { Button, Edit, ImageField, SimpleForm } from 'react-admin';
+import { Button, DeleteButton, Edit, ImageField, SaveButton, SimpleForm, Toolbar } from 'react-admin';
 
 export const EditView = ({ fields }) => {
     const [fieldsState, setFieldsState] = useState(fields);
@@ -13,7 +13,7 @@ export const EditView = ({ fields }) => {
     };
     return (
         <Edit>
-            <SimpleForm>
+            <SimpleForm toolbar={<CustomToolbar />}>
                 <Grid container spacing={2}>
                     {fields.map(({ Element, type, label, quantity, ...rest }, index) => {
                         return renderElement({ Element, type, label, quantity, index, handleAdd, rest });
@@ -23,6 +23,13 @@ export const EditView = ({ fields }) => {
         </Edit>
     );
 };
+
+const CustomToolbar = (props) => (
+    <Toolbar {...props} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <SaveButton />
+        <DeleteButton mutationMode="pessimistic" />
+    </Toolbar>
+);
 
 export const renderElement = ({ Element, type, label, quantity, index, handleAdd = () => {}, rest }) => {
     if (type === 'sub') {
