@@ -53,7 +53,7 @@ function Home({ title }) {
                     <Box width={home.topBanner.width} position="relative" display={home.topBanner.display}>
                         <SlideBanner images={home.topBanner.images || []} height={home.topBanner.height} />
                     </Box>
-                    <Lottie animationData={person} style={{ height: 200 }} />
+                    {/* <Lottie animationData={person} style={{ height: 200 }} /> */}
                     <Box width="100%" mt={8}>
                         <Stack spacing={2}>
                             {/* show group product */}

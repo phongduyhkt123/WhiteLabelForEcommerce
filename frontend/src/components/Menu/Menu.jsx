@@ -8,6 +8,7 @@ const Menu = ({ children, anchorEl, open, setOpen = () => {} }) => {
             open={open}
             onClose={setOpen}
             onClick={setOpen}
+            onMouseLeave={setOpen}
             placement={'bottom-end'}
             disablePortal
             style={{ margin: 0 }}

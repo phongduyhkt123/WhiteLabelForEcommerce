@@ -18,7 +18,24 @@ const ProductInfo = ({ product }) => {
     const labels = singleProduct.labels;
 
     const updateQuantity = (type) => {
-        type === 'plus' ? setQuantity(quantity + 1) : setQuantity(() => (quantity - 1 < 1 ? 1 : quantity - 1));
+        if (type === 'plus') {
+            if (quantity < variant.quantity) {
+                setQuantity(quantity + 1);
+            }
+        } else {
+            if (quantity < 1) return;
+            setQuantity(() => (quantity - 1 < 1 ? 1 : quantity - 1));
+        }
+    };
+
+    const handleOnInputQuantity = (quantity) => {
+        if (quantity > variant.quantity) {
+            setQuantity(variant.quantity);
+        } else if (quantity < 1) {
+            setQuantity(1);
+        } else {
+            setQuantity(quantity);
+        }
     };
 
     useEffect(() => {
@@ -92,15 +109,16 @@ const ProductInfo = ({ product }) => {
                         </IconButton>
                         <TextField
                             value={quantity}
-                            onChange={(e) => setQuantity(e.target.value)}
+                            onChange={(e) => {
+                                handleOnInputQuantity(JSON.parse(e.target.value));
+                            }}
                             variant="outlined"
                             type="number"
                             size="small"
                             inputProps={{
-                                readOnly: true,
                                 sx: {
                                     textAlign: 'center',
-                                    width: '4   rem',
+                                    width: '4rem',
                                     px: '0.2rem',
                                 },
                             }}

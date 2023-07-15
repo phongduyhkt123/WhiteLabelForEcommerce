@@ -8,7 +8,8 @@ const ConfigProvider = ({ children }) => {
 
     useEffect(() => {
         get('/config').then((res) => {
-            setConfig(JSON.parse(res.data.data[0].value));
+            const config = res.data.data.find((item) => item.isSelected === true);
+            setConfig(JSON.parse(config.value));
         });
     }, []);
 

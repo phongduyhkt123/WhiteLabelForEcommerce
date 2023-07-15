@@ -8,11 +8,11 @@ import { commas } from '~/utils/formater';
 import { productCard as pConfig, route } from '~/config';
 import Icon from '~/config/Store/Icon';
 
-export const ProductCard = ({ data }) => {
+export const ProductCard = ({ data, key }) => {
     const { isMobile } = useContext(GlobalContext);
 
     return (
-        <Card sx={{ position: 'relative' }}>
+        <Card key={key} sx={{ position: 'relative' }}>
             <CardActionArea LinkComponent={Link} to={`${route.product.path}/${data?.id}`}>
                 <Box sx={{ m: 0.2, overflow: 'hidden' }}>
                     {/* image */}

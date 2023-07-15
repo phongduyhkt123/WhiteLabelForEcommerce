@@ -14,8 +14,9 @@ import { EditOrder } from './Order/EditOrder';
 import { EditProduct } from './Product/EditProduct';
 import Report from './Report';
 import { EditComment } from './Comment/EditComment';
+import { BASE_ADMIN_URL } from '~/utils/httpRequest';
 
-const dataProvider = SpringDataProvider('http://localhost:8080/api/admin', request.fetch);
+const dataProvider = SpringDataProvider(BASE_ADMIN_URL, request.fetch);
 
 const StoreAdmin = ({ aTheme }) => {
     const ListProduct = <ListView fields={productList} />;

@@ -2,7 +2,9 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { useEffect, useState } from 'react';
 
+export const DOMAIN = 'http://localhost:8080';
 export const BASE_URL = 'http://localhost:8080/api/';
+export const BASE_ADMIN_URL = 'http://localhost:8080/api/admin';
 
 const headers = {
     'Content-Type': 'application/json',
@@ -22,7 +24,7 @@ const getHeaders = () => {
 
 const request = axios.create({
     baseURL: BASE_URL, //process.env.REACT_APP_BASE_URL,
-    timeout: 20000,
+    timeout: 30000,
     headers: headers,
     // transformResponse: [
     //     (data, headers, status) => {
@@ -110,6 +112,7 @@ export const useAxios = ({ url, method = 'GET', config = {}, dep = [], isAuthen 
                 const res = await request.request({ url, method, ...config });
                 setData(res.data.data);
             } catch (err) {
+                console.log('err', err);
                 setError(err);
             } finally {
                 setLoaded(true);

@@ -1,9 +1,22 @@
 import { route } from '~/config';
 import UserProfileLayout from '~/layouts/UserProfileLayout/UserProfileLayout';
 import { Cart, Home, Profile, Product, SingleProduct, Signin, DeliveryAddress, Checkout, Order } from '~/pages';
+import ProductCategory from '~/pages/ProductCategory';
 import Signup from '~/pages/Signup';
 
-const { home, signin, signup, singleProduct, product, deliveryAddress, profile, order, cart, checkout } = route;
+const {
+    home,
+    signin,
+    signup,
+    singleProduct,
+    product,
+    deliveryAddress,
+    profile,
+    order,
+    cart,
+    checkout,
+    productCategory,
+} = route;
 
 const publicRoute = [
     { path: home.path, title: home.title, element: Home },
@@ -19,6 +32,7 @@ const publicRoute = [
     },
     { path: singleProduct.path, title: singleProduct.title, element: SingleProduct },
     { path: product.path, title: product.title, element: Product },
+    { path: productCategory.path, title: productCategory.title, element: ProductCategory },
 ];
 
 const privateRoute = [

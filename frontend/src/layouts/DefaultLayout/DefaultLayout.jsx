@@ -2,9 +2,12 @@ import Header from '~/layouts/components/Header';
 import Footer from '~/layouts/components/Footer';
 import { Box } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
+import ChatBot from '~/components/ChatBot/Chatbot';
 
 const DefaultLayout = ({ children }) => {
     const [headerHeight, setHeaderHeight] = useState(0);
+
+    const [hasChatBot, setHasChatBot] = useState(false);
 
     const heigth = document.getElementById('header')?.clientHeight;
 
@@ -21,6 +24,7 @@ const DefaultLayout = ({ children }) => {
                         {children}
                     </Box>
                 </Box>
+                <ChatBot />
             </Box>
             <Footer />
         </Box>

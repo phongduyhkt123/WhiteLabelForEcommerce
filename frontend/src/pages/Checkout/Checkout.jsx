@@ -114,7 +114,7 @@ const Checkout = () => {
                 setMessage({ text: 'Checkout success', severity: 'success', type: AlertTypes.SNACKBAR_LARGE });
                 setShowMessage(true);
                 setCheckoutProducts([]);
-                navigate('/order');
+                navigate(route.order.path);
             } else if (paymentMethod === 2) {
                 console.log(res);
                 window.location.href = `${res.data.data.payUrl}`;
@@ -142,11 +142,11 @@ const Checkout = () => {
         if (isBuyNow) {
             return (
                 <CheckOutItem
-                    avatar={checkoutProducts.avatar.url}
-                    idProduct={checkoutProducts.product.id}
+                    avatar={checkoutProducts?.avatar?.url}
+                    idProduct={checkoutProducts?.product?.id}
                     price={orderSummary}
-                    productName={checkoutProducts.product.name}
-                    productVariationName={checkoutProducts.variationName}
+                    productName={checkoutProducts?.product?.name}
+                    productVariationName={checkoutProducts?.variationName}
                     quantity={searchParams.get('quantity')}
                 />
             );

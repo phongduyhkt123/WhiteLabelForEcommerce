@@ -71,14 +71,14 @@ const Order = ({ title }) => {
                 <Button value={2} onClick={filter} variant={active === 2 ? 'contained' : 'outlined'}>
                     Waiting for confirm
                 </Button>
+                <Button value={5} onClick={filter} variant={active === 5 ? 'contained' : 'outlined'}>
+                    Waiting for send
+                </Button>
                 <Button value={3} onClick={filter} variant={active === 3 ? 'contained' : 'outlined'}>
                     Delivering
                 </Button>
                 <Button value={4} onClick={filter} variant={active === 4 ? 'contained' : 'outlined'}>
                     Delivered
-                </Button>
-                <Button value={5} onClick={filter} variant={active === 5 ? 'contained' : 'outlined'}>
-                    Completed
                 </Button>
                 <Button value={6} onClick={filter} variant={active === 6 ? 'contained' : 'outlined'}>
                     Canceled

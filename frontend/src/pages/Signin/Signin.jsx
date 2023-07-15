@@ -14,6 +14,7 @@ import { Facebook, Google } from '~/assets/images';
 import { getSocialLoginUrl } from '~/services/mediaSocialService';
 import { motion } from 'framer-motion';
 import { ConfigContext } from '~/context/ConfigContext';
+import CustomLoader from '~/components/CustomLoader/CustomLoader';
 
 const Signin = () => {
     const navigate = useNavigate();
@@ -22,6 +23,8 @@ const Signin = () => {
 
     const { image, form, button, redirect, labels } = signin;
     const { setMessage, setShowMessage } = useContext(AlertContext);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const location = useLocation();
 
@@ -32,6 +35,7 @@ const Signin = () => {
         event.preventDefault();
 
         const login = async (loginKey, password) => {
+            setIsLoading(true);
             try {
                 const response = await request.post(route.signinAPI.url, {
                     loginKey,
@@ -45,7 +49,7 @@ const Signin = () => {
                 } else {
                     console.log(response);
                     setMessage({
-                        text: response?.detail?.message || 'Login failed',
+                        text: response?.message || response?.detail?.message || 'Login failed',
                         severity: 'error',
                         type: AlertTypes.STATIC,
                     });
@@ -53,12 +57,17 @@ const Signin = () => {
                 }
             } catch (error) {
                 setMessage({
-                    text: error?.response?.data?.detail?.message || 'Something went wrong',
+                    text:
+                        error?.response?.data?.message ||
+                        error?.response?.data?.detail?.message ||
+                        'Something went wrong',
                     severity: 'error',
                     type: AlertTypes.STATIC,
                 });
                 setShowMessage(true);
                 console.log(error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -67,6 +76,25 @@ const Signin = () => {
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            {isLoading && (
+                <div style={{ position: 'fixed', top: 0, right: 0, left: 0, bottom: 0, zIndex: 999999 }}>
+                    <Box
+                        position="absolute"
+                        top="0"
+                        right="0"
+                        left={0}
+                        bottom={0}
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        bgcolor="black"
+                        sx={{ opacity: 0.5, pointerEvents: 'none', cursor: 'wait' }}
+                        style={{ pointerEvents: isLoading ? 'all' : 'none' }}
+                    >
+                        <CustomLoader />
+                    </Box>
+                </div>
+            )}
             <AuthContainer>
                 {/* Image Left */}
                 {image && (

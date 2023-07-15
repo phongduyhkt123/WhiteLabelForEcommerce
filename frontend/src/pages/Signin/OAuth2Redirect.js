@@ -7,25 +7,22 @@ const OAuth2Redirect = () => {
     const token = new URLSearchParams(window.location.search).get('token');
     const userInfo = new URLSearchParams(window.location.search).get('user');
 
-    localStorage.setItem(
-        'auth',
-        JSON.stringify({ token, type: 'Bearer', userInfo: JSON.parse(decodeURIComponent(userInfo)) }),
-    );
+    console.log('userInfo', userInfo);
+
+    if (token && userInfo) {
+        localStorage.setItem(
+            'auth',
+            JSON.stringify({ token, type: 'Bearer', userInfo: JSON.parse(decodeURIComponent(userInfo)) }),
+        );
+    }
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('11111');
-
         const { token, userInfo } = JSON.parse(localStorage.getItem('auth'));
 
-        if (token) {
-            console.log('22222');
-            if (userInfo.role === 'ROLE_ADMIN') {
-                navigate('/');
-            } else {
-                navigate('/');
-            }
+        if (token && userInfo) {
+            navigate('/');
         }
     }, [localStorage.getItem('auth')]);
 

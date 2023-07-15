@@ -26,25 +26,26 @@ const ProductImages = ({ images }) => {
                                 sx={{ direction: 'rtl' }}
                             >
                                 {images.map((image) => (
-                                    <AnimatedOnScroll animationIn="swing" animationInDuration={1000}>
-                                        <Box
-                                            key={image.id}
-                                            component="img"
-                                            onClick={() => setPreviewImg({ id: image.id, url: image.url })}
-                                            src={image.url}
-                                            alt=""
-                                            height={80}
-                                            width="100%"
-                                            border={previewImg?.id === image.id ? '3px solid' : 'none'}
-                                            sx={{
-                                                objectFit: 'cover',
-                                                opacity: image.id === previewImg.id ? 1 : 0.5,
-                                                cursor: 'pointer',
-                                                borderColor: 'primary.main',
-                                                direction: 'ltr',
-                                            }}
-                                        />
-                                    </AnimatedOnScroll>
+                                    <div key={image.id}>
+                                        <AnimatedOnScroll animationIn="swing" animationInDuration={1000}>
+                                            <Box
+                                                component="img"
+                                                onClick={() => setPreviewImg({ id: image.id, url: image.url })}
+                                                src={image.url}
+                                                alt=""
+                                                height={80}
+                                                width="100%"
+                                                border={previewImg?.id === image.id ? '3px solid' : 'none'}
+                                                sx={{
+                                                    objectFit: 'cover',
+                                                    opacity: image.id === previewImg.id ? 1 : 0.5,
+                                                    cursor: 'pointer',
+                                                    borderColor: 'primary.main',
+                                                    direction: 'ltr',
+                                                }}
+                                            />
+                                        </AnimatedOnScroll>
+                                    </div>
                                 ))}
                             </Stack>
                         </Grid2>

@@ -32,17 +32,16 @@ function SingleProduct() {
 
     useEffect(() => {
         if (home) {
-            const { token } = JSON.parse(localStorage.getItem('auth'));
             if (true) {
-                request.get('/product/recommend', { params: { id } }).then((res) => {
-                    console.log('recommend', res);
+                request.get(`${route.productRecommendAPI.url}/${id}`).then((res) => {
+                    setRelativeProducts(res.data.data);
                 });
             }
 
-            request.get(home.groupProducts[0].api).then((res) => {
-                console.log(res);
-                setRelativeProducts(res.data.data);
-            });
+            // request.get(home.groupProducts[0].api).then((res) => {
+            //     console.log(res);
+            //     setRelativeProducts(res.data.data);
+            // });
         }
     }, [home]);
 
@@ -90,7 +89,7 @@ function SingleProduct() {
                                                 </Typography>
                                                 <LinearProgress
                                                     variant="determinate"
-                                                    value={product?.rating5}
+                                                    value={product?.rating5 || 0}
                                                     sx={{ height: 10, width: 200, borderRadius: 5 }}
                                                 />
                                                 <Typography variant="body" color="primary" ml={2}>
@@ -103,7 +102,7 @@ function SingleProduct() {
                                                 </Typography>
                                                 <LinearProgress
                                                     variant="determinate"
-                                                    value={product?.rating4}
+                                                    value={product?.rating4 || 0}
                                                     sx={{ height: 10, width: 200, borderRadius: 5 }}
                                                 />
                                                 <Typography variant="body" color="primary" ml={2}>
@@ -116,7 +115,7 @@ function SingleProduct() {
                                                 </Typography>
                                                 <LinearProgress
                                                     variant="determinate"
-                                                    value={product?.rating3}
+                                                    value={product?.rating3 || 0}
                                                     sx={{ height: 10, width: 200, borderRadius: 5 }}
                                                 />
                                                 <Typography variant="body" color="primary" ml={2}>
@@ -129,7 +128,7 @@ function SingleProduct() {
                                                 </Typography>
                                                 <LinearProgress
                                                     variant="determinate"
-                                                    value={product?.rating2}
+                                                    value={product?.rating2 || 0}
                                                     sx={{ height: 10, width: 200, borderRadius: 5 }}
                                                 />
                                                 <Typography variant="body" color="primary" ml={2}>
@@ -142,7 +141,7 @@ function SingleProduct() {
                                                 </Typography>
                                                 <LinearProgress
                                                     variant="determinate"
-                                                    value={product?.rating1}
+                                                    value={product?.rating1 || 0}
                                                     sx={{ height: 10, width: 200, borderRadius: 5 }}
                                                 />
                                                 <Typography variant="body" color="primary" ml={2}>
@@ -180,7 +179,7 @@ function SingleProduct() {
                         </Grid2>
 
                         <Box display="flex" flexDirection="column" alignItems="center" width="100%">
-                            {commentLoaded && comment.data.length > 0 && (
+                            {commentLoaded && comment?.data.length > 0 && (
                                 <>
                                     <Stack
                                         spacing={2}
@@ -206,7 +205,7 @@ function SingleProduct() {
                                 </>
                             )}
 
-                            {commentLoaded && comment.data.length === 0 && (
+                            {commentLoaded && comment?.data?.length === 0 && (
                                 <Typography
                                     variant="h5"
                                     color="primary"
@@ -231,7 +230,6 @@ function SingleProduct() {
                         <Box my={2} px={isMobile ? 0 : 3} width="100%">
                             <SliderCarousel isMobile={isMobile}>
                                 {relativeProducts.map((item, index) => {
-                                    console.log('first', item);
                                     return <ProductCard key={index} data={item} />;
                                 })}
                             </SliderCarousel>

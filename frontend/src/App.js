@@ -67,6 +67,13 @@ function App() {
                 />
             </head>
             <div>
+                <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+                <df-messenger
+                    intent="WELCOME"
+                    chat-title="Assistant"
+                    agent-id="ce3f48ce-4a10-4fa0-9e02-e472d23100a7"
+                    language-code="en"
+                ></df-messenger>
                 {config && (
                     <Router>
                         <NavigateSetter />

@@ -21,15 +21,6 @@ const NavbarItem = ({ children, item, onClick }) => {
     const itemRef = useRef();
     const [openMenu, setOpenMenu] = useState(false);
 
-    const handleOnClick = (e) => {
-        if (more) {
-            e.preventDefault();
-            setOpenMenu(!openMenu);
-        } else {
-            onClick();
-        }
-    };
-
     const [subItems, setSubItems] = useState([]);
     useEffect(() => {
         item.api && request.get(item.api).then((res) => setSubItems(res.data.data));
@@ -51,7 +42,7 @@ const NavbarItem = ({ children, item, onClick }) => {
                 to={to}
                 ref={itemRef}
                 style={{ display: 'flex', alignItems: 'center' }}
-                onClick={(e) => handleOnClick(e)}
+                onMouseEnter={() => setOpenMenu(true)}
                 className={({ isActive }) => (isActive ? classes.active : '')}
                 end
             >
@@ -59,7 +50,7 @@ const NavbarItem = ({ children, item, onClick }) => {
                 {more && <ExpandMore />}
             </NavLink>
             {more && (
-                <Menu anchorEl={itemRef.current} open={openMenu} setOpen={(e) => handleOnClick(e)}>
+                <Menu anchorEl={itemRef.current} open={openMenu} setOpen={() => setOpenMenu(!openMenu)}>
                     <List>
                         {subItems?.map((i, index) => {
                             return (

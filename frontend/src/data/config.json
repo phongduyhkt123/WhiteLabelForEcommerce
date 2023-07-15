@@ -29,6 +29,10 @@
             "path": "/product",
             "title": "Product"
         },
+        "productCategory": {
+            "path": "/product-category",
+            "title": "Product Category"
+        },
         "cart": {
             "path": "/cart",
             "title": "Cart"
@@ -72,6 +76,9 @@
         "productAPI": {
             "url": "/product"
         },
+        "productVariationAPI": {
+            "url": "/productVariation"
+        },
         "productSearchAPI": {
             "url": "/product/search"
         },
@@ -89,6 +96,9 @@
         },
         "singleProductAPI": {
             "url": "/product/"
+        },
+        "productRecommendAPI": {
+            "url": "/product/recommend"
         },
         "commentAPI": {
             "url": "/comment"
@@ -440,13 +450,13 @@
         {
             "id": 1,
             "code": "CASH",
-            "name": "Cashondelivery",
+            "name": "Cash on delivery",
             "icon": "AttachMoney"
         },
         {
             "id": 2,
-            "code": "CARD",
-            "name": "CreditCard",
+            "code": "MOMO",
+            "name": "Momo",
             "icon": "CreditCard"
         },
         {

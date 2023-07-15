@@ -90,7 +90,6 @@ const Cart = ({ title }) => {
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            {' '}
             <Title title={title}>
                 <Box my={3} display="flex" flexDirection="column" alignItems="center">
                     <Box width="100%" p={2} sx={{ boxShadow: 1, bgcolor: 'background.white' }}>

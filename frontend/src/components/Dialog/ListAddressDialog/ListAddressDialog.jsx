@@ -6,13 +6,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Box } from '@mui/system';
-import { useState } from 'react';
-import { route } from '~/config';
+import { useContext, useState } from 'react';
+import { ConfigContext } from '~/context/ConfigContext';
 import DeliveryAddressItem from '~/pages/Checkout/DeliveryAddressItem';
 import * as request from '~/utils/httpRequest';
 
 export default function ListAddressDialog({ selected, handleClose, handleSaveDeliveryAddress }) {
-    const { data: deliveryAddresses, loaded } = request.useAxios({ url: route.deliveryAddressAPI, isAuthen: true });
+    const { routes: route } = useContext(ConfigContext);
+
+    const { data: deliveryAddresses, loaded } = request.useAxios({ url: route.deliveryAddressAPI.url, isAuthen: true });
 
     const [deliveryAddress, setDeliveryAddress] = useState(selected);
 
@@ -35,7 +37,7 @@ export default function ListAddressDialog({ selected, handleClose, handleSaveDel
                         border="2px solid"
                         sx={{ borderColor: 'primary.main' }}
                     >
-                        {deliveryAddresses.map((item) => (
+                        {deliveryAddresses?.map((item) => (
                             <Box
                                 display="flex"
                                 alignItems="center"
