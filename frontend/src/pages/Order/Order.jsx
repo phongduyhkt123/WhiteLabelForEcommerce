@@ -1,5 +1,4 @@
 import {
-    Box,
     Button,
     ButtonGroup,
     Dialog,
@@ -15,20 +14,15 @@ import {
 } from '@mui/material';
 import times from 'lodash.times';
 import { useContext, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { CartItemSkeleton } from '~/components/Skeleton';
 import Title from '~/components/Title/Title';
 import { ConfigContext } from '~/context/ConfigContext';
 import * as request from '~/utils/httpRequest';
 import OrderItem from './OrderItem';
-import { Image } from '@mui/icons-material';
+import { useSearchParams } from 'react-router-dom';
 
 const Order = ({ title }) => {
-    const { routes: route } = useContext(ConfigContext);
-
-    const [page, setPage] = useState(1);
-
-    const [active, setActive] = useState(1);
+    const { routes: route, orderStatus } = useContext(ConfigContext);
 
     const [openCommentDialog, setOpenCommentDialog] = useState(false);
 
@@ -36,23 +30,36 @@ const Order = ({ title }) => {
 
     const [selectedOrder, setSelectedOrder] = useState({});
 
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const orderStatusList = Object.keys(orderStatus.items).map((key) => {
+        return { status: key, name: orderStatus.labels[orderStatus.items[key].name] };
+    });
+
+    const [active, setActive] = useState(orderStatusList[0].status);
+
     const { data: orders, loaded } = request.useAxios({
         url: route.orderAPI.url,
-        config: { params: { page } },
-        dep: [page],
+        config: {
+            params: {
+                status: searchParams.get('status') || 0,
+                page: searchParams.get('page') || 1,
+            },
+        },
+        dep: [searchParams],
         isAuthen: true,
     });
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    console.log('searchParams', searchParams);
 
     const filter = ({ target: { value } }) => {
-        setActive(parseInt(value));
+        setActive(value);
         setSearchParams({ status: value });
     };
 
     const handleChangePage = ({}, page) => {
-        setPage(page);
-        setSearchParams({ page });
+        searchParams.set('page', page);
+        setSearchParams(searchParams);
     };
 
     const handleSubmitComment = () => {
@@ -65,24 +72,16 @@ const Order = ({ title }) => {
     return (
         <Title title={title}>
             <ButtonGroup variant="outlined" fullWidth>
-                <Button value={1} onClick={filter} variant={active === 1 ? 'contained' : 'outlined'}>
-                    Waiting for payment
-                </Button>
-                <Button value={2} onClick={filter} variant={active === 2 ? 'contained' : 'outlined'}>
-                    Waiting for confirm
-                </Button>
-                <Button value={5} onClick={filter} variant={active === 5 ? 'contained' : 'outlined'}>
-                    Waiting for send
-                </Button>
-                <Button value={3} onClick={filter} variant={active === 3 ? 'contained' : 'outlined'}>
-                    Delivering
-                </Button>
-                <Button value={4} onClick={filter} variant={active === 4 ? 'contained' : 'outlined'}>
-                    Delivered
-                </Button>
-                <Button value={6} onClick={filter} variant={active === 6 ? 'contained' : 'outlined'}>
-                    Canceled
-                </Button>
+                {orderStatusList.map(({ status, name }) => (
+                    <Button
+                        key={status}
+                        value={status}
+                        onClick={filter}
+                        variant={active === status ? 'contained' : 'outlined'}
+                    >
+                        {name}
+                    </Button>
+                ))}
             </ButtonGroup>
             <Stack spacing={1}>
                 {loaded
@@ -104,6 +103,7 @@ const Order = ({ title }) => {
                     count={orders?.totalPage}
                     size="large"
                     sx={{ mt: 2 }}
+                    page={parseInt(searchParams?.get('page') || 1)}
                     onChange={handleChangePage}
                 />
             )}
