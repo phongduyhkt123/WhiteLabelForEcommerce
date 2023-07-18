@@ -7,10 +7,34 @@ import OrderStatus from '~/components/OrderStatus/OrderStatus';
 import { ConfigContext } from '~/context/ConfigContext';
 import { commas } from '~/utils/formater';
 import OrderDetailItem from './OrderDetailItem';
+import * as request from '~/utils/httpRequest';
 
-const OrderItem = ({ item, onClickComment }) => {
-    const { order, orderStatus } = useContext(ConfigContext);
+const OrderItem = ({ item, setSelectedOrder, setOpenCommentDialog, setOpenConfirmDialog }) => {
+    const { routes: route, order, orderStatus } = useContext(ConfigContext);
     const labels = order.labels;
+
+    const handleCommentClick = () => {
+        setSelectedOrder(item);
+        setOpenCommentDialog(true);
+    };
+
+    const handleCancelClick = () => {
+        setSelectedOrder(item);
+        setOpenConfirmDialog(true);
+    };
+
+    const handlePayClick = () => {
+        request
+            .post(`${route.orderAPI.url}/${item.id}`)
+            .then((res) => {
+                if (res.status === 200) {
+                    window.location.href = res.data;
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     return (
         <Paper sx={{ p: 0.5 }}>
@@ -29,22 +53,29 @@ const OrderItem = ({ item, onClickComment }) => {
                 <Typography variant="h6" display="flex" alignItems="center" justifyContent="right">
                     <MonetizationOn /> {labels.total}: {commas(item?.total || 0)}
                 </Typography>
-                <Typography variant="h6">
-                    {labels.note}: {item.note}
-                </Typography>
+                {item.note && (
+                    <Typography variant="h6">
+                        {labels.note}: {item.note}
+                    </Typography>
+                )}
             </Box>
 
             <>
                 <Divider sx={{ m: 0.5 }} />
                 <Box textAlign="right">
                     {orderStatus.items[item.status]?.cancelable && (
-                        <Button variant="contained" color="warning" sx={{ mr: 2 }} onClick={() => console.log('click')}>
+                        <Button variant="contained" color="warning" sx={{ mr: 2 }} onClick={handleCancelClick}>
                             {labels.cancel}
                         </Button>
                     )}
                     {orderStatus.items[item.status]?.ratingable && !item.isRated && (
-                        <Button variant="contained" color="info" sx={{ mr: 2 }} onClick={onClickComment}>
+                        <Button variant="contained" color="info" sx={{ mr: 2 }} onClick={handleCommentClick}>
                             {labels.rating}
+                        </Button>
+                    )}
+                    {item.status === 'WAIT_FOR_PAYMENT' && (
+                        <Button variant="contained" color="info" sx={{ mr: 2 }} onClick={handlePayClick}>
+                            Thanh Toán
                         </Button>
                     )}
                 </Box>

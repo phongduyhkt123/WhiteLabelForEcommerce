@@ -27,11 +27,15 @@ const ButtonControll = () => {
                     quantity,
                 });
                 if (response.status === 200) {
-                    setMessage({ text: labels.addToCartSuccess, severity: 'success' });
+                    setMessage({ text: labels.addToCartSuccess, severity: 'success', type: AlertTypes.SNACKBAR_LARGE });
                     setTotalCartItem((prev) => prev + quantity);
                 }
             } catch (e) {
-                setMessage({ text: e.response?.data?.message || labels.addToCartUnKnownError, severity: 'error' });
+                setMessage({
+                    text: e.response?.data?.errors[0] || e.response?.data?.message || labels.addToCartUnKnownError,
+                    severity: 'error',
+                    type: AlertTypes.SNACKBAR_LARGE,
+                });
             }
         }
         setShowMessage(true);

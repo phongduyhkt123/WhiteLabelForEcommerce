@@ -9,9 +9,11 @@ import { commas } from '~/utils/formater';
 import ButtonControll from './ButtonControll';
 import ProductDescription from './ProductDescription';
 import { ConfigContext } from '~/context/ConfigContext';
+import { AlertContext, AlertTypes } from '~/context/AlertContext';
 
 const ProductInfo = ({ product }) => {
     const { quantity, setQuantity, variant, setVariant } = useContext(ProductContext);
+    const { setShowMessage, setMessage } = useContext(AlertContext);
 
     const { singleProduct } = useContext(ConfigContext);
 
@@ -21,6 +23,13 @@ const ProductInfo = ({ product }) => {
         if (type === 'plus') {
             if (quantity < variant.quantity) {
                 setQuantity(quantity + 1);
+            } else {
+                setMessage({
+                    text: 'Số lượng sản phẩm không đủ!',
+                    severity: 'error',
+                    type: AlertTypes.SNACKBAR_LARGE,
+                });
+                setShowMessage(true);
             }
         } else {
             if (quantity < 1) return;

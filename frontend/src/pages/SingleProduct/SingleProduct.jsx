@@ -63,7 +63,7 @@ function SingleProduct() {
                 <AnimatedOnScroll animationIn="fadeIn" animationOut="fadeOut">
                     <Box display="flex" flexDirection="column" width="100%" my={20}>
                         <Typography variant="h3" color="primary" m="auto">
-                            Buyer Reviews
+                            Đánh giá sản phẩm
                         </Typography>
 
                         {/* user comment */}
@@ -80,7 +80,7 @@ function SingleProduct() {
                                 <Box display="flex" flexDirection="column" alignItems="center">
                                     <Box display="flex" flexDirection="column" alignItems="center">
                                         <Typography variant="h6" color="primary" mr={2}>
-                                            Rating Snapshot
+                                            Đánh giá tổng quát
                                         </Typography>
                                         <Box display="flex" flexDirection="column" alignItems="center">
                                             <Box display="flex" alignItems="center">
@@ -157,7 +157,7 @@ function SingleProduct() {
                                 <Box display="flex" flexDirection="column" alignItems="center">
                                     <Box display="flex" flexDirection="column" alignItems="center">
                                         <Typography variant="h6" color="primary" mr={2}>
-                                            Overal Rating
+                                            Đánh giá trung bình
                                         </Typography>
                                         <Box display="flex" alignItems="center">
                                             <Typography variant="h3" color="primary" mr={2}>
@@ -171,7 +171,7 @@ function SingleProduct() {
                                             </Box>
                                         </Box>
                                         <Typography variant="body" color="primary" mr={2}>
-                                            This product has a high recommendation rate from customers
+                                            Sản phẩm được đánh giá cao bởi người dùng
                                         </Typography>
                                     </Box>
                                 </Box>
@@ -214,7 +214,7 @@ function SingleProduct() {
                                     p={4}
                                     bgcolor="background.paper"
                                 >
-                                    This product has no comment
+                                    Chưa có đánh giá nào cho sản phẩm này
                                 </Typography>
                             )}
                         </Box>
@@ -224,7 +224,7 @@ function SingleProduct() {
                 <AnimatedOnScroll animationIn="fadeIn" animationOut="fadeOut">
                     <Box display="flex" flexDirection="column" alignItems="center" width="100%" mt={10}>
                         <Typography variant="h3" color="primary" m="auto">
-                            Recommend Products For You
+                            Các sản phẩm tương tự
                         </Typography>
                         {/* List product */}
                         <Box my={2} px={isMobile ? 0 : 3} width="100%">

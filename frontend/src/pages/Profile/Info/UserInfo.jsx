@@ -41,13 +41,13 @@ const UserInfo = (props) => {
     return (
         <form autoComplete="off" noValidate {...props} onSubmit={handleSubmit}>
             <Card>
-                <CardHeader subheader="The information can be edited" title={profile.labels.profile} />
+                <CardHeader subheader="THÔNG TIN CÓ THỂ ĐƯỢC CẬP NHẬT" title={profile.labels.profile} />
                 <Divider />
                 <CardContent>
                     <Box display="flex" alignItems="center" flexDirection="column" mb="4rem">
                         <Box
                             component="img"
-                            src={values.avatar}
+                            src={values.avatar || 'https://wallpaperaccess.com/full/460999.jpg'}
                             alt="avatar"
                             width="15rem"
                             border="1px solid #fff"

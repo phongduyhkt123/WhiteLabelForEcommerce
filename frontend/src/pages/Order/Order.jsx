@@ -20,13 +20,17 @@ import { ConfigContext } from '~/context/ConfigContext';
 import * as request from '~/utils/httpRequest';
 import OrderItem from './OrderItem';
 import { useSearchParams } from 'react-router-dom';
+import ConfirmDialog from '~/components/Dialog/ConfirmDialog';
+import { AlertContext, AlertTypes } from '~/context/AlertContext';
 
 const Order = ({ title }) => {
     const { routes: route, orderStatus } = useContext(ConfigContext);
+    const { setMessage, setShowMessage } = useContext(AlertContext);
 
     const [openCommentDialog, setOpenCommentDialog] = useState(false);
+    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
-    const [comment, setComment] = useState({ productId: 0, rate: 5, description: 'Good' });
+    const [comment, setComment] = useState({ productVariationId: 0, rate: 5, description: 'Good' });
 
     const [selectedOrder, setSelectedOrder] = useState({});
 
@@ -36,9 +40,13 @@ const Order = ({ title }) => {
         return { status: key, name: orderStatus.labels[orderStatus.items[key].name] };
     });
 
-    const [active, setActive] = useState(orderStatusList[0].status);
+    const [active, setActive] = useState(searchParams.get('status') || orderStatusList[0].status);
 
-    const { data: orders, loaded } = request.useAxios({
+    const {
+        data: orders,
+        setData: setOrders,
+        loaded,
+    } = request.useAxios({
         url: route.orderAPI.url,
         config: {
             params: {
@@ -69,6 +77,30 @@ const Order = ({ title }) => {
         setComment({ productId: 0, rate: 5, description: 'Good' });
     };
 
+    const handleCancel = async () => {
+        try {
+            const res = await request.put(`${route.orderAPI.url}/${selectedOrder.id}?new-status=CANCELED`);
+            if (res.status === 200) {
+                setOrders({ ...orders, data: orders.data.filter((item) => item.id !== selectedOrder.id) });
+                setMessage({
+                    text: 'Hủy đơn hàng thành công',
+                    severity: 'success',
+                    type: AlertTypes.SNACKBAR_LARGE,
+                });
+            }
+        } catch (err) {
+            setMessage({
+                text: 'Hủy đơn hàng thất bại, vui lòng thử lại sau',
+                severity: 'error',
+                type: AlertTypes.SNACKBAR_LARGE,
+            });
+            console.log('err', err);
+        } finally {
+            setOpenConfirmDialog(false);
+            setShowMessage(true);
+        }
+    };
+
     return (
         <Title title={title}>
             <ButtonGroup variant="outlined" fullWidth>
@@ -85,14 +117,13 @@ const Order = ({ title }) => {
             </ButtonGroup>
             <Stack spacing={1}>
                 {loaded
-                    ? orders?.data.map((item) => (
+                    ? orders?.data?.map((item) => (
                           <OrderItem
                               key={item.id}
                               item={item}
-                              onClickComment={() => {
-                                  setSelectedOrder(item);
-                                  setOpenCommentDialog(true);
-                              }}
+                              setSelectedOrder={setSelectedOrder}
+                              setOpenCommentDialog={setOpenCommentDialog}
+                              setOpenConfirmDialog={setOpenConfirmDialog}
                           />
                       ))
                     : times(10).map((n) => <CartItemSkeleton key={n} />)}
@@ -118,29 +149,29 @@ const Order = ({ title }) => {
                     bgcolor="background.paper"
                     textAlign="center"
                 >
-                    You have no order
+                    Bạn chưa có đơn hàng nào
                 </Typography>
             )}
 
             {/* dialog for leave a comment */}
             <Dialog fullWidth open={openCommentDialog} onClose={() => setOpenCommentDialog(false)}>
-                <DialogTitle>Rating</DialogTitle>
+                <DialogTitle>Đánh giá</DialogTitle>
                 <DialogContent>
-                    <Typography variant="h6">Choose Product to Rating</Typography>
+                    <Typography variant="h6">Chọn sản phẩm bạn muốn đánh giá</Typography>
                     <Stack spacing={2} sx={{ m: 2 }} maxHeight={200} overflow="auto">
                         {selectedOrder?.orderDetails?.map((item) => {
                             if (item.reviewed) return null;
                             return (
                                 <Button
-                                    key={item.productVariation.product.id}
+                                    key={item.productVariation.id}
                                     variant={
-                                        comment.productId === item.productVariation.product.id
+                                        comment.productVariationId === item.productVariation.id
                                             ? 'contained'
                                             : 'outlined'
                                     }
                                     color="primary"
                                     onClick={() =>
-                                        setComment({ ...comment, productId: item.productVariation.product.id })
+                                        setComment({ ...comment, productVariationId: item.productVariation.id })
                                     }
                                     sx={{ textTransform: 'none' }}
                                 >
@@ -178,6 +209,15 @@ const Order = ({ title }) => {
                     </Button>
                 </DialogActions>
             </Dialog>
+
+            {/* dialog for confirm cancel */}
+            <ConfirmDialog
+                open={openConfirmDialog}
+                onClose={() => setOpenConfirmDialog(false)}
+                onConfirm={handleCancel}
+            >
+                Bạn có chắc muốn hủy đơn hàng này?
+            </ConfirmDialog>
         </Title>
     );
 };

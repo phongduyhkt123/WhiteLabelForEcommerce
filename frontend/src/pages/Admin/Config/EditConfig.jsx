@@ -30,7 +30,7 @@ export const EditConfig = () => {
             const testIfJson = JSON.parse(data.value);
             if (typeof testIfJson !== 'object') {
                 setMessage({
-                    text: 'Invalid JSON 1',
+                    text: 'Nội dung không hợp lệ',
                     severity: 'error',
                     type: AlertTypes.SNACKBAR_LARGE,
                 });
@@ -52,7 +52,7 @@ export const EditConfig = () => {
             }
         } catch (error) {
             setMessage({
-                text: 'Invalid JSON',
+                text: 'Json không hợp lệ',
                 severity: 'error',
                 type: AlertTypes.SNACKBAR_LARGE,
             });

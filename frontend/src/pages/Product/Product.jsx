@@ -63,7 +63,7 @@ const Product = ({ title }) => {
 
     useEffect(() => {
         if (error) {
-            setMessage({ text: error.message, severity: 'error', type: AlertTypes.SNACKBAR_SMALL });
+            setMessage({ text: error.message, severity: 'error', type: AlertTypes.SNACKBAR_LARGE });
             setShowMessage(true);
         }
     }, [error]);
